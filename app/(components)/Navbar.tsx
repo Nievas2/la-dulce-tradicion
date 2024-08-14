@@ -29,7 +29,7 @@ export default function Component() {
     console.log("logout")
   }
   return (
-    <header className="flex flex-col h-20 w-full shrink-0 px-4 md:px-6">
+    <header className="flex flex-col h-20 w-full shrink-0 ">
       <div className="flex flex-col items-center justify-center w-full">
         <img
           src="/sinfondo.webp"
