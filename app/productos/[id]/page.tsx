@@ -2,7 +2,6 @@
 import Cards from "@/components/shared/Cards"
 import axios from "axios"
 import { useEffect } from "react"
-
 const page = () => {
   const productos = [
     {
@@ -11,7 +10,7 @@ const page = () => {
       description:
         "Camiseta básica de algodón de alta calidad, suave y cómoda para uso diario.",
       price: 19.99,
-      image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
+      image: "camiseta-algodon.jpg",
       CategoryName: "Ropa",
       SubCategoryProducts: [
         {
@@ -33,7 +32,7 @@ const page = () => {
           ProductId: 1,
           ImageProduct: {
             id: 1,
-            image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
+            image: "camiseta-algodon.jpg",
             Product: 1
           }
         }
@@ -45,7 +44,7 @@ const page = () => {
       description:
         "Smartphone Android de última generación con cámara de alta resolución y gran capacidad de almacenamiento.",
       price: 399.99,
-      image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
+      image: "smartphone-android.jpg",
       CategoryName: "Electrónica",
       SubCategoryProducts: [
         {
@@ -67,7 +66,7 @@ const page = () => {
           ProductId: 2,
           ImageProduct: {
             id: 2,
-            image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
+            image: "smartphone-android.jpg",
             Product: 2
           }
         }
@@ -75,11 +74,11 @@ const page = () => {
     }
   ]
   useEffect(() => {
-    getProducts()
-  }, [])
-  function getProducts() {
+     getProducts() 
+  },[])
+  async function getProducts() {
     try {
-      const response = axios.get("http://localhost:4001/producto")
+      const response = await axios.get("http://localhost:4001/producto")
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -87,7 +86,7 @@ const page = () => {
   }
   return (
     <section>
-      {/*  {productos.map((producto) => (
+      {/*   {productos.map((producto) => (
         <Cards
           producto={producto}
           key={crypto.randomUUID()}
