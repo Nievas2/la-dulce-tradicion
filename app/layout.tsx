@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import Navbar from "./(components)/Navbar"
+import FloatButtons from "./(components)/FloatButtons"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} w-full font-poppins flex flex-col justify-center items-center min-h-screen`}
+        className={`${inter.className} relative w-full font-poppins flex flex-col justify-center items-center min-h-screen`}
       >
         <Navbar />
+        
+        <FloatButtons />
         {children}
       </body>
     </html>

@@ -60,7 +60,7 @@ export default function Component() {
           side="left"
           className="bg-main"
         >
-          <ul className="flex flex-col w-full justify-around gap-2 et-menu bg-main">
+          <ul className="flex flex-col w-full justify-center gap-2 et-menu bg-main">
             {items.map((item) => (
               <ItemsNavbar
                 key={crypto.randomUUID()}
@@ -105,8 +105,10 @@ export default function Component() {
           </ul>
         </SheetContent>
       </Sheet>
-      <nav className="hidden w-full border-y border-secondary py-4 lg:flex gap-6 bg-main dl-menu-style1">
-        <ul className="flex w-full justify-around items-center text-center gap-2 et-menu bg-main">
+      <nav className="hidden w-full border-y border-secondary py-4 lg:flex gap-6 bg-main ">
+        <div className="flex w-full justify-center items-center text-center gap-2 dl-menu-style1 bg-main">
+          <ul className="flex gap-8 et-menu">
+
           {items.map((item) => (
             <ItemsNavbar
               key={crypto.randomUUID()}
@@ -121,6 +123,7 @@ export default function Component() {
           ) : (
             ""
           )}
+          </ul>
           {logueado ? (
             <Button
               variant={"main"}
@@ -148,7 +151,7 @@ export default function Component() {
               </Button>
             </>
           )}
-        </ul>
+        </div>
       </nav>
     </header>
   )
