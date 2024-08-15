@@ -29,33 +29,38 @@ export default function Component() {
     console.log("logout")
   }
   return (
-    <header className="flex flex-col h-20 w-full shrink-0 ">
-      <div className="flex flex-col items-center justify-center w-full">
+    <header className="flex flex-col w-full max-w-7xl h-20 shrink-0 bg-main sm:mb-[76px] md:mb-[80px] lg:mb-[114px]">
+      <div className="flex flex-col items-center justify-center w-full bg-main">
         <img
           src="/sinfondo.webp"
           className="h-20 "
           alt="LaDulceTradicion logo"
         />
-        <h5 className="font-bold">
+        <h5 className="font-bold bg-main">
           Flor & Lucas - Pastelería, Lunch y algo más
         </h5>
       </div>
       <Sheet>
         <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="lg:hidden"
-          >
-            <MenuIcon className="h-6 w-6" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
+          <div className="flex flex-1 bg-main p-2">
+            <div>
+
+            <Button
+              variant="outline"
+              size="icon"
+              className="lg:hidden"
+            >
+              <MenuIcon className="h-6 w-6" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+            </div>
+          </div>
         </SheetTrigger>
         <SheetContent
           side="left"
           className="bg-main"
         >
-          <ul className="flex flex-col w-full justify-around gap-2 et-menu">
+          <ul className="flex flex-col w-full justify-around gap-2 et-menu bg-main">
             {items.map((item) => (
               <ItemsNavbar
                 key={crypto.randomUUID()}
@@ -101,7 +106,7 @@ export default function Component() {
         </SheetContent>
       </Sheet>
       <nav className="hidden w-full border-y border-secondary py-4 lg:flex gap-6 bg-main dl-menu-style1">
-        <ul className="flex w-full justify-around items-center text-center gap-2 et-menu">
+        <ul className="flex w-full justify-around items-center text-center gap-2 et-menu bg-main">
           {items.map((item) => (
             <ItemsNavbar
               key={crypto.randomUUID()}

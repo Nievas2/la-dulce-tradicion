@@ -50,7 +50,8 @@ const config = {
         },
         "main": "#fff0f0",
         "secondary":"#c1694c",
-        "tertiary":"#751c19"
+        "tertiary":"#751c19",
+        "quaternary":"#efa593",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -74,6 +75,10 @@ const config = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+      backgroundImage: {
+        'contact': "url('/fondos7.jfif')",
+        'footer-texture': "url('/img/footer-texture.png')",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
