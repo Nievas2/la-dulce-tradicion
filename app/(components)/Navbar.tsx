@@ -5,7 +5,7 @@ import Link from "next/link"
 import ItemsNavbar from "@/components/shared/ItemsNavbar"
 
 export default function Component() {
-  const admin = true
+  const admin = false
   const logueado = false
   const items = [
     {
@@ -91,14 +91,14 @@ export default function Component() {
                   size="default"
                   className="rounded-[10px]"
                 >
-                  <Link href="logout">Registrarse</Link>
+                  <Link href="/register">Registrarse</Link>
                 </Button>
                 <Button
                   variant={"main"}
                   size="default"
                   className="rounded-[10px]"
                 >
-                  <Link href="login">Iniciar Sesión</Link>
+                  <Link href="/login">Iniciar Sesión</Link>
                 </Button>
               </>
             )}
@@ -140,14 +140,14 @@ export default function Component() {
                 size="default"
                 className="rounded-[10px]"
               >
-                <Link href="logout">Registrarse</Link>
+                <Link href="/register">Registrarse</Link>
               </Button>
               <Button
                 variant={"main"}
                 size="default"
                 className="rounded-[10px]"
               >
-                <Link href="login">Iniciar Sesión</Link>
+                <Link href="/login">Iniciar Sesión</Link>
               </Button>
             </>
           )}

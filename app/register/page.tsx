@@ -1,101 +1,109 @@
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import Link from "next/link"
 
 const page = () => {
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos7.jfif')] w-full max-w-7xl">
-      <div className="flex justify-center items-center h-screen">
-        <div className="border border-white ">
+    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos3.jpg')] w-full max-w-7xl">
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="border border-white bg-main py-2 px-4 rounded-md">
           <div className="flex flex-col">
-            <div className="flex p-2">
+            {/* <div className="flex">
               <h5>
-                Gracias por volver! Inicia sesion para realizar tu proxima
-                compra
+                Hola! registrate en nuestra pagina para recibir novedades y que
+                la proxima compra sea mas rapido.
               </h5>
-            </div>
-
+            </div> */}
             <div className="flex">
-              <h5 className="card-title">Iniciar sesion</h5>
+              <h5 className="font-bold text-xl">Registro</h5>
             </div>
-            {/*        <form [formGroup]="form" (ngSubmit)="login()">
-          <div className="mb-2">
-            <label>Email</label>
-            <input
-              className="form-control"
-              formControlName="email"
-              name="email"
-              type="email"
-              placeholder="Escribe tu email"
-            />
-            <span
-              *ngIf="
-                form.get('email')?.hasError('required') &&
-                form.get('email')?.touched
-              "
-            >
-              El campo email es <strong>requerido</strong>
-            </span>
-            <span
-              *ngIf="
-                form.get('email')?.hasError('email') &&
-                form.get('email')?.touched
-              "
-            >
-              Por favor, introduce un email válido.
-            </span>
-          </div>
-          <div className="mb-2">
-            <label>Contraseña</label>
-            <div className="input-group">
-              <input
-                className="form-control"
-                formControlName="password"
-                name="password"
-                type="{{ mostrarContrasena ? 'text' : 'password' }}"
-                placeholder="************"
-              />
-              <div className="input-group-text">
-                <input
-                  className="form-check-input mt-0"
-                  type="checkbox"
-                  (change)="toggleMostrarContrasena()"
-                  value=""
-                  aria-label="Checkbox for following text input"
+            <form className="flex flex-col gap-2">
+              <div>
+                <Label>Nombres </Label>
+                <Input
+                  className="form-control"
+                  name="firstName"
+                  type="text"
+                  placeholder="Escribe tus nombres"
                 />
               </div>
-            </div>
-        
-            <span
-              *ngIf="
-                form.get('password')?.hasError('required') &&
-                form.get('password')?.touched
-              "
-            >
-              El campo es <strong>requerido</strong>
-            </span>
+              <div>
+                <Label>Apellidos </Label>
+                <Input
+                  className="form-control"
+                  name="lastName"
+                  type="text"
+                  placeholder="Escribe tu/s apellido/s"
+                />
+              </div>
+              <div>
+                <Label>Teléfono</Label>
+                <Input
+                  className="form-control"
+                  name="phone"
+                  type="text"
+                  placeholder="Escribe tu numero de telefono"
+                />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input
+                  className="form-control"
+                  name="email"
+                  type="email"
+                  placeholder="Escribe tu email"
+                />
+              </div>
+              <div>
+                <Label>Contraseña:</Label>
+                <Input
+                  className="form-control"
+                  name="password"
+                  type="password"
+                  placeholder="************"
+                />
+              </div>
+              <div>
+                <Label>Repetir contraseña</Label>
+                <Input
+                  className="form-control"
+                  name="repeatpassword"
+                  type="password"
+                  placeholder="************"
+                />
+              </div>
+              <div className="flex">
+                <Button
+                  className="text-white w-full"
+                  type="submit"
+                  variant="secondary"
+                >
+                  Suscribirse
+                </Button>
+              </div>
+            </form>
+            <h5 className="text-center">
+              Si ya tiene una cuenta puede ingresar desde aqui {" "}
+              <Link className="text-blue-800 font-bold" href="/login">aqui</Link>
+            </h5>
           </div>
-
-          <div className="row mt-3" style="background-color: var(--color2)">
-            <button
-              [disabled]="form.invalid"
-              className="submit text-white btn"
-              type="submit"
-            >
-              login
-            </button>
+          <div className="flex">
+            {/* <h2 className="p-4">
+          ESTAS A UN PASO DE CREAR TU CUENTA <br />
+          <br />
+  
+          Te enviamos un link a tu email {{ user.email }} para que valides que
+          eres tú.
+        </h2> */}
+            {/* <div className="flex m-2">
+          <Button
+            className="btn"
+          >
+            Login
+          </Button>
+        </div> */}
           </div>
-        </form> */}
-          </div>
-          <h5>
-            <Link href="recuperarcontraseña">Recuperar contraseña</Link>
-          </h5>
-          <h5 className="text-center">
-            Si no tiene una cuenta puede crearse una desde
-            <a href="register">aqui</a>
-          </h5>
-          <h5 className="text-center">
-            Si tiene problemas con su código ingrese
-            <a href="crear-codigo">aqui</a>
-          </h5>
         </div>
       </div>
     </div>
