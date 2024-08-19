@@ -2,7 +2,11 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { login } from "@/services/AuthService"
+import { loginSchema } from "@/utils/schemas/LoginSchema"
 import { Icon } from "@iconify/react/dist/iconify.js"
+import { useMutation } from "@tanstack/react-query"
+import { useFormik } from "formik"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -11,6 +15,27 @@ const page = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState)
   }
+  const mutate = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      localStorage.setItem("user-token", data.token)
+      window.location.href = "/"
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    validationSchema:loginSchema,
+    onSubmit: (values) => {
+      mutate.mutate(values)
+      console.log(values)
+    }
+  })
   return (
     <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos1.jpg')] w-full max-w-7xl">
       <div className="flex justify-center items-center h-screen">
@@ -25,22 +50,34 @@ const page = () => {
 
             <h5 className="font-bold">Iniciar sesion</h5>
 
-            <form className="flex flex-col gap-3">
+            <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
               <Label>Email</Label>
               <Input
                 className="form-control"
-                name="email"
                 type="email"
                 placeholder="Escribe tu email"
+                {...formik.getFieldProps("email")}
+                disabled={mutate.isPending}
               />
+              {
+                formik.touched.email && formik.errors.email && (
+                  <small className="text-red-500">{formik.errors.email}</small>
+                )
+              }
               <Label>Contraseña</Label>
               <div className="relative">
                 <Input
                   className="form-control"
-                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="************"
+                  {...formik.getFieldProps("password")}
+                  disabled={mutate.isPending}
                 />
+                {
+                  formik.touched.password && formik.errors.password && (
+                    <small className="text-red-500">{formik.errors.password}</small>
+                  )
+                }
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"

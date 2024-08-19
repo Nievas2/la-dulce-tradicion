@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import ItemsNavbar from "@/components/shared/ItemsNavbar"
 import { Icon } from "@iconify/react/dist/iconify.js"
+import { useAuthContext } from "@/contexts/auth-context"
 
 export default function Component() {
   const admin = false
   const logueado = false
+  const { authUser } = useAuthContext()
+  console.log(authUser)
   const items = [
     {
       name: "Inicio",
@@ -45,15 +48,14 @@ export default function Component() {
         <SheetTrigger asChild>
           <div className="flex flex-1 bg-main p-2">
             <div>
-
-            <Button
-              variant="outline"
-              size="icon"
-              className="lg:hidden"
-            >
-              <MenuIcon className="h-6 w-6" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="lg:hidden"
+              >
+                <MenuIcon className="h-6 w-6" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
             </div>
           </div>
         </SheetTrigger>
@@ -69,14 +71,14 @@ export default function Component() {
                 name={item.name}
               />
             ))}
-            {admin ? (
+            {authUser?.user.isAdmin ? (
               <li>
                 <a href="administracion">Administración</a>
               </li>
             ) : (
               ""
             )}
-            {logueado ? (
+            {authUser ? (
               <Button
                 variant={"main"}
                 size="default"
@@ -109,23 +111,22 @@ export default function Component() {
       <nav className="hidden w-full border-y border-secondary py-4 lg:flex gap-6 bg-main ">
         <div className="flex w-full justify-center items-center text-center gap-2 dl-menu-style1 bg-main">
           <ul className="flex gap-8 et-menu">
-
-          {items.map((item) => (
-            <ItemsNavbar
-              key={crypto.randomUUID()}
-              link={item.link}
-              name={item.name}
-            />
-          ))}
-          {admin ? (
-            <li>
-              <a href="administracion">Administración</a>
-            </li>
-          ) : (
-            ""
-          )}
+            {items.map((item) => (
+              <ItemsNavbar
+                key={crypto.randomUUID()}
+                link={item.link}
+                name={item.name}
+              />
+            ))}
+            {authUser?.user.isAdmin ? (
+              <li>
+                <a href="administracion">Administración</a>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
-          {logueado ? (
+          {authUser ? (
             <Button
               variant={"main"}
               size="default"
@@ -160,7 +161,10 @@ export default function Component() {
 
 function MenuIcon(props: any) {
   return (
-    <Icon icon="material-symbols:menu" width="24" height="24" />
+    <Icon
+      icon="material-symbols:menu"
+      width="24"
+      height="24"
+    />
   )
 }
-

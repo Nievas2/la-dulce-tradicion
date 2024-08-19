@@ -1,7 +1,7 @@
 import { Producto } from "./Product"
 export interface Category {
-  id: number
+  id?: number
   name: string
   image: string
-  Products: [Producto]
+  Products?: [Producto]
 }

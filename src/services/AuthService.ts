@@ -1,9 +1,10 @@
 import axiosInstance from "@/api/axiosInstance"
+import { LoginData } from "@/interfaces/Login"
 
-export function login(email: string, password: string) {
+export async function login(login: LoginData) {
   try {
-    const response = axiosInstance.post("auth/login", { email, password })
-    return response
+    const response = await axiosInstance.post("auth", login)
+    return response.data
   } catch (error) {
     throw error
   }

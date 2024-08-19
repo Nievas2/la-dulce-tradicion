@@ -1,10 +1,10 @@
 export interface User {
-    id: number,
+    id?: number,
     firstName:string,
     lastName:string,
     email:string,
     phone:string,
     password:string,
-    active:boolean,
-    admin:boolean,
+    active?:boolean,
+    admin?:boolean,
 }
