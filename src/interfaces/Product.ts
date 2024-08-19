@@ -1,3 +1,6 @@
+import { ImagesProductAsocciations } from "./ImagesProductAsocciation"
+import { SubCategoryProduct } from "./SubCategoryProduct"
+
 export interface Producto {
   id: number
   name: string
@@ -7,27 +10,4 @@ export interface Producto {
   CategoryName: string
   SubCategoryProducts: [SubCategoryProduct]
   ImagesProductAsocciations: [ImagesProductAsocciations]
-}
-export interface SubCategoryProduct {
-  id: number
-  ProductId: number
-  SubCategoryId: number
-  SubCategory: SubCategory
-}
-export interface ImagesProductAsocciations {
-  id: number
-  ImageProductId: number
-  ProductId: number
-  ImageProduct: ImageProduct
-}
-export interface ImageProduct{
-    id: number;
-    image: string;
-    Product: number;
-}
-export interface SubCategory{
-    id: number;
-    date: string;
-    price:number
-    Product: number;
 }
