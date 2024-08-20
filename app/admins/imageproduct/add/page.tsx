@@ -64,14 +64,14 @@ const page = () => {
                   <b>Nombre de la categoria</b>
                 </Label>
                 {/* <select
-              name="CategoryName"
-              className="form-control"
-            >
-              <option value="">Selecciona una categoría</option>
-              <option >
-                <h1>{ category.name }</h1>
-              </option>
-            </select> */}
+            name="CategoryName"
+            className="form-control"
+          >
+            <option value="">Selecciona una categoría</option>
+            <option >
+              <h1>{ category.name }</h1>
+            </option>
+          </select> */}
                 <Select>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecciona una categoría" />
@@ -86,8 +86,8 @@ const page = () => {
               <div className="row mb-3 mt-2 text-center">
                 <div className="col-lg-6">
                   {/* <Button className="btn boton" routerLink="/admins/productos">
-                Volver
-              </Button> */}
+              Volver
+            </Button> */}
                 </div>
                 <div className="col-lg-6">
                   <Button
@@ -106,4 +106,3 @@ const page = () => {
   )
 }
 export default page
-
