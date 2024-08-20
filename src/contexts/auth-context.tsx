@@ -24,7 +24,7 @@ export const useAuthContext = (): AuthContextType => {
 }
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const storedUser = localStorage.getItem("user-token");
+/*   const storedUser = localStorage.getItem("user-token");
   let user
   if(storedUser){
     const data = decodeJwt(storedUser as string);
@@ -35,8 +35,8 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
 
   }
   console.log(user);
-  
-  const [authUser, setAuthUser] = useState<AuthUser | null>(user ? user : null);
+   */
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
 
 
   useEffect(() => {
