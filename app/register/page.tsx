@@ -35,7 +35,7 @@ const page = () => {
     }
   })
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos3.jpg')] w-full max-w-7xl">
+    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos3.jpg')] w-full max-w-8xl">
       <div className="flex justify-center items-center min-h-screen">
         <div className="border border-white bg-main py-2 px-4 rounded-md">
           <div className="flex flex-col">

@@ -3,7 +3,7 @@ import { Category } from "@/interfaces/Category"
 
 export async function getCategories() {
   try {
-    const response = axiosInstance.get("categories")
+    const response = axiosInstance.get("category")
     return response
   } catch (error) {
     throw error
@@ -21,7 +21,7 @@ export async function getCategoryById(id: number) {
 
 export async function postCategory(Category: Category) {
   try {
-    const response = axiosInstance.post("categories", Category)
+    const response = axiosInstance.post("category", Category)
     return response
   } catch (error) {
     throw error

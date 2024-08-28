@@ -20,7 +20,7 @@ const page = () => {
     }
   })
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos7.jfif')] w-full max-w-7xl">
+    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos7.jfif')] w-full max-w-8xl">
       <div className="flex flex-1 justify-center items-center h-screen">
         <div className="w-50 border border-white">
           <div>

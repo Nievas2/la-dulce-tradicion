@@ -78,6 +78,9 @@ const config = {
       backgroundImage: {
         'contact': "url('/fondos7.jfif')",
         'footer-texture': "url('/img/footer-texture.png')",
+      },
+      maxWidth:{
+        '8xl': '1360px',
       }
     },
   },

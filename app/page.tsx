@@ -6,7 +6,7 @@ import Questions from "./(components)/Questions"
 
 export default function Home() {
   return (
-    <main className="flex flex-1 max-w-7xl flex-col">
+    <main className="flex flex-1 max-w-8xl flex-col">
       <Carrousel />
       <Questions />
     </main>

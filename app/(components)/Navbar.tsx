@@ -10,7 +10,6 @@ export default function Component() {
   const admin = false
   const logueado = false
   const { authUser } = useAuthContext()
-  console.log(authUser)
   const items = [
     {
       name: "Inicio",
@@ -33,7 +32,7 @@ export default function Component() {
     console.log("logout")
   }
   return (
-    <header className="flex flex-col w-full max-w-7xl h-20 shrink-0 bg-main sm:mb-[76px] md:mb-[80px] lg:mb-[114px]">
+    <header className="flex flex-col w-full max-w-8xl h-20 shrink-0 bg-main sm:mb-[76px] md:mb-[80px] lg:mb-[114px]">
       <div className="flex flex-col items-center justify-center w-full bg-main">
         <img
           src="/sinfondo.webp"
@@ -73,7 +72,7 @@ export default function Component() {
             ))}
             {authUser?.user.isAdmin ? (
               <li>
-                <a href="administracion">Administración</a>
+                <a href="/admins">Administración</a>
               </li>
             ) : (
               ""
@@ -120,7 +119,7 @@ export default function Component() {
             ))}
             {authUser?.user.isAdmin ? (
               <li>
-                <a href="administracion">Administración</a>
+                <a href="/admins">Administración</a>
               </li>
             ) : (
               ""

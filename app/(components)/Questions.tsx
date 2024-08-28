@@ -7,11 +7,11 @@ import {
 
 const Questions = () => {
   return (
-    <div className="w-full max-w-7xl mb-16">
+    <div className="w-full max-w-8xl mb-16">
       <Accordion
         type="single"
         collapsible
-        className="w-full max-w-7xl bg-white px-2"
+        className="w-full max-w-8xl bg-white px-2"
       >
         <AccordionItem value="item-1">
           <AccordionTrigger>¿COMO COMPRAR?</AccordionTrigger>
