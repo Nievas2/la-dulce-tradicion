@@ -6,10 +6,14 @@ import {
   CarouselNext,
   CarouselPrevious
 } from "@/components/ui/carousel"
+import { useEffect, useState } from "react"
 //import Autoplay from "embla-carousel-autoplay"
 
 const Carrousel = () => {
-  const width = window.innerWidth
+  const [width, setWidth] = useState(window.innerWidth)
+  useEffect(() => {
+    setWidth(window.innerWidth)
+  },[width])
   return (
     <div className="mt-24 sm:mt-16 md:mt-0 flex justify-center items-center lg:mt-28">
       <Carousel
@@ -27,19 +31,31 @@ const Carrousel = () => {
         <CarouselContent>
           <CarouselItem>
             <img
-              src={width > 768 ? "/carrusel/1desktop.webp" : "/carrusel/1mobile.webp"}
+              src={
+                width > 768
+                  ? "/carrusel/1desktop.webp"
+                  : "/carrusel/1mobile.webp"
+              }
               alt=""
             />
           </CarouselItem>
           <CarouselItem>
             <img
-              src={width > 768 ? "/carrusel/2desktop.webp" : "/carrusel/2mobile.webp"}
+              src={
+                width > 768
+                  ? "/carrusel/2desktop.webp"
+                  : "/carrusel/2mobile.webp"
+              }
               alt=""
             />
           </CarouselItem>
           <CarouselItem>
             <img
-              src={width > 768 ? "/carrusel/3desktop.webp" : "/carrusel/3mobile.webp"}
+              src={
+                width > 768
+                  ? "/carrusel/3desktop.webp"
+                  : "/carrusel/3mobile.webp"
+              }
               alt=""
             />
           </CarouselItem>
