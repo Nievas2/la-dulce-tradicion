@@ -1,3 +1,4 @@
+"use client"
 import {
   Carousel,
   CarouselContent,
@@ -8,8 +9,9 @@ import {
 //import Autoplay from "embla-carousel-autoplay"
 
 const Carrousel = () => {
+  const width = window.innerWidth
   return (
-    <div className="mt-16 flex justify-center items-center lg:mt-28">
+    <div className="mt-24 sm:mt-16 md:mt-0 flex justify-center items-center lg:mt-28">
       <Carousel
         opts={{
           align: "start",
@@ -25,19 +27,19 @@ const Carrousel = () => {
         <CarouselContent>
           <CarouselItem>
             <img
-              src="/1.webp"
+              src={width > 768 ? "/carrusel/1desktop.webp" : "/carrusel/1mobile.webp"}
               alt=""
             />
           </CarouselItem>
           <CarouselItem>
             <img
-              src="/1.webp"
+              src={width > 768 ? "/carrusel/2desktop.webp" : "/carrusel/2mobile.webp"}
               alt=""
             />
           </CarouselItem>
           <CarouselItem>
             <img
-              src="/1.webp"
+              src={width > 768 ? "/carrusel/3desktop.webp" : "/carrusel/3mobile.webp"}
               alt=""
             />
           </CarouselItem>

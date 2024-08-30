@@ -44,6 +44,7 @@ export default function Component() {
         </h5>
       </div>
       <Sheet>
+        
         <SheetTrigger asChild>
           <div className="flex flex-1 bg-main p-2">
             <div>
@@ -58,6 +59,7 @@ export default function Component() {
             </div>
           </div>
         </SheetTrigger>
+
         <SheetContent
           side="left"
           className="bg-main"

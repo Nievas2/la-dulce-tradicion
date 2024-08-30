@@ -17,7 +17,9 @@ import { getCategories } from "@/services/CategoryService"
 const page = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["categories"],
-    queryFn: getCategories
+    queryFn: getCategories,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60 * 24,
   })
   console.log(data, error)
 
