@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 
 const FloatButtons = () => {
   return (
-    <div className="fixed flex flex-col right-2 bottom-2 gap-2">
+    <div className="fixed flex flex-col right-2 bottom-2 gap-2 z-50">
       <div className="flex justify-end">
         <a
           onClick={() => window.scrollTo(0, 0)}

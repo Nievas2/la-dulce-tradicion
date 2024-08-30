@@ -10,10 +10,17 @@ import { useEffect, useState } from "react"
 //import Autoplay from "embla-carousel-autoplay"
 
 const Carrousel = () => {
-  const [width, setWidth] = useState(window.innerWidth)
-  useEffect(() => {
+  const [width, setWidth] = useState<number | undefined>()
+  const handleWindowResize = () => {
     setWidth(window.innerWidth)
-  },[width])
+  }
+  useEffect(() => {
+    // component is mounted and window is available
+    handleWindowResize()
+    window.addEventListener("resize", handleWindowResize)
+    // unsubscribe from the event on component unmount
+    return () => window.removeEventListener("resize", handleWindowResize)
+  }, [])
   return (
     <div className="mt-24 sm:mt-16 md:mt-0 flex justify-center items-center lg:mt-28">
       <Carousel
@@ -32,7 +39,7 @@ const Carrousel = () => {
           <CarouselItem>
             <img
               src={
-                width > 768
+                width! > 768
                   ? "/carrusel/1desktop.webp"
                   : "/carrusel/1mobile.webp"
               }
@@ -42,7 +49,7 @@ const Carrousel = () => {
           <CarouselItem>
             <img
               src={
-                width > 768
+                width! > 768
                   ? "/carrusel/2desktop.webp"
                   : "/carrusel/2mobile.webp"
               }
@@ -52,7 +59,7 @@ const Carrousel = () => {
           <CarouselItem>
             <img
               src={
-                width > 768
+                width! > 768
                   ? "/carrusel/3desktop.webp"
                   : "/carrusel/3mobile.webp"
               }
