@@ -1,5 +1,13 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog"
 import { Producto } from "@/interfaces/Product"
 import { Icon } from "@iconify/react/dist/iconify.js"
+import ChangeProduct from "../admins/products/(components)/ChangeProduct"
 interface CardProps {
   product: Producto
 }
@@ -14,17 +22,25 @@ const CardsAdmin = ({ product }: CardProps) => {
         rounded-lg
         relative
         `}
-        style={{ backgroundImage: `url(${product.image})` }}
+      style={{ backgroundImage: `url(${product.image})` }}
     >
       <span className="text-white">{product.name}</span>
-      <button className="absolute top-2 right-2">
-        <Icon
-          icon="fluent:edit-24-filled"
-          width="24"
-          height="24"
-          color="#fff"
-        />
-      </button>
+      <Dialog>
+        <DialogTrigger className="absolute top-2 right-2">
+          <Icon
+            icon="fluent:edit-24-filled"
+            width="24"
+            height="24"
+            color="#fff"
+          />
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Editar un producto</DialogTitle>
+            <ChangeProduct product={product} />
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       <button className="absolute bottom-2 right-2">
         <Icon
           icon="fluent:delete-24-filled"
