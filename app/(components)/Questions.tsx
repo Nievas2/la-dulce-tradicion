@@ -4,11 +4,44 @@ import {
   AccordionItem,
   AccordionTrigger
 } from "@/components/ui/accordion"
+import { Card, CardContent } from "@/components/ui/card"
 
 const Questions = () => {
+  const qaItems = [
+    {
+      question: "¿Qué es React?",
+      answer:
+        "Una biblioteca de JavaScript para construir interfaces de usuario."
+    },
+    {
+      question: "¿Qué es Tailwind CSS?",
+      answer:
+        "Un framework de CSS utilidad-primero para crear diseños personalizados rápidamente."
+    },
+    {
+      question: "¿Qué es Next.js?",
+      answer:
+        "Un framework de React para producción con renderizado del lado del servidor."
+    },
+    {
+      question: "¿Qué es TypeScript?",
+      answer:
+        "Un superconjunto tipado de JavaScript que se compila a JavaScript puro."
+    },
+    {
+      question: "¿Qué es un componente en React?",
+      answer:
+        "Una pieza reutilizable e independiente de la interfaz de usuario."
+    },
+    {
+      question: "¿Qué son los hooks en React?",
+      answer:
+        "Funciones que permiten usar estado y otras características de React en componentes funcionales."
+    }
+  ]
   return (
     <div className="w-full max-w-8xl mb-16">
-      <Accordion
+      {/*  <Accordion
         type="single"
         collapsible
         className="w-full max-w-8xl bg-white px-2"
@@ -76,7 +109,52 @@ const Questions = () => {
             contamos con el lugar adecuado para ese tipo de productos. <br />{" "}
           </AccordionContent>
         </AccordionItem>
-      </Accordion>
+      </Accordion> */}
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Preguntas y Respuestas de Desarrollo Web
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Card className="overflow-hidden md:col-span-1 lg:col-span-2 bg-main shadow-md">
+            <CardContent className="p-6">
+              <h2 className="text-lg font-semibold mb-2">item.question</h2>
+              <p className="text-sm text-muted-foreground">item.answer</p>
+            </CardContent>
+          </Card>
+          <Card className="overflow-hidden md:col-span-1 lg:col-span-1 bg-main shadow-md">
+            <CardContent className="p-6">
+              <h2 className="text-lg font-semibold mb-2">item.question</h2>
+              <p className="text-sm text-muted-foreground">item.answer</p>
+            </CardContent>
+          </Card>
+
+          <Card className="overflow-hidden md:col-span-1 lg:col-span-1 bg-main shadow-md">
+            <CardContent className="p-6">
+              <h2 className="text-lg font-semibold mb-2">item.question</h2>
+              <p className="text-sm text-muted-foreground">item.answer</p>
+            </CardContent>
+          </Card>
+          <Card className="overflow-hidden md:col-span-1 lg:col-span-2 bg-main shadow-md">
+            <CardContent className="p-6">
+              <h2 className="text-lg font-semibold mb-2">item.question</h2>
+              <p className="text-sm text-muted-foreground">item.answer</p>
+            </CardContent>
+          </Card>
+
+          <Card className="overflow-hidden md:col-span-1 lg:col-span-2 bg-main shadow-md">
+            <CardContent className="p-6">
+              <h2 className="text-lg font-semibold mb-2">item.question</h2>
+              <p className="text-sm text-muted-foreground">item.answer</p>
+            </CardContent>
+          </Card>
+          <Card className="overflow-hidden md:col-span-1 lg:col-span-1 bg-main shadow-md">
+            <CardContent className="p-6">
+              <h2 className="text-lg font-semibold mb-2">item.question</h2>
+              <p className="text-sm text-muted-foreground">item.answer</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }

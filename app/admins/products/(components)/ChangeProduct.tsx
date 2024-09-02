@@ -9,10 +9,12 @@ import {
   SelectContent
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { Category } from "@/interfaces/Category"
 import { Producto } from "@/interfaces/Product"
+import { getCategories } from "@/services/CategoryService"
 import { postProduct, putProduct } from "@/services/ProductService"
 import { ProductSchema } from "@/utils/schemas/ProductSchema"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useFormik } from "formik"
 
 export interface ProductForm {
@@ -20,28 +22,47 @@ export interface ProductForm {
   image: string
   description: string
   price: number
-  category: string
+  CategoryName: string
 }
 interface ChangeProductProps {
   product: Producto | undefined
 }
 const ChangeProduct = ({ product }: ChangeProductProps) => {
+  const {
+    data: categories,
+    error,
+    isPending
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getCategories
+  })
+
   const mutation = useMutation({
     mutationFn: (values: ProductForm) => {
-      if (product) return putProduct(values, product.id)
+      if (product) {
+        console.log("put")
+
+        return putProduct(values, product.id)
+      }
+      console.log("post")
+
       return postProduct(values)
     },
     onSuccess: (data) => {
       console.log(data)
+    },
+    onError: (error) => {
+      console.log(error)
     }
   })
+
   const formik = useFormik({
     initialValues: {
       name: product ? product.name : "",
       image: product ? product.image : "",
       description: product ? product.description : "",
       price: product ? product.price : 0,
-      category: product ? product.CategoryName : ""
+      CategoryName: product ? product.Category.name : ""
     },
     validationSchema: ProductSchema,
     onSubmit: (values) => {
@@ -49,8 +70,10 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
       console.log(values)
     }
   })
-  console.log(product)
 
+  function handleChangeCategory(value: string) {
+    formik.setFieldValue("CategoryName", value)
+  }
   return (
     <>
       <div className="flex flex-col mb-3 mt-3 offset-lg-2">
@@ -65,7 +88,7 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
                   <b>Nombre</b>
                 </Label>
                 <Input
-                  type="text"
+                  type="text" 
                   className="form-control"
                   placeholder="Ingrese Nombre"
                   {...formik.getFieldProps("name")}
@@ -128,26 +151,36 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
                 <Label className="form-Label mb-0 p-0">
                   <b>Nombre de la categoria</b>
                 </Label>
-                {/* <select
-                  name="CategoryName"
-                  className="form-control"
+                <Select
+                  onValueChange={(values) => handleChangeCategory(values)}
+                  defaultValue={formik.values.CategoryName}
                 >
-                  <option value="">Selecciona una categoría</option>
-                  <option >
-                    <h1>{ category.name }</h1>
-                  </option>
-                </select> */}
-                <Select>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger
+                    className="w-full"
+                  >
                     <SelectValue placeholder="Selecciona una categoría" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    {!error &&
+                      categories &&
+                      !isPending &&
+                      categories?.data.map((category: Category) => (
+                        <SelectItem
+                          key={category.id}
+                          value={category.name}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
+                {formik.touched.CategoryName && formik.errors.CategoryName && (
+                  <small className="font-bold text-[#ff4444]">
+                    {formik.errors.CategoryName}
+                  </small>
+                )}
               </div>
+              {error && <small>{error.message}</small>}
               <div className="row mb-3 mt-2 text-center">
                 <div className="col-lg-6">
                   {/* <Button className="btn boton" routerLink="/admins/productos">

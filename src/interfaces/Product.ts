@@ -1,3 +1,4 @@
+import { Category } from "./Category"
 import { ImagesProductAsocciations } from "./ImagesProductAsocciation"
 import { SubCategoryProduct } from "./SubCategoryProduct"
 
@@ -7,7 +8,7 @@ export interface Producto {
   description: string
   price: number
   image: string
-  CategoryName: string
+  Category: Category
   SubCategoryProducts: [SubCategoryProduct]
   ImagesProductAsocciations: [ImagesProductAsocciations]
 }

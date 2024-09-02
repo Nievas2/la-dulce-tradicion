@@ -21,6 +21,8 @@ export async function getProductById(id: number) {
 }
 
 export async function postProduct(product: ProductForm) {
+  console.log(product);
+  
   try {
     const response = axiosInstance.post("product", product)
     return response

@@ -1,7 +1,7 @@
 import axiosInstance from "@/api/axiosInstance"
 import { Category } from "@/interfaces/Category"
 
-export async function getCategories() {
+export async function getCategories() : Promise<any> {
   try {
     const response = axiosInstance.get("category")
     return response
