@@ -112,7 +112,7 @@ const Questions = () => {
       </Accordion> */}
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-6 text-center">
-          Preguntas y Respuestas de Desarrollo Web
+          Preguntas Frecuentes
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card className="overflow-hidden md:col-span-1 lg:col-span-2 bg-main shadow-md">
