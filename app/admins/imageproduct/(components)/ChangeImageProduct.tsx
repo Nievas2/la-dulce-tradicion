@@ -30,28 +30,32 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
   })
 
   const mutation = useMutation({
-    mutationFn: (values) => {
+    mutationFn: async () => {
       if (image) {
-        console.log("put")
-        return putImageProduct(values.images[0].image, data?.data.id)
+        console.log("put");
+        return await putImageProduct(images[0].image, data?.data.id);
       }
-      values.images.forEach((element: string) => {
-        const data = {
-          Product: values.Product,
-          image: element.image
-        }
-        postImageProduct(data)
-      })
-      return true
+  
+      const promises = images.map((element) => {
+        const body = {
+          Product: formik.values.Product,
+          image: element.image,
+        };
+        return postImageProduct(body);
+      });
+  
+      await Promise.all(promises);
+      return true;
     },
     onSuccess: (data) => {
-      console.log(data)
+      console.log(data);
     },
     onError: (error) => {
-      setError(error.message)
-      console.log(error)
-    }
-  })
+      setError(error.message);
+      console.log(error);
+    },
+  });
+  
 
   const formik = useFormik({
     initialValues: {
@@ -59,7 +63,7 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
       images: image ? image : images // inicializar con el array de imágenes
     },
     onSubmit: (values) => {
-      mutation.mutate(values)
+      mutation.mutate()
       console.log(values)
     }
   })
