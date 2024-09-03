@@ -23,6 +23,7 @@ export function getImageProductById(id: number) {
 
 
 export function postImageProduct(imageProduct: ImageProductForm) {
+  console.log(imageProduct);
   try {
     const response = axiosInstance.post("imageproduct", imageProduct)
     return response

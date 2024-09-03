@@ -34,12 +34,6 @@ const FloatButtons = () => {
           </a>
         </div>
       </div>
-
-      <div>
-        <p className="bg-[#FFCFCF] text-sm p-1 z-10 rounded-[6px]">
-          Acá estamos <br /> para ayudarte
-        </p>
-      </div>
     </div>
   )
 }
