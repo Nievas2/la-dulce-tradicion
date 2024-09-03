@@ -1,5 +1,6 @@
 import axiosInstance from "@/api/axiosInstance"
 import { ImageProduct } from "@/interfaces/ImageProduct"
+import { ImageProductForm } from "../../app/admins/imageproduct/(components)/ChangeImageProduct"
 
 export function getImageProducts() {
   try {
@@ -21,7 +22,7 @@ export function getImageProductById(id: number) {
 }
 
 
-export function postImageProduct(imageProduct: ImageProduct) {
+export function postImageProduct(imageProduct: ImageProductForm) {
   try {
     const response = axiosInstance.post("imageproduct", imageProduct)
     return response
@@ -32,9 +33,11 @@ export function postImageProduct(imageProduct: ImageProduct) {
 
 
 
-export function putImageProduct(imageProduct: ImageProduct, id: number) {
+export function putImageProduct(image : string, Product : number) {
   try {
-    const response = axiosInstance.put(`imageproduct/${id}`, imageProduct)
+    console.log(image, Product);
+    
+    const response = axiosInstance.put(`imageproduct/edit/${Product}`, {image})
     return response
   } catch (error) {
     throw error

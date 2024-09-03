@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,6 +17,8 @@ import { postProduct, putProduct } from "@/services/ProductService"
 import { ProductSchema } from "@/utils/schemas/ProductSchema"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useFormik } from "formik"
+import { useState } from "react"
+import ChangeImageProduct from "../../imageproduct/(components)/ChangeImageProduct"
 
 export interface ProductForm {
   name: string
@@ -28,6 +31,7 @@ interface ChangeProductProps {
   product: Producto | undefined
 }
 const ChangeProduct = ({ product }: ChangeProductProps) => {
+  const [finished, setFinished] = useState(false)
   const {
     data: categories,
     error,
@@ -49,9 +53,11 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
       return postProduct(values)
     },
     onSuccess: (data) => {
+      setFinished(true)
       console.log(data)
     },
     onError: (error) => {
+      setFinished(false)
       console.log(error)
     }
   })
@@ -67,7 +73,6 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
     validationSchema: ProductSchema,
     onSubmit: (values) => {
       mutation.mutate(values)
-      console.log(values)
     }
   })
 
@@ -78,7 +83,7 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
     <>
       <div className="flex flex-col mb-3 mt-3 offset-lg-2">
         <div className="text-white mb-3">
-          <div className="">
+          {!finished ? (
             <form
               className="flex flex-1 flex-col p-4"
               onSubmit={formik.handleSubmit}
@@ -88,7 +93,7 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
                   <b>Nombre</b>
                 </Label>
                 <Input
-                  type="text" 
+                  type="text"
                   className="form-control"
                   placeholder="Ingrese Nombre"
                   {...formik.getFieldProps("name")}
@@ -155,9 +160,7 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
                   onValueChange={(values) => handleChangeCategory(values)}
                   defaultValue={formik.values.CategoryName}
                 >
-                  <SelectTrigger
-                    className="w-full"
-                  >
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecciona una categoría" />
                   </SelectTrigger>
                   <SelectContent>
@@ -183,11 +186,6 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
               {error && <small>{error.message}</small>}
               <div className="row mb-3 mt-2 text-center">
                 <div className="col-lg-6">
-                  {/* <Button className="btn boton" routerLink="/admins/productos">
-                    Volver
-                  </Button> */}
-                </div>
-                <div className="col-lg-6">
                   <Button
                     type="submit"
                     className="btn boton"
@@ -198,7 +196,16 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
                 </div>
               </div>
             </form>
-          </div>
+          ) : (
+            <div>
+              {!product && (
+                <ChangeImageProduct
+                  Product={undefined}
+                  image={undefined}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

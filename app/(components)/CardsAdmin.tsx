@@ -25,6 +25,7 @@ const CardsAdmin = ({ product }: CardProps) => {
       style={{ backgroundImage: `url(${product.image})` }}
     >
       <span className="text-white">{product.name}</span>
+      <span  className="absolute bottom-2 left-2 text-white">{product.id}</span>
       <Dialog>
         <DialogTrigger className="absolute top-2 right-2">
           <Icon
