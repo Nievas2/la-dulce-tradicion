@@ -2,28 +2,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
-  SelectTrigger,
-  Select,
-  SelectValue,
-  SelectItem,
-  SelectContent
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { Category } from "@/interfaces/Category"
-import { Producto } from "@/interfaces/Product"
-import { getCategories } from "@/services/CategoryService"
-import {
   getImageProductById,
   postImageProduct,
   putImageProduct
 } from "@/services/ImageProduct"
-import { postProduct, putProduct } from "@/services/ProductService"
-import { ImageProductSchema } from "@/utils/schemas/ImageProduct"
-import { ProductSchema } from "@/utils/schemas/ProductSchema"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
-import FormImages from "./FormImages"
 
 export interface ImageProductForm {
   Product: number
@@ -73,7 +58,6 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
       Product: Product ? Product : 0,
       images: image ? image : images // inicializar con el array de imágenes
     },
-    validationSchema: ImageProductSchema,
     onSubmit: (values) => {
       mutation.mutate(values)
       console.log(values)
@@ -126,11 +110,6 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
                     value={img.image}
                     onChange={(e) => handleImageChange(index, e.target.value)}
                   />
-                  {formik.touched.images && formik.errors.images && (
-                    <small className="font-bold text-[#ff4444]">
-                      {formik.errors.images[index].toString()}
-                    </small>
-                  )}
                   {images.length > 1 && (
                     <Button
                       type="button"
@@ -162,11 +141,6 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
                     placeholder="Ingrese el ID del producto"
                     {...formik.getFieldProps("Product")}
                   />
-                  {formik.touched.Product && formik.errors.Product && (
-                    <small className="font-bold text-[#ff4444]">
-                      {formik.errors.Product}
-                    </small>
-                  )}
                 </div>
               )}
               {error && <small>{error}</small>}

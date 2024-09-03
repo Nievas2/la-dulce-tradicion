@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const ImageProductSchema = Yup.object().shape({
+export const ImageProductSchema = Yup.object().shape({
   Product: Yup.number()
     .required('El ID del producto es requerido')
     .positive('El ID del producto debe ser un número positivo')
