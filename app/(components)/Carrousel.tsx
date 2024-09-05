@@ -67,7 +67,7 @@ const Carrousel = () => {
             />
           </CarouselItem>
         </CarouselContent>
-        {width! > 768 ? (
+        {width! < 768 ? (
           ""
         ) : (
           <>
