@@ -32,30 +32,29 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
   const mutation = useMutation({
     mutationFn: async () => {
       if (image) {
-        console.log("put");
-        return await putImageProduct(images[0].image, data?.data.id);
+        console.log("put")
+        return await putImageProduct(images[0].image, data?.data.id)
       }
-  
+
       const promises = images.map((element) => {
         const body = {
           Product: formik.values.Product,
-          image: element.image,
-        };
-        return postImageProduct(body);
-      });
-  
-      await Promise.all(promises);
-      return true;
+          image: element.image
+        }
+        return postImageProduct(body)
+      })
+
+      await Promise.all(promises)
+      return true
     },
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data)
     },
     onError: (error) => {
-      setError(error.message);
-      console.log(error);
-    },
-  });
-  
+      setError(error.message)
+      console.log(error)
+    }
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -71,7 +70,7 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
     if (image) {
       setImages([{ image: image }])
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleAddImage = () => {

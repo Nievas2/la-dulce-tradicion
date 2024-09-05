@@ -10,6 +10,7 @@ import {
 import { SubCategory } from "@/interfaces/SubCategory"
 import { getSubCategories } from "@/services/SubCategoryService"
 import { useQuery } from "@tanstack/react-query"
+import ChangeSubCategoryProduct from "./(components)/ChangeSubCategory"
 const page = () => {
   const { data, error, isPending } = useQuery({
     queryKey: ["sub-categories"],
@@ -28,20 +29,20 @@ const page = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Agregar una sub categoría</DialogTitle>
-            {/* <ChangeProduct product={undefined} /> */}
+            <ChangeSubCategoryProduct Product={3} />
           </DialogHeader>
         </DialogContent>
       </Dialog>
       <div className="flex flex-wrap gap-4">
         {data?.data?.map((subCategory: SubCategory) => (
           <Dialog key={crypto.randomUUID()}>
-            <DialogTrigger className="absolute -top-10 right-0 border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
+            <DialogTrigger className="border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
               edit
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Editar una sub categoría</DialogTitle>
-                {/* <ChangeProduct product={undefined} /> */}
+                <ChangeSubCategoryProduct Product={3} subCategory={subCategory} id={subCategory.id} />
               </DialogHeader>
             </DialogContent>
           </Dialog>

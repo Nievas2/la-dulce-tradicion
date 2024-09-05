@@ -1,9 +1,10 @@
 import axiosInstance from "@/api/axiosInstance"
 import { SubCategory } from "@/interfaces/SubCategory"
+import { SubCategoryForm } from "../../app/admins/subcategories/(components)/ChangeSubCategory"
 
 export function getSubCategories() {
   try {
-    const response = axiosInstance.get("sub-category")
+    const response = axiosInstance.get("subcategory")
     return response
   } catch (error) {
     throw error
@@ -12,25 +13,27 @@ export function getSubCategories() {
 
 export function getSubCategoryById(id: number) {
   try {
-    const response = axiosInstance.get(`sub-category/${id}`)
+    const response = axiosInstance.get(`subcategory/${id}`)
     return response
   } catch (error) {
     throw error
   }
 }
 
-export function postSubCategory(subCategory: SubCategory) {
+export function postSubCategory(subCategory: SubCategoryForm) {
   try {
-    const response = axiosInstance.post("sub-category", subCategory)
+    const response = axiosInstance.post("subcategory", subCategory)
     return response
   } catch (error) {
     throw error
   }
 }
 
-export function putSubCategory(subCategory: SubCategory, id: number) {
+export function putSubCategory(subCategory: SubCategoryForm, id: number) {
   try {
-    const response = axiosInstance.put(`sub-category/${id}`, subCategory)
+    console.log(subCategory, id);
+    
+    const response = axiosInstance.put(`subcategory/edit/${id}`, subCategory)
     return response
   } catch (error) {
     throw error
@@ -39,7 +42,7 @@ export function putSubCategory(subCategory: SubCategory, id: number) {
 
 export function deleteSubCategory(id: number) {
   try {
-    const response = axiosInstance.delete(`sub-category/${id}`)
+    const response = axiosInstance.delete(`subcategory/${id}`)
     return response
   } catch (error) {
     throw error
