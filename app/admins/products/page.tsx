@@ -16,7 +16,7 @@ import ChangeProduct from "./(components)/ChangeProduct"
 const page = () => {
   const { data, error, isPending } = useQuery({
     queryKey: ["products"],
-    queryFn: getProducts,
+    queryFn: ()=> getProducts(1),
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24
   })
@@ -36,7 +36,7 @@ const page = () => {
         </DialogContent>
       </Dialog>
       <div className="flex flex-wrap gap-4">
-        {data?.data?.map((product: Producto) => (
+        {data?.data?.products.map((product: Producto) => (
           <CardsAdmin
             product={product}
             key={crypto.randomUUID()}
