@@ -14,7 +14,7 @@ import {
 import ChangeProduct from "./(components)/ChangeProduct"
 
 const page = () => {
-  const { data, error, isPending } = useQuery({
+  const { data, error, isPending, refetch } = useQuery({
     queryKey: ["products"],
     queryFn: ()=> getProducts(1),
     refetchOnWindowFocus: false,

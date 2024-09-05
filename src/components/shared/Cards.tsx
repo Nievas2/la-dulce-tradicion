@@ -1,29 +1,26 @@
 import { Producto } from "@/interfaces/Product"
-const Cards = (producto: Producto) => {
+interface CardProps {
+  product: Producto
+}
+const Cards = ({ product }: CardProps) => {
   return (
-    <div>
-      <div className="flex flex-col bg-main">
-        <div className="">
-          <div className="border border-tertiary">
-            <a className="text-black">
-              <div className="absolute right-1 z-10"></div>
+    <div className="flex flex-col w-full h-full">
+      <div className="bg-main border border-tertiary">
+        <a className="text-black">
+          <div className="absolute right-1 z-10"></div>
 
-              <img
-                src={producto.image}
-                className="w-full h-48 object-cover"
-                alt={producto.name}
-              />
+          <img
+            src={product.image}
+            className="w-full h-48 object-cover"
+            alt={product.name}
+          />
 
-              <div className="card-body item-info">
-                <h3 className="fs-5">
-                  <b>{producto.name}</b>
-                </h3>
+          <div className="card-body item-info p-2">
+            <h3 className="text-lg font-bold">{product.name}</h3>
 
-                <h4 className="text-lg text-end">${producto.price}</h4>
-              </div>
-            </a>
+            <h4 className="text-lg text-end">${product.price}</h4>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   )

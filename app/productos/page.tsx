@@ -1,98 +1,56 @@
 "use client"
 import Cards from "@/components/shared/Cards"
+import Pagination from "@/components/shared/Pagination"
+import Search from "@/components/shared/Search"
+import { Producto } from "@/interfaces/Product"
+import { getProducts } from "@/services/ProductService"
+import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useEffect } from "react"
 
-const page = () => {
-  const productos = [
-    {
-      id: 1,
-      name: "Camiseta de algodón",
-      description:
-        "Camiseta básica de algodón de alta calidad, suave y cómoda para uso diario.",
-      price: 19.99,
-      image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
-      CategoryName: "Ropa",
-      SubCategoryProducts: [
-        {
-          id: 1,
-          ProductId: 1,
-          SubCategoryId: 1,
-          SubCategory: {
-            id: 1,
-            date: "2023-08-15",
-            price: 19.99,
-            Product: 1
-          }
-        }
-      ],
-      ImagesProductAsocciations: [
-        {
-          id: 1,
-          ImageProductId: 1,
-          ProductId: 1,
-          ImageProduct: {
-            id: 1,
-            image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
-            Product: 1
-          }
-        }
-      ]
-    },
-    {
-      id: 2,
-      name: "Smartphone Android",
-      description:
-        "Smartphone Android de última generación con cámara de alta resolución y gran capacidad de almacenamiento.",
-      price: 399.99,
-      image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
-      CategoryName: "Electrónica",
-      SubCategoryProducts: [
-        {
-          id: 2,
-          ProductId: 2,
-          SubCategoryId: 2,
-          SubCategory: {
-            id: 2,
-            date: "2023-08-15",
-            price: 399.99,
-            Product: 2
-          }
-        }
-      ],
-      ImagesProductAsocciations: [
-        {
-          id: 2,
-          ImageProductId: 2,
-          ProductId: 2,
-          ImageProduct: {
-            id: 2,
-            image: "https://i.ibb.co/qCbHTyz/sanguchito-2.webp",
-            Product: 2
-          }
-        }
-      ]
-    }
-  ]
-  useEffect(() => {
-    getProducts()
-  }, [])
-  function getProducts() {
-    try {
-      const response = axios.get("http://localhost:4001/producto")
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
+const page = ({
+  searchParams
+}: {
+  searchParams?: {
+    query?: string
+    page?: string
   }
+}) => {
+  const { data, error, isPending, refetch } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => getProducts(currentPage),
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60 * 24
+  })
+  const query = searchParams?.query || ""
+  const currentPage = Number(searchParams?.page) || 1
+  let totalPages
+
+  useEffect(() => {
+    refetch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, currentPage])
+
   return (
-    <section>
-      {/*  {productos.map((producto) => (
-        <Cards
-          producto={producto}
-          key={crypto.randomUUID()}
-        />
-      ))} */}
+    <section className="w-full flex flex-col gap-4 justify-center items-center p-4">
+      <Search placeholder="Buscar productos..." />
+
+      <section className="mx-auto max-w-[1240px] grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-5 min-h-screen">
+        {data?.data?.products.map((producto: Producto) => (
+          <div
+            className="flex"
+            key={crypto.randomUUID()}
+          >
+            <Cards product={producto} />
+          </div>
+        ))}
+      </section>
+
+      <Pagination
+        totalPages={data?.data?.totalPages}
+        disabled={isPending}
+        products={data?.data?.products}
+      />
     </section>
   )
 }
