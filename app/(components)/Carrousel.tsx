@@ -67,7 +67,14 @@ const Carrousel = () => {
             />
           </CarouselItem>
         </CarouselContent>
-        {width! > 768 ? <CarouselNext /> : <CarouselPrevious />}
+        {width! > 768 ? (
+          ""
+        ) : (
+          <>
+            <CarouselPrevious />
+            <CarouselNext />
+          </>
+        )}
       </Carousel>
     </div>
   )
