@@ -16,12 +16,12 @@ import ChangeProduct from "./(components)/ChangeProduct"
 const page = () => {
   const { data, error, isPending, refetch } = useQuery({
     queryKey: ["products"],
-    queryFn: ()=> getProducts(1),
+    queryFn: () => getProducts(1, ""),
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24
   })
-  console.log(data);
-  
+  console.log(data)
+
   return (
     <section className="flex flex-col relative">
       <Dialog>

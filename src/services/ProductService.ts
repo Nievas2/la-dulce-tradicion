@@ -2,9 +2,9 @@ import axiosInstance from "@/api/axiosInstance"
 import { Producto } from "@/interfaces/Product"
 import { ProductForm } from "../../app/admins/products/(components)/ChangeProduct"
 
-export async function getProducts(page: number) {
+export async function getProducts(page: number, query: string) {
   try {
-    const response = axiosInstance.get("product/" + page)
+    const response = axiosInstance.get("product/" + page + "?query=" + query)
     return response
   } catch (error) {
     throw error
@@ -21,8 +21,8 @@ export async function getProductById(id: number) {
 }
 
 export async function postProduct(product: ProductForm) {
-  console.log(product);
-  
+  console.log(product)
+
   try {
     const response = axiosInstance.post("product", product)
     return response

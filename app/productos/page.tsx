@@ -18,7 +18,7 @@ const page = ({
 }) => {
   const { data, error, isPending, refetch } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getProducts(currentPage),
+    queryFn: () => getProducts(currentPage, query),
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24
   })
