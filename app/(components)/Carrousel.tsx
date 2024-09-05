@@ -33,7 +33,7 @@ const Carrousel = () => {
             delay: 2000
           })
         ]} */
-        className="w-[80%]"
+        className="w-[100%] md:w-[80%]"
       >
         <CarouselContent>
           <CarouselItem>
@@ -67,8 +67,7 @@ const Carrousel = () => {
             />
           </CarouselItem>
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {width! > 768 ? <CarouselNext /> : <CarouselPrevious />}
       </Carousel>
     </div>
   )

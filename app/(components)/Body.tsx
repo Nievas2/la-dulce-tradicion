@@ -5,14 +5,13 @@ import { AuthContextProvider } from "@/contexts/auth-context"
 import Navbar from "./Navbar"
 
 const Body = ({ children }: { children: React.ReactNode }) => {
-
   return (
     <>
       <FloatButtons />
       <ProviderQuery>
         <AuthContextProvider>
           <Navbar />
-          {children}
+          <div className="w-full h-screen">{children}</div>
         </AuthContextProvider>
       </ProviderQuery>
     </>
