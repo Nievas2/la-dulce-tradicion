@@ -12,20 +12,36 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog"
 import ChangeProduct from "./(components)/ChangeProduct"
+import { useEffect } from "react"
+import Pagination from "@/components/shared/Pagination"
+import Search from "@/components/shared/Search"
 
-const page = () => {
+const page = ({
+  searchParams
+}: {
+  searchParams?: {
+    query?: string
+    page?: string
+  }
+}) => {
   const { data, error, isPending, refetch } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getProducts(1, ""),
+    queryFn: () => getProducts(currentPage, query),
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24
   })
-  console.log(data)
-
+  const query = searchParams?.query || ""
+  const currentPage = Number(searchParams?.page) || 1
+  let totalPages
+  useEffect(() => {
+    refetch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, currentPage])
   return (
-    <section className="flex flex-col relative">
+    <section className="w-full flex flex-col gap-4 justify-center items-center p-4 relative">
+      <Search placeholder="Buscar productos..." />
       <Dialog>
-        <DialogTrigger className="absolute -top-10 right-0 border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
+        <DialogTrigger className="absolute top-0 right-0 border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
           Add
         </DialogTrigger>
         <DialogContent>
@@ -35,19 +51,20 @@ const page = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <div className="flex flex-wrap gap-4">
+      <section className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-center gap-5">
         {data?.data?.products.map((product: Producto) => (
           <CardsAdmin
             product={product}
             key={crypto.randomUUID()}
           />
         ))}
-        {/* <div className="flex justify-center items-center h-full w-full">
-        <div className="border border-white bg-white py-2 px-4 w-[440px] gap-2 rounded-md">
-          <Link href="/admins/products/add">Products</Link>
-        </div>
-      </div> */}
-      </div>
+      </section>
+
+      <Pagination
+        totalPages={data?.data?.totalPages}
+        disabled={isPending}
+        products={data?.data?.products}
+      />
     </section>
   )
 }

@@ -2,7 +2,7 @@ import SideItem from "./SideItem"
 
 const SideNav = () => {
   return (
-    <div className="bg-main h-full w-full">
+    <div className="bg-main h-full w-full min-h-screen">
       <ul className="flex flex-col p-2 gap-3 ">
         <SideItem icon="mingcute:chicken-fill" name="Products" link="/admins/products" />
         <SideItem icon="mdi:tag-outline" name="Categories" link="/admins/categories" />

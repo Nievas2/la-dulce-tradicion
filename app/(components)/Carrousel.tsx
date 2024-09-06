@@ -22,7 +22,7 @@ const Carrousel = () => {
     return () => window.removeEventListener("resize", handleWindowResize)
   }, [])
   return (
-    <div className="mt-24 sm:mt-16 md:mt-0 flex justify-center items-center lg:mt-28">
+    <div className="flex justify-center items-center">
       <Carousel
         opts={{
           align: "start",

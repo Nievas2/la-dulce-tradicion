@@ -28,7 +28,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }, [text])
 
   return (
-    <div className="sticky top-10 flex w-[80%]">
+    <div className="sticky top-0 flex w-[80%]">
       <label
         htmlFor="search"
         className="sr-only"

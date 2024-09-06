@@ -78,7 +78,7 @@ const page = () => {
   },[])
   async function getProducts() {
     try {
-      const response = await axios.get("http://localhost:4001/producto")
+      const response = await axios.get("http://localhost:4001/producto/get/1")
       console.log(response)
     } catch (error) {
       console.log(error)

@@ -40,7 +40,7 @@ export default function Component() {
           alt="LaDulceTradicion logo"
         />
         <h5 className="font-bold bg-main">
-          Flor & Lucas - Pastelería, Lunch y algo más
+          Flor & Lucas - Pastelería y algo más
         </h5>
       </div>
       <Sheet>
