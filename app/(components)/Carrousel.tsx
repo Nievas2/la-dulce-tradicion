@@ -71,8 +71,8 @@ const Carrousel = () => {
           ""
         ) : (
           <>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious variant="arrow" />
+            <CarouselNext variant="arrow" />
           </>
         )}
       </Carousel>
