@@ -51,11 +51,10 @@ const page = () => {
           const final = res.data
           const response = await loginGoogle(tokenResponse.access_token)
           if (response) {
-            const data = decodeJwt(response.data.tokenValue)
-            console.log(response.data.tokenValue)
+            const data = decodeJwt(response.data.token)
             const user = {
               user: data,
-              token: response.data.tokenValue
+              token: response.data.token
             }
             localStorage.setItem("user", JSON.stringify(user))
             window.location.href = "/"
