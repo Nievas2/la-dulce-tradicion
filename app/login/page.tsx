@@ -2,23 +2,60 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { login } from "@/services/AuthService"
+import { login, loginGoogle } from "@/services/AuthService"
 import { loginSchema } from "@/utils/schemas/LoginSchema"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation } from "@tanstack/react-query"
 import { useFormik } from "formik"
 import Link from "next/link"
 import { useState } from "react"
+import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google"
+import { GoogleLogin } from "@react-oauth/google"
+import { useGoogleLogin } from "@react-oauth/google"
+import axios from "axios"
+import { decodeJwt } from "@/utils/decodeJwt"
 
 const page = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState(false)
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const userInfo = await axios
+        .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+        })
+        .then(async (res) => {
+          const final = res.data
+          const response = await loginGoogle(tokenResponse.access_token)
+          if (response) {
+            const data = decodeJwt(response.data.token)
+            const user = {
+              user: data,
+              token: response.data.token
+            }
+            localStorage.setItem("user", JSON.stringify(user))
+            window.location.href = "/"
+          } else {
+            setError(true)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  })
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState)
   }
   const mutate = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      localStorage.setItem("user-token", data.token)
+      const userToken = decodeJwt(data.token)
+      const user = {
+        user: userToken,
+        token: data.token
+      }
+      localStorage.setItem("user", JSON.stringify(user))
       window.location.href = "/"
     },
     onError: (error) => {
@@ -30,14 +67,13 @@ const page = () => {
       email: "",
       password: ""
     },
-    validationSchema:loginSchema,
+    validationSchema: loginSchema,
     onSubmit: (values) => {
       mutate.mutate(values)
-      console.log(values)
     }
   })
   return (
-    <div className="">
+    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos1.jpg')] w-full max-w-8xl min-h-screen">
       <div className="flex justify-center items-center h-screen">
         <div className="border border-white bg-white py-2 px-4 w-[440px] gap-2 rounded-md">
           <div className="flex flex-col gap-2">
@@ -50,7 +86,10 @@ const page = () => {
 
             <h5 className="font-bold">Iniciar sesion</h5>
 
-            <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
+            <form
+              className="flex flex-col gap-3"
+              onSubmit={formik.handleSubmit}
+            >
               <Label>Email</Label>
               <Input
                 className="form-control"
@@ -59,11 +98,9 @@ const page = () => {
                 {...formik.getFieldProps("email")}
                 disabled={mutate.isPending}
               />
-              {
-                formik.touched.email && formik.errors.email && (
-                  <small className="text-red-500">{formik.errors.email}</small>
-                )
-              }
+              {formik.touched.email && formik.errors.email && (
+                <small className="text-red-500">{formik.errors.email}</small>
+              )}
               <Label>Contraseña</Label>
               <div className="relative">
                 <Input
@@ -73,11 +110,11 @@ const page = () => {
                   {...formik.getFieldProps("password")}
                   disabled={mutate.isPending}
                 />
-                {
-                  formik.touched.password && formik.errors.password && (
-                    <small className="text-red-500">{formik.errors.password}</small>
-                  )
-                }
+                {formik.touched.password && formik.errors.password && (
+                  <small className="text-red-500">
+                    {formik.errors.password}
+                  </small>
+                )}
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
@@ -99,12 +136,27 @@ const page = () => {
               </div>
 
               <Button
-                className="text-white w-full"
+                className="w-full"
                 variant="secondary"
                 type="submit"
               >
                 login
               </Button>
+              <button
+                onClick={() => googleLogin()}
+                type="button"
+                className="text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-slate-200 rounded-md"
+              >
+                <Icon
+                  icon="devicon:google"
+                  width="24"
+                  height="24"
+                />
+                Continuá con google
+              </button>
+              {error && (
+                <small className="text-red-500">Error al iniciar sesion</small>
+              )}
               <h5 className="text-sm">
                 Si no tiene una cuenta puede crearse una desde{" "}
                 <Link
@@ -116,12 +168,6 @@ const page = () => {
               </h5>
             </form>
           </div>
-          {/* <Link href="recuperarcontraseña" className="">Recuperar contraseña</Link> */}
-
-          {/* <h5 className="text-center">
-            Si tiene problemas con su código ingrese
-            <a href="crear-codigo">aqui</a>
-          </h5> */}
         </div>
       </div>
     </div>

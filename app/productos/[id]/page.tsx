@@ -1,97 +1,34 @@
 "use client"
 import Cards from "@/components/shared/Cards"
+
+import { getProductById } from "@/services/ProductService"
+import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useEffect } from "react"
-const page = () => {
-  const productos = [
-    {
-      id: 1,
-      name: "Camiseta de algodón",
-      description:
-        "Camiseta básica de algodón de alta calidad, suave y cómoda para uso diario.",
-      price: 19.99,
-      image: "camiseta-algodon.jpg",
-      CategoryName: "Ropa",
-      SubCategoryProducts: [
-        {
-          id: 1,
-          ProductId: 1,
-          SubCategoryId: 1,
-          SubCategory: {
-            id: 1,
-            date: "2023-08-15",
-            price: 19.99,
-            Product: 1
-          }
-        }
-      ],
-      ImagesProductAsocciations: [
-        {
-          id: 1,
-          ImageProductId: 1,
-          ProductId: 1,
-          ImageProduct: {
-            id: 1,
-            image: "camiseta-algodon.jpg",
-            Product: 1
-          }
-        }
-      ]
-    },
-    {
-      id: 2,
-      name: "Smartphone Android",
-      description:
-        "Smartphone Android de última generación con cámara de alta resolución y gran capacidad de almacenamiento.",
-      price: 399.99,
-      image: "smartphone-android.jpg",
-      CategoryName: "Electrónica",
-      SubCategoryProducts: [
-        {
-          id: 2,
-          ProductId: 2,
-          SubCategoryId: 2,
-          SubCategory: {
-            id: 2,
-            date: "2023-08-15",
-            price: 399.99,
-            Product: 2
-          }
-        }
-      ],
-      ImagesProductAsocciations: [
-        {
-          id: 2,
-          ImageProductId: 2,
-          ProductId: 2,
-          ImageProduct: {
-            id: 2,
-            image: "smartphone-android.jpg",
-            Product: 2
-          }
-        }
-      ]
-    }
-  ]
-  useEffect(() => {
-     getProducts() 
-  },[])
-  async function getProducts() {
-    try {
-      const response = await axios.get("http://localhost:4001/producto/get/1")
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+import ProductCarousel from "../(components)/ProductCarousel"
+const page = ({ params }: { params: { id: number } }) => {
+  const id = params.id
+  const { data, isPending } = useQuery({
+    queryKey: ["product"],
+    queryFn: () => getProductById(id),
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60 * 24
+  })
+
   return (
-    <section>
-      {/*   {productos.map((producto) => (
-        <Cards
-          producto={producto}
-          key={crypto.randomUUID()}
-        />
-      ))} */}
+    <section className="flex flex-col p-2">
+      <div className="flex gap-2 p-2 bg-white">
+        <div className="flex basis-1/3">
+          {data && (
+            <ProductCarousel images={data?.data?.ImagesProductAsocciations} />
+          )}
+        </div>
+        <div className="flex flex-col basis-2/3 gap-4">
+          <h2>{data?.data?.name}</h2>
+          <h3>{data?.data?.price}</h3>
+          <p>{data?.data?.description}</p>
+        </div>
+      </div>
     </section>
   )
 }

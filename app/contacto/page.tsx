@@ -16,7 +16,6 @@ const page = () => {
     validationSchema: ContactSchema,
     onSubmit: (values) => {
       setFinished(true)
-      console.log(values)
     }
   })
   return (

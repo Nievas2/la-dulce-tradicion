@@ -38,7 +38,9 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
     isPending
   } = useQuery({
     queryKey: ["categories"],
-    queryFn: getCategories
+    queryFn: getCategories,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60 * 24
   })
 
   const mutation = useMutation({

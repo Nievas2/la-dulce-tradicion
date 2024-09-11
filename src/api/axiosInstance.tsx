@@ -7,9 +7,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(
-  function (config: any) {
-    console.log(process.env.NEXT_PUBLIC_URL_BACK);
-    
+  function (config: any) {    
     const token = localStorage.getItem("user-token")
 
     if (token) {

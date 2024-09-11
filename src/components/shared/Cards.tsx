@@ -1,10 +1,11 @@
 import { Producto } from "@/interfaces/Product"
+import Link from "next/link"
 interface CardProps {
   product: Producto
 }
 const Cards = ({ product }: CardProps) => {
   return (
-    <div className="flex flex-col w-full h-full">
+    <Link href={`/productos/${product.id}`} className="flex flex-col w-full h-full">
       <div className="bg-main border border-tertiary">
         <a className="text-black">
           <div className="absolute right-1 z-10"></div>
@@ -22,7 +23,7 @@ const Cards = ({ product }: CardProps) => {
           </div>
         </a>
       </div>
-    </div>
+    </Link>
   )
 }
 export default Cards

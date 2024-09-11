@@ -26,7 +26,9 @@ const ChangeImageProduct = ({ Product, image }: ChangeProductProps) => {
     queryKey: ["productImageById"],
     queryFn: () => {
       if (Product) return getImageProductById(Product)
-    }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60 * 24
   })
 
   const mutation = useMutation({

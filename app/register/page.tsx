@@ -4,19 +4,26 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { postUser } from "@/services/UserService"
 import { UserSchema } from "@/utils/schemas/UserSchema"
+import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation } from "@tanstack/react-query"
 import { useFormik } from "formik"
 import Link from "next/link"
-
+import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google"
+import { GoogleLogin } from "@react-oauth/google"
+import { useGoogleLogin } from "@react-oauth/google"
+import axios from "axios"
+import { decodeJwt } from "@/utils/decodeJwt"
+import { useState } from "react"
+import { loginGoogle } from "@/services/AuthService"
 const page = () => {
+  const [error, setError] = useState(false)
   const mutation = useMutation({
     mutationFn: postUser,
     onSuccess: (data) => {
       console.log(data)
     },
     onError: (error) => {
-      console.log(error);
-      
+      console.log(error)
     }
   })
   const formik = useFormik({
@@ -32,6 +39,33 @@ const page = () => {
     onSubmit: (values) => {
       const { confirmPassword, ...data } = values
       mutation.mutate(data)
+    }
+  })
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const userInfo = await axios
+        .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+        })
+        .then(async (res) => {
+          const final = res.data
+          const response = await loginGoogle(tokenResponse.access_token)
+          if (response) {
+            const data = decodeJwt(response.data.tokenValue)
+            console.log(response.data.tokenValue)
+            const user = {
+              user: data,
+              token: response.data.tokenValue
+            }
+            localStorage.setItem("user", JSON.stringify(user))
+            window.location.href = "/"
+          } else {
+            setError(true)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   })
   return (
@@ -151,6 +185,23 @@ const page = () => {
                 >
                   Suscribirse
                 </Button>
+                <button
+                  onClick={() => googleLogin()}
+                  type="button"
+                  className="text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-slate-200 rounded-md"
+                >
+                  <Icon
+                    icon="devicon:google"
+                    width="24"
+                    height="24"
+                  />
+                  Continuá con google
+                </button>
+                {error && (
+                  <small className="text-red-500">
+                    Error al iniciar sesion
+                  </small>
+                )}
               </div>
             </form>
             <h5 className="text-center">

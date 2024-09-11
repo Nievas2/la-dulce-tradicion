@@ -30,15 +30,15 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
 
 
   useEffect(() => {
-    storedUser = localStorage.getItem("user-token");
+    storedUser = localStorage.getItem("user");
+    const token = storedUser ? JSON.parse(storedUser).token : null;
     let user = null
     if(storedUser){
-      const data = decodeJwt(storedUser as string);
+      const data = decodeJwt(token);
       user = {
         user  : data,
         token: storedUser
       }
-  
     }
     setAuthUser(user);
   }, []);

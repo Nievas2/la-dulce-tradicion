@@ -5,11 +5,10 @@ import Link from "next/link"
 import ItemsNavbar from "@/components/shared/ItemsNavbar"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useAuthContext } from "@/contexts/auth-context"
+import { redirect } from "next/navigation"
 
 export default function Component() {
-  const admin = false
-  const logueado = false
-  const { authUser } = useAuthContext()
+  const { authUser, setAuthUser } = useAuthContext()
   const items = [
     {
       name: "Inicio",
@@ -29,7 +28,8 @@ export default function Component() {
     }
   ]
   function handleLogout() {
-    console.log("logout")
+    localStorage.removeItem("user")
+    setAuthUser(null)
   }
   return (
     <header className="flex flex-col w-full max-w-8xl h-20 shrink-0 bg-main sm:mb-[76px] md:mb-[80px] lg:mb-[114px]">

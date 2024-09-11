@@ -9,6 +9,16 @@ export async function login(login: LoginData) {
     throw error
   }
 }
+export async function loginGoogle(token: string) {
+  try {
+    const response = await axiosInstance.post("auth/login/google", {
+      token: token
+    })
+    return response
+  } catch (error) {
+    throw error
+  }
+}
 
 export function passwordRecovery(email: string) {
   try {
