@@ -6,11 +6,18 @@ import { useFormik } from "formik"
 import { useMutation } from "@tanstack/react-query"
 import { postCategory } from "@/services/CategoryService"
 import { Button } from "@/components/ui/button"
+export interface CategoryForm {
+  name: string
+  image: string
+}
 const page = () => {
   const mutation = useMutation({
-    mutationFn: postCategory,
+    mutationFn: (values: CategoryForm) => postCategory(values),
     onSuccess: (data) => {
       console.log(data)
+    },
+    onError: (error) => {
+      console.log(error)
     }
   })
   const formik = useFormik({
@@ -26,7 +33,10 @@ const page = () => {
   })
   return (
     <div>
-      <form className="flex flex-1 flex-col p-4" onSubmit={formik.handleSubmit}>
+      <form
+        className="flex flex-1 flex-col p-4"
+        onSubmit={formik.handleSubmit}
+      >
         <div className="row mb-3">
           <Label>Nombre</Label>
           <Input
@@ -57,7 +67,7 @@ const page = () => {
             </small>
           )}
         </div>
-        <Button variant="default" >Enviar</Button>
+        <Button variant="default">Enviar</Button>
       </form>
     </div>
   )

@@ -27,6 +27,11 @@ const page = () => {
     <>
       <div className="flex flex-col mb-3 mt-3 offset-lg-2  h-full w-full">
         <Link href="/admins/categories/add">Add</Link>
+        {data?.data.map((category: any) => (
+          <div key={category.id}>
+            {category.name}
+          </div>
+        ))}
       </div>
     </>
   )

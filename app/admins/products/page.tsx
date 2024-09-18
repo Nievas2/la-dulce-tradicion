@@ -30,6 +30,7 @@ const page = ({
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24
   })
+  console.log(data)
   const query = searchParams?.query || ""
   const currentPage = Number(searchParams?.page) || 1
   let totalPages
@@ -47,7 +48,7 @@ const page = ({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Agregar un producto</DialogTitle>
-            <ChangeProduct product={undefined} />
+            <ChangeProduct product={undefined} lastId={data?.data.totalProducts} />
           </DialogHeader>
         </DialogContent>
       </Dialog>

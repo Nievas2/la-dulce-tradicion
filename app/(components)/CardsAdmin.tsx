@@ -23,6 +23,7 @@ const CardsAdmin = ({ product }: CardProps) => {
         relative
         `}
       style={{ backgroundImage: `url(${product.image})` }}
+      /* backgroundImage: `url(${product.ImagesProductAsocciations[0].ImageProduct.image})` */
     >
       <span className="text-white">{product.name}</span>
       <span  className="absolute bottom-2 left-2 text-white">{product.id}</span>

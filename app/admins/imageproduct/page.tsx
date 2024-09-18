@@ -19,8 +19,8 @@ const page = () => {
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24
   })
-  console.log(data);
-  
+  console.log(data)
+
   return (
     <section className="flex flex-col relative">
       <Dialog>
@@ -33,6 +33,7 @@ const page = () => {
             <ChangeImageProduct
               Product={undefined}
               image={undefined}
+              imageId={undefined}
             />
           </DialogHeader>
         </DialogContent>
@@ -48,8 +49,9 @@ const page = () => {
                 <DialogTitle>Agregar un producto</DialogTitle>
 
                 <ChangeImageProduct
-                  Product={image.id}
+                  Product={undefined}
                   image={image.image}
+                  imageId={image.id}
                 />
               </DialogHeader>
             </DialogContent>

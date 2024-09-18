@@ -22,15 +22,15 @@ import ChangeImageProduct from "../../imageproduct/(components)/ChangeImageProdu
 
 export interface ProductForm {
   name: string
-  image: string
   description: string
   price: number
   CategoryName: string
 }
 interface ChangeProductProps {
   product: Producto | undefined
+  lastId ?: number
 }
-const ChangeProduct = ({ product }: ChangeProductProps) => {
+const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
   const [finished, setFinished] = useState(false)
   const {
     data: categories,
@@ -67,7 +67,6 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
   const formik = useFormik({
     initialValues: {
       name: product ? product.name : "",
-      image: product ? product.image : "",
       description: product ? product.description : "",
       price: product ? product.price : 0,
       CategoryName: product ? product.Category.name : ""
@@ -106,23 +105,7 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
                   </small>
                 )}
               </div>
-
-              <div className="row mb-3">
-                <Label className="form-Label mb-0 p-0">
-                  <b>Imagen</b>
-                </Label>
-                <Input
-                  type="text"
-                  className="form-control mt-2"
-                  placeholder="Ingrese imagen"
-                  {...formik.getFieldProps("image")}
-                />
-                {formik.touched.image && formik.errors.image && (
-                  <small className="font-bold text-[#ff4444]">
-                    {formik.errors.image}
-                  </small>
-                )}
-              </div>
+              
               <div className="row mb-3">
                 <Label className="form-Label mb-0 p-0">
                   <b>Precio</b>
@@ -202,8 +185,9 @@ const ChangeProduct = ({ product }: ChangeProductProps) => {
             <div>
               {!product && (
                 <ChangeImageProduct
-                  Product={undefined}
+                  Product={lastId + 1}
                   image={undefined}
+                  imageId={undefined}
                 />
               )}
             </div>

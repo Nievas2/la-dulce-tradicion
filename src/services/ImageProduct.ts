@@ -11,7 +11,6 @@ export function getImageProducts() {
   }
 }
 
-
 export function getImageProductById(id: number) {
   try {
     const response = axiosInstance.get(`imageproduct/${id}`)
@@ -21,31 +20,23 @@ export function getImageProductById(id: number) {
   }
 }
 
-
-export function postImageProduct(imageProduct: ImageProductForm) {
-  console.log(imageProduct);
+export function postImageProduct(imageProduct: FormData, id: number) {
   try {
-    const response = axiosInstance.post("imageproduct", imageProduct)
+    const response = axiosInstance.post(`imageproduct/add/${id}`, imageProduct)
     return response
   } catch (error) {
     throw error
   }
 }
 
-
-
-export function putImageProduct(image : string, Product : number) {
+export function putImageProduct(image: FormData, imageId: number) {
   try {
-    console.log(image, Product);
-    
-    const response = axiosInstance.put(`imageproduct/edit/${Product}`, {image})
+    const response = axiosInstance.put(`imageproduct/edit/${imageId}`, image)
     return response
   } catch (error) {
     throw error
   }
 }
-
-
 
 export function deleteImageProduct(id: number) {
   try {
@@ -55,5 +46,3 @@ export function deleteImageProduct(id: number) {
     throw error
   }
 }
-
-
