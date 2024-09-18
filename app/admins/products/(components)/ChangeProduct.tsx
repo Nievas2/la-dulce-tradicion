@@ -28,7 +28,7 @@ export interface ProductForm {
 }
 interface ChangeProductProps {
   product: Producto | undefined
-  lastId ?: number
+  lastId?: number
 }
 const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
   const [finished, setFinished] = useState(false)
@@ -105,7 +105,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                   </small>
                 )}
               </div>
-              
+
               <div className="row mb-3">
                 <Label className="form-Label mb-0 p-0">
                   <b>Precio</b>
@@ -185,7 +185,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
             <div>
               {!product && (
                 <ChangeImageProduct
-                  Product={lastId + 1}
+                  Product={lastId ? lastId + 1 : undefined}
                   image={undefined}
                   imageId={undefined}
                 />
