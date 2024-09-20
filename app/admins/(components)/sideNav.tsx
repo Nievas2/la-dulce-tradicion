@@ -4,11 +4,11 @@ const SideNav = () => {
   return (
     <div className="bg-main h-full w-full min-h-screen">
       <ul className="flex flex-col p-2 gap-3 ">
-        <SideItem icon="mingcute:chicken-fill" name="Products" link="/admins/products" />
-        <SideItem icon="mdi:tag-outline" name="Categories" link="/admins/categories" />
-        <SideItem icon="ph:tag-chevron-fill" name="SubCategories" link="/admins/subcategories" />
-        <SideItem icon="mdi:image-multiple-outline" name="Imagen de los productos" link="/admins/imageproduct" />
-        <SideItem icon="ri:admin-fill" name="Admins" link="/admins/admins" />
+       <SideItem icon="clarity:dollar-solid" name="Precios" link="/admins/precios" />
+        <SideItem icon="mingcute:chicken-fill" name="Productos" link="/admins/products" />
+        <SideItem icon="mdi:tag-outline" name="Categorias" link="/admins/categories" />
+        <SideItem icon="ph:tag-chevron-fill" name="Sub Categorias" link="/admins/subcategories" />
+        <SideItem icon="mdi:image-multiple-outline" name="Imagenes" link="/admins/imageproduct" />
       </ul>
     </div>
   )

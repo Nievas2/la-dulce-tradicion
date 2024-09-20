@@ -19,6 +19,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { useFormik } from "formik"
 import { useState } from "react"
 import ChangeImageProduct from "../../imageproduct/(components)/ChangeImageProduct"
+import ChangeSubCategoryProduct from "../../subcategories/(components)/ChangeSubCategory"
 
 export interface ProductForm {
   name: string
@@ -31,7 +32,7 @@ interface ChangeProductProps {
   lastId?: number
 }
 const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
-  const [finished, setFinished] = useState(false)
+  const [step, setStep] = useState(0)
   const {
     data: categories,
     error,
@@ -55,11 +56,11 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
       return postProduct(values)
     },
     onSuccess: (data) => {
-      setFinished(true)
+      setStep(1)
+      formik.resetForm()
       console.log(data)
     },
     onError: (error) => {
-      setFinished(false)
       console.log(error)
     }
   })
@@ -84,7 +85,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
     <>
       <div className="flex flex-col mb-3 mt-3 offset-lg-2">
         <div className="text-white mb-3">
-          {!finished ? (
+          {step == 0 && (
             <form
               className="flex flex-1 flex-col p-4"
               onSubmit={formik.handleSubmit}
@@ -181,15 +182,34 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                 </div>
               </div>
             </form>
-          ) : (
+          )}
+          {step == 1 && (
             <div>
               {!product && (
                 <ChangeImageProduct
                   Product={lastId ? lastId + 1 : undefined}
                   image={undefined}
                   imageId={undefined}
+                  setStep={setStep}
                 />
               )}
+            </div>
+          )}
+          {step == 2 && (
+            <ChangeSubCategoryProduct
+              Product={lastId ? lastId + 1 : undefined}
+              setStep={setStep}
+            />
+          )}
+          {step == 3 && (
+            <div className="flex flex-col justify-center items-center">
+              <h4 className="text-black">Todo cargado correctamente</h4>
+              <Button
+                variant="main"
+                onClick={() => setStep(0)}
+              >
+                Cargar más
+              </Button>
             </div>
           )}
         </div>

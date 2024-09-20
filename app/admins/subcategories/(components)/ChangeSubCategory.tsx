@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useMutation } from "@tanstack/react-query"
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { postSubCategory, putSubCategory } from "@/services/SubCategoryService"
 
 export interface SubCategoryForm {
@@ -15,12 +15,14 @@ interface ChangeSubCategoryProps {
   Product: number | undefined
   subCategory?: SubCategoryForm // Prop para manejar las subcategorías
   id?: number
+  setStep?: Dispatch<SetStateAction<number>>
 }
 
 const ChangeSubCategoryProduct = ({
   Product,
   subCategory,
-  id
+  id,
+  setStep
 }: ChangeSubCategoryProps) => {
   const [error, setError] = useState("")
   const [subCategories, setSubCategories] = useState([{ price: 0, date: "" }]) // Array para las subcategorías
@@ -34,11 +36,10 @@ const ChangeSubCategoryProduct = ({
             price: element.price,
             date: element.date
           }
-          return postSubCategory(body)
+          postSubCategory(body)
         })
 
         await Promise.all(promises)
-        return true
       } else {
         const body = {
           price: subCategories[0].price,
@@ -46,8 +47,10 @@ const ChangeSubCategoryProduct = ({
         }
         return putSubCategory(body, id!)
       }
+      if (setStep) setStep(3)
     },
     onSuccess: (data) => {
+      formik.resetForm()
       console.log(data)
     },
     onError: (error) => {

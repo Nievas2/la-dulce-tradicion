@@ -8,7 +8,7 @@ import {
 } from "@/services/ImageProduct"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useDropzone } from "react-dropzone"
 
 export interface ImageProductForm {
@@ -19,11 +19,13 @@ interface ChangeProductProps {
   Product: number | undefined
   image: string | undefined
   imageId: number | undefined
+  setStep?: Dispatch<SetStateAction<number>>
 }
 const ChangeImageProduct = ({
   Product,
   image,
-  imageId
+  imageId,
+  setStep
 }: ChangeProductProps) => {
   const [error, setError] = useState("")
   const [images, setImages] = useState([]) // Array para las imágenes
@@ -68,6 +70,7 @@ const ChangeImageProduct = ({
       return true */
     },
     onSuccess: (data) => {
+      formik.resetForm()
       console.log(data)
     },
     onError: (error) => {
@@ -96,7 +99,8 @@ const ChangeImageProduct = ({
           console.log(response)
         }
       })
-      return
+      if(setStep) setStep(2)
+      return 
     }
     const imagesUpload = [...images]
     imagesUpload.forEach(async (imageUp) => {
@@ -107,6 +111,7 @@ const ChangeImageProduct = ({
         console.log(response)
       }
     })
+    if(setStep) setStep(2)
   }
     function handleRemoveImage(index: any) {
     const newImages = [...images]
