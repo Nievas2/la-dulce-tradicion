@@ -13,4 +13,4 @@ db.connect((err) => {
   }
 })
 
-module.exports = db
+export default db
