@@ -1,22 +1,35 @@
 import { NextResponse } from "next/server"
 import db from "../../db"
 
-export default async function getProductsPrice() {
+interface Product {
+  name: string
+  price: number // Cambia el tipo según sea necesario
+}
+
+export default async function getProductsPrice(): Promise<Product[]> {
   try {
-    const results = await new Promise((resolve: any, reject: any) => {
-      db.query("SELECT name, price FROM products", (err: any, results: any) => {
+    const results = await new Promise<Product[]>((resolve, reject) => {
+      db.query("SELECT name, price FROM products", (err, results) => {
         if (err) {
-          reject(err)
+          return reject(err)
+        }
+
+        // Verifica si results es un array
+        if (Array.isArray(results)) {
+          resolve(results as Product[]) // Asegúrate de que sea del tipo correcto
         } else {
-          resolve(results)
+          reject(new Error("El resultado no es un array"))
         }
       })
     })
+
     return results
   } catch (error) {
-    return NextResponse.json({ message: error }, { status: 500 })
+    console.error("Error fetching product prices:", error) // Log del error
+    throw error
   }
 }
+
 export async function updatePrice(request: Request) {
   const { name, newPrice } = await request.json()
 

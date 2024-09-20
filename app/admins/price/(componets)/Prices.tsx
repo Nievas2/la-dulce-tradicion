@@ -6,7 +6,7 @@ const Prices = async () => {
   return (
     <div>
       <h1>Prices</h1>
-      {JSON.parse(JSON.stringify(prices)).map((price: any) => (
+      {prices.map((price: any) => (
         <div key={price.name}>
           <h1>{price.name}</h1>
           <h1>{price.price}</h1>
