@@ -1,8 +1,8 @@
 import axiosInstance from "@/api/axiosInstance"
 import { Category } from "@/interfaces/Category"
-import { CategoryForm } from "../../app/admins/categories/add/page"
+import { FormCategory } from "../../app/admins/categories/(components)/ChangeCategory"
 
-export async function getCategories() : Promise<any> {
+export async function getCategories(): Promise<any> {
   try {
     const response = axiosInstance.get("category")
     return response
@@ -20,7 +20,8 @@ export async function getCategoryById(id: number) {
   }
 }
 
-export async function postCategory(Category: CategoryForm) {
+export async function postCategory(Category: FormCategory) {
+  console.log(Category)
   try {
     const response = axiosInstance.post("category/add", {
       name: Category.name,
@@ -32,7 +33,7 @@ export async function postCategory(Category: CategoryForm) {
   }
 }
 
-export async function putCategory(Category: Category, id: number) {
+export async function putCategory(Category: FormCategory, id: number) {
   try {
     const response = axiosInstance.put(`category/${id}`, Category)
     return response

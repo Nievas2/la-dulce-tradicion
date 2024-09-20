@@ -5,13 +5,20 @@ interface CardProps {
 }
 const Cards = ({ product }: CardProps) => {
   return (
-    <Link href={`/productos/${product.id}`} className="flex flex-col w-full h-full">
+    <Link
+      href={`/productos/${product.id}`}
+      className="flex flex-col w-full h-full"
+    >
       <div className="bg-main border border-tertiary">
         <a className="text-black">
           <div className="absolute right-1 z-10"></div>
 
           <img
-            src={product.image}
+            src={
+              product.ImagesProductAsocciations[0].ImageProduct.image
+                ? product.ImagesProductAsocciations[0].ImageProduct.image
+                : ""
+            }
             className="w-full h-48 object-cover"
             alt={product.name}
           />

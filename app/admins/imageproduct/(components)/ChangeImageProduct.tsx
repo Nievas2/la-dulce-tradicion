@@ -108,11 +108,11 @@ const ChangeImageProduct = ({
       }
     })
   }
-  /*   function handleRemoveImage(index: any) {
+    function handleRemoveImage(index: any) {
     const newImages = [...images]
     newImages.splice(index, 1)
     setImages(newImages)
-  } */
+  }
 
   /*   const handleImageChange = (index: any, value: any) => {
     const newImages = images.map((img, i) =>
@@ -182,20 +182,22 @@ const ChangeImageProduct = ({
                 <div className="flex justify-around items-center">
                   {image && (
                     <img
-                      src={image}
-                      alt=""
+                      src={image}width={90}
+                      height={90}
+                      key={crypto.randomUUID()}
+                      alt={image}
                     />
                   )}
-                  {/* {images.map((image: any, index: number) => (
+                  {images.map((image: any, index: number) => (
                     <img
                       src={URL.createObjectURL(image)}
                       alt="uploaded"
-                      width={50}
-                      height={50}
+                      width={90}
+                      height={90}
                       key={image.name}
                       onClick={() => handleRemoveImage(index)}
                     /> 
-                  ))} */}
+                  ))}
                 </div>
               </div>
               {error && <small>{error}</small>}
