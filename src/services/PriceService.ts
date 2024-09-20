@@ -9,7 +9,7 @@ interface Product {
 export default async function getProductsPrice(): Promise<Product[]> {
   try {
     const results = await new Promise<Product[]>((resolve, reject) => {
-      db.query("SELECT name, price FROM products", (err, results) => {
+      db.query("SELECT name, price FROM Products", (err, results) => {
         if (err) {
           return reject(err)
         }
