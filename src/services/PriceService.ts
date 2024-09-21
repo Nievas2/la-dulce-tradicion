@@ -6,21 +6,28 @@ interface Product {
   price: number // Cambia el tipo según sea necesario
 }
 
-export default async function getProductsPrice(): Promise<Product[]> {
+export default async function getProductsPrice(
+  CategoryId?: number
+): Promise<Product[]> {
   try {
     const results = await new Promise<Product[]>((resolve, reject) => {
-      db.query("SELECT name, price FROM Products", (err, results) => {
-        if (err) {
-          return reject(err)
-        }
+      db.query(
+        `SELECT name, price FROM Products ${
+          CategoryId ? `WHERE CategoryId = ${CategoryId}` : ""
+        }`,
+        (err, results) => {
+          if (err) {
+            return reject(err)
+          }
 
-        // Verifica si results es un array
-        if (Array.isArray(results)) {
-          resolve(results as Product[]) // Asegúrate de que sea del tipo correcto
-        } else {
-          reject(new Error("El resultado no es un array"))
+          // Verifica si results es un array
+          if (Array.isArray(results)) {
+            resolve(results as Product[]) // Asegúrate de que sea del tipo correcto
+          } else {
+            reject(new Error("El resultado no es un array"))
+          }
         }
-      })
+      )
     })
 
     return results

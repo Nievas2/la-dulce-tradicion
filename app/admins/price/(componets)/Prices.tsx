@@ -1,8 +1,10 @@
 import getProductsPrice from "@/services/PriceService"
-import { AnyAaaaRecord } from "dns"
+interface PricesProps {
+  categoryId?: number
+}
+const Prices = async ({ categoryId }: PricesProps) => {
+  const prices = await getProductsPrice(categoryId)
 
-const Prices = async () => {
-  const prices = await getProductsPrice()
   return (
     <div>
       <h1>Prices</h1>
