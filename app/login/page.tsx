@@ -14,7 +14,7 @@ import { GoogleLogin } from "@react-oauth/google"
 import { useGoogleLogin } from "@react-oauth/google"
 import axios from "axios"
 import { decodeJwt } from "@/utils/decodeJwt"
-
+import Cookies from "js-cookie"
 const page = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState(false)
@@ -34,6 +34,7 @@ const page = () => {
               token: response.data.token
             }
             localStorage.setItem("user", JSON.stringify(user))
+            Cookies.set("token", response.data.token)
             window.location.href = "/"
           } else {
             setError(true)
@@ -56,6 +57,7 @@ const page = () => {
         token: data.token
       }
       localStorage.setItem("user", JSON.stringify(user))
+      Cookies.set("token", data.token)
       window.location.href = "/"
     },
     onError: (error) => {

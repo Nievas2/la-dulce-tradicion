@@ -1,5 +1,6 @@
 import axiosInstance from "@/api/axiosInstance"
 import { LoginData } from "@/interfaces/Login"
+import db from "../../db"
 
 export async function login(login: LoginData) {
   try {
@@ -37,3 +38,4 @@ export function createPassword(password: string) {
     throw error
   }
 }
+
