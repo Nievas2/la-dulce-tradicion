@@ -1,5 +1,4 @@
 import { getPagesPrice } from "@/services/PriceService"
-import Prices from "./(componets)/Prices"
 import Search from "./(componets)/Search"
 import Table from "./(componets)/Table"
 import Pagination from "./(componets)/Pagination"
@@ -38,7 +37,7 @@ export default async function Page({
       <Table
         query={query}
         currentPage={currentPage}
-        CategoryId={categoryId}
+        categoryId={categoryId}
         product={product}
         value={value}
       />
