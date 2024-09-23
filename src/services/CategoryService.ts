@@ -4,7 +4,7 @@ import { FormCategory } from "../../app/admins/categories/(components)/ChangeCat
 
 export async function getCategories(): Promise<any> {
   try {
-    const response = axiosInstance.get("category")
+    const response = axiosInstance.get("category/get")
     return response
   } catch (error) {
     throw error
