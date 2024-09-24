@@ -1,4 +1,5 @@
 import { Producto } from "@/interfaces/Product"
+import Image from "next/image"
 import Link from "next/link"
 interface CardProps {
   product: Producto
@@ -13,13 +14,15 @@ const Cards = ({ product }: CardProps) => {
         <a className="text-black">
           <div className="absolute right-1 z-10"></div>
 
-          <img
+          <Image
             src={
               product.ImagesProductAsocciations[0].ImageProduct.image
                 ? product.ImagesProductAsocciations[0].ImageProduct.image
                 : ""
             }
-            className="w-full h-48 object-cover"
+            className="w-full object-cover"
+            width={200}
+            height={200}
             alt={product.name}
           />
 
