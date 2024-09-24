@@ -16,9 +16,10 @@ const Cards = ({ product }: CardProps) => {
 
           <Image
             src={
-              product.ImagesProductAsocciations[0].ImageProduct.image
+              product.ImagesProductAsocciations[0] != null ||
+              product.ImagesProductAsocciations[0] != undefined
                 ? product.ImagesProductAsocciations[0].ImageProduct.image
-                : ""
+                : "/fondos/fondos1.jpg"
             }
             className="w-full object-cover"
             width={200}
