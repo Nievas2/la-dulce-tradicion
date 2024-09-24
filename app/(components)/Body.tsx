@@ -13,6 +13,16 @@ const Body = ({ children }: { children: React.ReactNode }) => {
       <ProviderQuery>
         <GoogleOAuthProvider clientId={client_id || ""}>
           <AuthContextProvider>
+            <div className="flex flex-col items-center justify-center w-full bg-main">
+              <img
+                src="/sinfondo.webp"
+                className="h-20 "
+                alt="LaDulceTradicion logo"
+              />
+              <h5 className="font-bold bg-main">
+                Flor & Lucas - Pastelería y algo más
+              </h5>
+            </div>
             <Navbar />
             <div className="w-full h-full mt-20 sm:mt-0">{children}</div>
           </AuthContextProvider>

@@ -6,9 +6,11 @@ import ItemsNavbar from "@/components/shared/ItemsNavbar"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useAuthContext } from "@/contexts/auth-context"
 import { redirect } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 export default function Component() {
   const { authUser, setAuthUser } = useAuthContext()
+  const pathname = usePathname()
   const items = [
     {
       name: "Inicio",
@@ -18,10 +20,10 @@ export default function Component() {
       name: "Productos",
       link: "/productos"
     },
-    {
+    /*  {
       name: "Preguntas Frecuentes",
       link: "/preguntas-frecuentes"
-    },
+    }, */
     {
       name: "Contacto",
       link: "/contacto"
@@ -32,26 +34,17 @@ export default function Component() {
     setAuthUser(null)
   }
   return (
-    <header className="flex flex-col w-full max-w-8xl h-20 shrink-0 bg-main sm:mb-[76px] md:mb-[80px] lg:mb-[114px]">
-      <div className="flex flex-col items-center justify-center w-full bg-main">
-        <img
-          src="/sinfondo.webp"
-          className="h-20 "
-          alt="LaDulceTradicion logo"
-        />
-        <h5 className="font-bold bg-main">
-          Flor & Lucas - Pastelería y algo más
-        </h5>
-      </div>
+    <header className="flex flex-col w-full max-w-8xl h-full shrink-0 bg-main sticky top-0 z-50">
+     
+      {/* PARA MOBILE */}
       <Sheet>
-        
         <SheetTrigger asChild>
-          <div className="flex flex-1 bg-main p-2">
+          <div className="flex flex-1 bg-main lg:hidden">
             <div>
               <Button
                 variant="outline"
                 size="icon"
-                className="lg:hidden"
+              
               >
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
@@ -70,6 +63,7 @@ export default function Component() {
                 key={crypto.randomUUID()}
                 link={item.link}
                 name={item.name}
+                pathname={pathname || ""}
               />
             ))}
             {authUser?.user.isAdmin ? (
@@ -109,14 +103,16 @@ export default function Component() {
           </ul>
         </SheetContent>
       </Sheet>
-      <nav className="hidden w-full border-y border-secondary py-4 lg:flex gap-6 bg-main ">
-        <div className="flex w-full justify-center items-center text-center gap-2 dl-menu-style1 bg-main">
-          <ul className="flex gap-8 et-menu">
+      {/* PARA DESKTOP */}
+      <nav className="hidden w-full border-y border-secondary py-4 lg:flex gap-6 bg-main">
+        <div className="flex w-full justify-between items-center text-center bg-main px-4">
+          <ul className="flex w-full items-center justify-start text-center flex-row gap-2">
             {items.map((item) => (
               <ItemsNavbar
                 key={crypto.randomUUID()}
                 link={item.link}
                 name={item.name}
+                pathname={pathname || ""}
               />
             ))}
             {authUser?.user.isAdmin ? (
