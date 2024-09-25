@@ -19,15 +19,15 @@ const page = () => {
     }
   })
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos7.jfif')] w-full max-w-8xl">
-      <div className="flex flex-1 justify-center items-center h-screen">
+    <div className="flex flex-1 flex-col bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos7.jfif')] w-full max-w-8xl text-white">
+      <div className="flex flex-1 justify-center items-center h-screen py-3">
         <div className="w-50 border border-white">
           <div>
             <div className="flex flex-col sm:flex-row bg-quaternary p-2">
               <div className="flex flex-col basis-1/2 justify-center items-center">
                 <img
                   src="/sinfondo.webp"
-                  className="w-[340px] h-[200px]"
+                  className="w-[300px] h-[180px]"
                   id="center"
                   alt="logo"
                 />
@@ -135,7 +135,7 @@ const page = () => {
                         <>
                           <div className="flex ">
                             <Button
-                              className="text-white w-full rounded-[6px]"
+                              className="w-full rounded-[6px]"
                               variant="secondary"
                               type="submit"
                             >

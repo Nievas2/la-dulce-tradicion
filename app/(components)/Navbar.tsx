@@ -35,16 +35,14 @@ export default function Component() {
   }
   return (
     <header className="flex flex-col w-full max-w-8xl h-full shrink-0 bg-main sticky top-0 z-50">
-     
       {/* PARA MOBILE */}
       <Sheet>
         <SheetTrigger asChild>
-          <div className="flex flex-1 bg-main lg:hidden">
+          <div className="flex flex-1 justify-end bg-main lg:hidden p-2">
             <div>
               <Button
                 variant="outline"
                 size="icon"
-              
               >
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
@@ -66,12 +64,12 @@ export default function Component() {
                 pathname={pathname || ""}
               />
             ))}
-            {authUser?.user.isAdmin ? (
-              <li>
-                <a href="/admins">Administración</a>
-              </li>
-            ) : (
-              ""
+            {authUser?.user.isAdmin && (
+              <ItemsNavbar
+                link={"/admins"}
+                name={"Administración"}
+                pathname={pathname || ""}
+              />
             )}
             {authUser ? (
               <Button
@@ -115,12 +113,12 @@ export default function Component() {
                 pathname={pathname || ""}
               />
             ))}
-            {authUser?.user.isAdmin ? (
-              <li>
-                <a href="/admins">Administración</a>
-              </li>
-            ) : (
-              ""
+            {authUser?.user.isAdmin && (
+              <ItemsNavbar
+                link={"/admins"}
+                name={"Administración"}
+                pathname={pathname || ""}
+              />
             )}
           </ul>
           {authUser ? (

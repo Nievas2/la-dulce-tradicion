@@ -39,19 +39,24 @@ const page = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, currentPage])
   return (
-    <section className="w-full flex flex-col gap-4 justify-center items-center p-4 relative">
+    <section className="w-full flex flex-col gap-4 justify-center items-center p-4 relative z-20">
       <Search placeholder="Buscar productos..." />
-      <Dialog>
-        <DialogTrigger className="absolute top-0 right-0 border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
-          Add
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Agregar un producto</DialogTitle>
-            <ChangeProduct product={undefined} lastId={data?.data.totalProducts} />
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <div className="flex items-start justify-start w-full">
+        <Dialog>
+          <DialogTrigger className="flex border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
+            Add
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Agregar un producto</DialogTitle>
+              <ChangeProduct
+                product={undefined}
+                lastId={data?.data.totalProducts}
+              />
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      </div>
       <section className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-center gap-5">
         {data?.data?.products.map((product: Producto) => (
           <CardsAdmin

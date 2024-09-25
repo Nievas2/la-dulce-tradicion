@@ -24,7 +24,7 @@ const Body = ({ children }: { children: React.ReactNode }) => {
               </h5>
             </div>
             <Navbar />
-            <div className="w-full h-full mt-20 sm:mt-0">{children}</div>
+            <div className="w-full h-full">{children}</div>
           </AuthContextProvider>
         </GoogleOAuthProvider>
       </ProviderQuery>
