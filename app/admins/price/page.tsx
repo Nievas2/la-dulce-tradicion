@@ -2,7 +2,7 @@ import { getPagesPrice } from "@/services/PriceService"
 import Search from "./(componets)/Search"
 import Table from "./(componets)/Table"
 import Pagination from "./(componets)/Pagination"
-import Categories from "./(componets)/Categories"
+import Categories from "../../(components)/Categories"
 
 export default async function Page({
   searchParams

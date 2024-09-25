@@ -2,9 +2,15 @@ import axiosInstance from "@/api/axiosInstance"
 import { Producto } from "@/interfaces/Product"
 import { ProductForm } from "../../app/admins/products/(components)/ChangeProduct"
 
-export async function getProducts(page: number, query: string) {
+export async function getProducts(
+  page: number,
+  query: string,
+  categoryId: string
+) {
   try {
-    const response = axiosInstance.get("product/" + page + "?query=" + query)
+    const response = axiosInstance.get(
+      "product/" + page + "?query=" + query + "&categoryId=" + categoryId
+    )
     return response
   } catch (error) {
     throw error
