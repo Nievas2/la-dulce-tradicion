@@ -8,7 +8,7 @@ const FloatButtons = () => {
       <div className="flex justify-end">
         <a
           onClick={() => window.scrollTo(0, 0)}
-          className="bg-[#141313] rounded-full p-2 hover:bg-[#141313]/90 flex justify-center items-center"
+          className="bg-[#141313] rounded-full p-2 hover:bg-[#141313]/90 flex justify-center items-center cursor-pointer"
         >
           <Icon
             icon="formkit:arrowup"

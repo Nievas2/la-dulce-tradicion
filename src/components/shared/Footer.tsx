@@ -92,19 +92,19 @@ const Footer = () => {
         </div>
       </div>
 
+      <hr className="h-[1px] mt-4 bg-black border-0 w-full"></hr>
       <div className="max-w-[1280px] mx-auto px-6 md:px-8">
-        <hr className="h-[1px] mt-4 bg-black border-0"></hr>
         <div className="flex w-full justify-center text-center font-semibold text-[15px] gap-2">
           Si necesitas ayuda
           <Link
-            href="/contact"
+            href="/contacto"
             className="text-secondary font-bold hover:underline cursor-pointer"
           >
-            contacto.
+            contactanos.
           </Link>
         </div>
-        <hr className="h-[1px] mt-4 bg-black border-0"></hr>
       </div>
+      <hr className="h-[1px] mt-4 bg-black border-0 w-full"></hr>
     </div>
   )
 }
