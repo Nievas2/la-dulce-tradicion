@@ -5,6 +5,7 @@ import ProviderQuery from "@/utils/ProviderQuery"
 import { AuthContextProvider } from "@/contexts/auth-context"
 import Body from "./(components)/Body"
 import { Inter } from "next/font/google"
+import Footer from "@/components/shared/Footer"
 
 export const metadata: Metadata = {
   title: "La dulce tradicion",
@@ -23,6 +24,7 @@ export default function RootLayout({
         className={`${inter.className} relative w-full font-poppins flex flex-col justify-center items-center min-h-screen`}
       >
         <Body>{children}</Body>
+        <Footer />
       </body>
     </html>
   )

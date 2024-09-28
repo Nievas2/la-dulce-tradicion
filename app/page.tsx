@@ -7,7 +7,7 @@ import CategoriesSection from "./(components)/CategoriesSection"
 
 export default function Home() {
   return (
-    <main className="flex flex-1 max-w-8xl flex-col p-4">
+    <main className="flex flex-1 max-w-8xl flex-col p-4 gap-24">
       <title>La dulce tradicion | home</title>
       <Carrousel />
       <Questions />

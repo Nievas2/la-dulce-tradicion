@@ -2,9 +2,9 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const Questions = () => {
   return (
-    <div className="w-full max-w-8xl mb-16">
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6 text-center">
+    <div className="w-full max-w-8xl">
+      <div className="flex flex-col w-full gap-10">
+        <h1 className="text-4xl font-bold mb-6 text-center">
           Preguntas Frecuentes
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
