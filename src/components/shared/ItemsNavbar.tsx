@@ -13,7 +13,7 @@ const ItemsNavbar = ({ link, name, pathname }: ItemsNavbarProps) => {
     >
       {name}
       <span
-        className={`h-[3px] inline-block bg-transparent md:bg-secondary absolute left-1/2 -translate-x-1/2 bottom-[1px] transition-[width] ease duration-[400ms] ${
+        className={`h-[3px] inline-block bg-transparent md:bg-secondary absolute left-1/2 -translate-x-1/2 bottom-[1px] transition-[width] ease duration-300 ${
           pathname === link ? "w-full" : "w-0"
         }`}
       >

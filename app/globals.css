@@ -4,7 +4,7 @@
 body {
   text-decoration: none;
   background-color: #fff0f0;
-  background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); */
 }
 :root {
   --color1: #fbe4dd;

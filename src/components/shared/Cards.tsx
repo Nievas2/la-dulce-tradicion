@@ -7,7 +7,7 @@ interface CardProps {
 const Cards = ({ product }: CardProps) => {
   return (
     <Link
-      href={`/productos/${product.id}`}
+      href={`/productos/${product.name}`}
       className="flex flex-col w-full h-full"
     >
       <div className="bg-main border border-tertiary">
