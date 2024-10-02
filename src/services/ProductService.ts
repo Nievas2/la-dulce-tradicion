@@ -1,6 +1,7 @@
 import axiosInstance from "@/api/axiosInstance"
 import { Producto } from "@/interfaces/Product"
 import { ProductForm } from "../../app/admins/products/(components)/ChangeProduct"
+import db from "../../db"
 
 export async function getProducts(
   page: number,
@@ -20,6 +21,15 @@ export async function getProducts(
 export async function getProductById(id: number) {
   try {
     const response = axiosInstance.get(`product/get/${id}`)
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getProductByName(name: string) {
+  try {
+    const response = axiosInstance.get(`product/name/${name}`)
     return response
   } catch (error) {
     throw error
