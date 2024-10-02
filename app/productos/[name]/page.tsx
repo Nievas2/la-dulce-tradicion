@@ -1,20 +1,14 @@
 "use client"
-import Cards from "@/components/shared/Cards"
-
-import { getProductById } from "@/services/ProductService"
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { useEffect } from "react"
 import ProductCarousel from "../(components)/ProductCarousel"
-const page = ({ params }: { params: { id: number } }) => {
-  const id = params.id
+import { useQuery } from "@tanstack/react-query"
+import { getProductByName } from "@/services/ProductService"
+const page = ({ params }: { params: { name: string } }) => {
+  const name = params.name
   const { data, isPending } = useQuery({
-    queryKey: ["product"],
-    queryFn: () => getProductById(id),
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60 * 24
+    queryKey: ["productName"],
+    queryFn: () => getProductByName(name)
   })
-
+  
   return (
     <section className="flex flex-col p-2">
       <div className="flex gap-2 p-2 bg-white">
