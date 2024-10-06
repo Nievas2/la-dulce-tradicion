@@ -11,6 +11,15 @@ import axios from "axios"
 import { useEffect } from "react"
 import Categories from "../(components)/Categories"
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb"
+
 const page = ({
   searchParams
 }: {
@@ -39,6 +48,20 @@ const page = ({
 
   return (
     <section className="w-full flex flex-col gap-4 justify-center items-center p-4">
+      <div className="flex justify-start items-start w-full">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Inicio</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Productos</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+
       <Search placeholder="Buscar productos..." />
       <div className="flex justify-start items-start w-full">
         <Categories />

@@ -2,15 +2,40 @@
 import ProductCarousel from "../(components)/ProductCarousel"
 import { useQuery } from "@tanstack/react-query"
 import { getProductByName } from "@/services/ProductService"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb"
+
 const page = ({ params }: { params: { name: string } }) => {
   const name = params.name
   const { data, isPending } = useQuery({
     queryKey: ["productName"],
     queryFn: () => getProductByName(name)
   })
-  
+
   return (
-    <section className="flex flex-col p-2">
+    <section className="flex flex-col p-4 gap-4">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Inicio</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/productos">Productos</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{name}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <div className="flex gap-2 p-2 bg-white">
         <div className="flex basis-1/3">
           {data && (
