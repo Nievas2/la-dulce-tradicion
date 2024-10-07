@@ -10,8 +10,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
+import { useState } from "react"
 
 const page = ({ params }: { params: { name: string } }) => {
+  const [imageSelected, setImageSelected] = useState(0)
   const name = params.name
   const { data, isPending } = useQuery({
     queryKey: ["productName"],
@@ -36,13 +38,41 @@ const page = ({ params }: { params: { name: string } }) => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex gap-2 p-2 bg-white">
-        <div className="flex basis-1/3">
+      <div className="flex flex-col sm:flex-row gap-2 p-4 bg-white rounded-md">
+        <div className="hidden sm:flex gap-4 sm">
+          <div className="flex flex-col justify-between items-center gap-2">
+            {data?.data?.ImagesProductAsocciations.map((image: any, index : number) => (
+              <button
+                className="size-11"
+                onClick={() => setImageSelected(index)}
+                key={image.id}
+              >
+                <img
+                  src={image.ImageProduct.image}
+                  alt="image"
+                />
+              </button>
+            ))}
+          </div>
+
+          <div className="flex w-full items-center justify-center">
+            {
+              <img
+                src={
+                  data?.data?.ImagesProductAsocciations[imageSelected].ImageProduct.image
+                }
+                alt="image"
+                className="max-w-96"
+              />
+            }
+          </div>
+        </div>
+        <div className="flex items-center justify-center sm:hidden">
           {data && (
-            <ProductCarousel images={data?.data?.ImagesProductAsocciations} />
+            <ProductCarousel images={data.data.ImagesProductAsocciations} />
           )}
         </div>
-        <div className="flex flex-col basis-2/3 gap-4">
+        <div className="flex flex-col gap-4">
           <h2>{data?.data?.name}</h2>
           <h3>{data?.data?.price}</h3>
           <p>{data?.data?.description}</p>

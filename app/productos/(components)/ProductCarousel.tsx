@@ -21,14 +21,14 @@ const ProductCarousel = ({ images }: ProductCarouselProps) => {
             delay: 2000
           })
         ]} */
-      className="w-full"
+      className="max-h-80 max-w-80"
     >
       <CarouselContent>
         {images.map((image, index) => (
-          <CarouselItem key={index}>
+          <CarouselItem key={crypto.randomUUID()}>
             <img
               src={image.ImageProduct.image}
-              alt=""
+              alt="imagen del producto"
             />
           </CarouselItem>
         ))}
