@@ -22,8 +22,6 @@ const Categories = () => {
   async function fetchCategories() {
     try {
       const response = await fetch("/api/categories").then((res) => res.json())
-      console.log(response)
-
       setCategories(response)
     } catch (error) {
       throw error

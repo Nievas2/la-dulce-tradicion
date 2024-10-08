@@ -15,11 +15,11 @@ const buttonVariants = cva(
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300",
+          "border border-secondary hover:bg-secondary/80 hover:text-white bg-white text-black transition-colors duration-300",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         arrow: "text-black hover:text-black/60 border border-input",
-        main:"border border-secondary text-black rounded-md bg-[var(--color1)] border-[#c1694c] shadow-[5px_5px_0_#c1694c]"
+        main: "border border-secondary text-black rounded-md bg-[var(--color1)] border-[#c1694c] shadow-[5px_5px_0_#c1694c]"
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -27,12 +27,12 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
         ghost: ""
-      },
+      }
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
-    },
+      size: "default"
+    }
   }
 )
 
