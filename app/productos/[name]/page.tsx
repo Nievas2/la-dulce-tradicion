@@ -52,7 +52,7 @@ const page = ({ params }: { params: { name: string } }) => {
 
       <div className="flex flex-col lg:flex-row gap-8 p-4 bg-white rounded-md ">
         <div className="hidden lg:flex gap-4 sm">
-          <div className="flex flex-col justify-between items-center gap-2">
+          <div className="flex flex-col items-center gap-6">
             {data?.data?.ImagesProductAsocciations.map(
               (image: any, index: number) => (
                 <button
@@ -106,7 +106,7 @@ const page = ({ params }: { params: { name: string } }) => {
                           (subCategoryProducts: SubCategoryProduct) => (
                             <SelectItem
                               className="text-start"
-                              key={subCategoryProducts.SubCategory.Product}
+                              key={crypto.randomUUID()}
                               value={subCategoryProducts.SubCategory.date}
                             >
                               {subCategoryProducts.SubCategory.date} :{" "}
