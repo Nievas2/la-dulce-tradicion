@@ -5,6 +5,14 @@ interface CardProps {
   product: Producto
 }
 const Cards = ({ product }: CardProps) => {
+  /*  console.log(product); */
+  console.log(
+    product.ImagesProductAsocciations[0] != null ||
+      product.ImagesProductAsocciations[0] != undefined
+      ? product.ImagesProductAsocciations[0].ImageProduct.image
+      : "/fondos/fondos1.jpg"
+  )
+
   return (
     <Link
       href={`/productos/${product.name}`}

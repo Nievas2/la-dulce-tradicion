@@ -1,40 +1,39 @@
 import {
+  DialogTitle,
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
-import { Producto } from "@/interfaces/Product"
+import { ImageProduct } from "@/interfaces/ImageProduct"
 import { Icon } from "@iconify/react/dist/iconify.js"
-import ChangeProduct from "../admins/products/(components)/ChangeProduct"
-interface CardProps {
-  product: Producto
+import ChangeImageProduct from "./ChangeImageProduct"
+
+interface ImageCardProps {
+  image: ImageProduct
 }
-const CardsAdmin = ({ product }: CardProps) => {
-/*   console.log(product); */
-  
+const ImageCard = ({ image }: ImageCardProps) => {
   return (
     <div
       className={`
-        flex flex-col items-start justify-start 
-        bg-cover bg-center 
-        h-[150px] w-[300px] 
-        p-2 
-        rounded-lg
-        relative
-        `}
+      flex flex-col items-start justify-start 
+      bg-cover bg-center 
+      h-[150px] w-[300px] 
+      p-2 
+      rounded-lg
+      relative
+      `}
       style={{
         backgroundImage: `url(${
-          product.ImagesProductAsocciations[0] != null || product.ImagesProductAsocciations[0] != undefined
-            ? product.ImagesProductAsocciations[0].ImageProduct.image
+          image.image != null || image.image != undefined
+            ? image.image
             : "/fondos/fondos1.jpg"
         })`
       }}
       /* backgroundImage: `url(${product.ImagesProductAsocciations[0].ImageProduct.image})` */
     >
-      <span className="text-white">{product.name}</span>
-      <span className="absolute bottom-2 left-2 text-white">{product.id}</span>
+      <span className="text-white">{image.Product}</span>
+      <span className="absolute bottom-2 left-2 text-white">{image.id}</span>
       <Dialog>
         <DialogTrigger className="absolute top-2 right-2">
           <Icon
@@ -46,8 +45,12 @@ const CardsAdmin = ({ product }: CardProps) => {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar un producto</DialogTitle>
-            <ChangeProduct product={product} />
+            <DialogTitle>Editar una imagen</DialogTitle>
+            <ChangeImageProduct
+              Product={undefined}
+              image={image.image}
+              imageId={image.id}
+            />
           </DialogHeader>
         </DialogContent>
       </Dialog>
@@ -62,4 +65,4 @@ const CardsAdmin = ({ product }: CardProps) => {
     </div>
   )
 }
-export default CardsAdmin
+export default ImageCard

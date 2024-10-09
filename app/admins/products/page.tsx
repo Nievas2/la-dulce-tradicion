@@ -55,7 +55,7 @@ const page = ({
               <DialogTitle>Agregar un producto</DialogTitle>
               <ChangeProduct
                 product={undefined}
-                lastId={data?.data.totalProducts}
+                lastId={data?.data.lastId}
               />
             </DialogHeader>
           </DialogContent>

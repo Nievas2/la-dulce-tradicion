@@ -155,7 +155,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                       !isPending &&
                       categories?.data.map((category: Category) => (
                         <SelectItem
-                          key={category.id}
+                          key={crypto.randomUUID()}
                           value={category.name}
                         >
                           {category.name}

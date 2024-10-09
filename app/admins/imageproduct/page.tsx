@@ -11,6 +11,7 @@ import {
 import ChangeImageProduct from "./(components)/ChangeImageProduct"
 import { getImageProducts } from "@/services/ImageProduct"
 import { useQuery } from "@tanstack/react-query"
+import ImageCard from "./(components)/ImageCard"
 
 const page = () => {
   const { data, error, isPending } = useQuery({
@@ -40,7 +41,11 @@ const page = () => {
       </Dialog>
       <div className="flex flex-wrap gap-4">
         {data?.data?.map((image: any) => (
-          <Dialog key={crypto.randomUUID()}>
+          <ImageCard
+            key={crypto.randomUUID()}
+            image={image}
+          />
+          /*  <Dialog key={crypto.randomUUID()}>
             <DialogTrigger className="border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
               Add
             </DialogTrigger>
@@ -55,7 +60,7 @@ const page = () => {
                 />
               </DialogHeader>
             </DialogContent>
-          </Dialog>
+          </Dialog> */
         ))}
       </div>
     </section>
