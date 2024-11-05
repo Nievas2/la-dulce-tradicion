@@ -29,15 +29,12 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   return (
     <div className="sticky top-0 flex w-[80%]">
-      <label
-        htmlFor="search"
-        className="sr-only"
-      >
+      <label htmlFor="search" className="sr-only">
         Search
       </label>
 
       <input
-        className="block w-full rounded-md border border-gray-200 py-[9px] px-2 text-sm outline-2 placeholder:text-gray-500"
+        className="block w-full rounded-md border border-secondary py-[9px] px-2 text-sm font-semibold outline-1 outline-secondary placeholder:font-medium placeholder:text-red-main"
         placeholder={placeholder}
         onChange={(e) => {
           setText(e.target.value)
@@ -52,6 +49,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         >
           <Icon
             icon="material-symbols:close"
+            className="text-secondary"
             width="24"
             height="24"
           />
