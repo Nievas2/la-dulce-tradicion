@@ -27,8 +27,8 @@ const Cards = ({ product }: CardProps) => {
               : "/fondos/fondos1.jpg"
           }
           className="w-full object-cover"
-          width={100}
-          height={100}
+          width={225}
+          height={225}
           alt={product.name}
         />
 

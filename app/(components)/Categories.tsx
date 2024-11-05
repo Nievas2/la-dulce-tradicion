@@ -46,10 +46,10 @@ const Categories = () => {
   return (
     <Select onValueChange={handleChange} defaultValue={searchParams?.get("categoryId") || "nothing"}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Theme" />
+        <SelectValue placeholder="Categorias" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="nothing">todos</SelectItem>
+        <SelectItem value="nothing">Todos</SelectItem>
         {categories &&
           categories.map((category) => (
             <SelectItem
