@@ -16,6 +16,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import NotFound from "../(components)/NotFound"
 
 const page = ({
   searchParams,
@@ -67,6 +68,10 @@ const page = ({
       <section className="mx-auto max-w-[1240px] grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-x-6 gap-y-3">
         {isPending ? (
           <div className="min-h-screen flex">Loading...</div>
+        ) : data?.data?.products.length === 0 ? (
+          <div className="flex justify-center items-center w-full col-span-full">
+            <NotFound />
+          </div>
         ) : (
           data?.data?.products.map((producto: Producto) => (
             <Cards product={producto} key={crypto.randomUUID()} />
