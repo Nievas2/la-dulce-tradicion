@@ -104,7 +104,6 @@ const Footer = () => {
           </Link>
         </div>
       </div>
-      <hr className="h-[1px] mt-4 bg-black border-0 w-full"></hr>
     </div>
   )
 }
