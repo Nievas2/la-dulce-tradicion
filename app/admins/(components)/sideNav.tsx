@@ -19,22 +19,18 @@ const SideNav = () => {
     <div className="h-full min-h-screen flex md:w-64 md:bg-main">
       <div
         className={`${
-          width! < 768 && open ? "absolute top-0" : "hidden"
-        } w-14 md:w-64 md:h-full md:flex flex-col bg-main min-h-screen left-0 z-50`}
+          width! < 768 && open ? "sticky top-0" : "hidden"
+        } w-14 md:w-64 h-full md:flex flex-col min-h-screen left-0 z-40 bg-main`}
       >
-        {open == true && width! < 768 && (
-          <button
-            className="flex p-2 items-center justify-center w-full"
-            onClick={() => setOpen(false)}
-          >
-            <Icon
-              icon="material-symbols:close"
-              width="24"
-              height="24"
-            />
-          </button>
-        )}
-        <ul className="flex flex-col p-2 gap-3 w-full">
+        <ul className="flex flex-col p-2 gap-3 w-full sticky top-14 md:top-20 overflow-y-auto bg-main">
+          {open == true && width! < 768 && (
+            <button
+              className="flex p-2 items-center justify-center w-full"
+              onClick={() => setOpen(false)}
+            >
+              <Icon icon="material-symbols:close" width="24" height="24" />
+            </button>
+          )}
           <SideItem
             icon="clarity:dollar-solid"
             name="Precios"
@@ -70,11 +66,7 @@ const SideNav = () => {
           size="default"
           onClick={() => setOpen(true)}
         >
-          <Icon
-            icon="weui:arrow-filled"
-            width="24"
-            height="24"
-          />
+          <Icon icon="weui:arrow-filled" width="24" height="24" />
         </Button>
       )}
     </div>
