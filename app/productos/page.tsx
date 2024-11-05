@@ -46,8 +46,8 @@ const page = ({
   console.log(data)
 
   return (
-    <section className="w-full flex flex-col gap-4 justify-center items-center p-4">
-      <div className="flex justify-start items-start w-full">
+    <section className="w-full flex flex-col gap-4 justify-center items-center p-7">
+      <div className="flex justify-start items-start w-full ">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -61,11 +61,11 @@ const page = ({
         </Breadcrumb>
       </div>
 
-      <Search placeholder="Buscar productos..." />
-      <div className="flex justify-start items-start w-full">
+      <div className="flex w-full gap-4">
+        <Search placeholder="Buscar productos..." />
         <Categories />
       </div>
-      <section className="mx-auto max-w-[1240px] grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-x-6 gap-y-3">
+      <section className="mx-auto w-full grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-x-6 gap-y-3">
         {isPending ? (
           <div className="min-h-screen flex">Loading...</div>
         ) : data?.data?.products.length === 0 ? (
