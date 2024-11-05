@@ -6,11 +6,15 @@ body {
   background-color: #fff0f0;
   /* background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png"); */
 }
+/* 
+
+*/
 :root {
   --color1: #fbe4dd;
   --color2: #c1694c;
   --color3: #751c19;
   --color4: #efa593;
+  --color5: #9b3939;
   --BottomOffset: 20px;
   --LineHeight: 5px;
 }

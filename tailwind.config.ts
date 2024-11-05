@@ -52,6 +52,7 @@ const config = {
         "secondary":"#c1694c",
         "tertiary":"#751c19",
         "quaternary":"#efa593",
+        "red-main" :"#9b3939"
       },
       borderRadius: {
         lg: "8px",
