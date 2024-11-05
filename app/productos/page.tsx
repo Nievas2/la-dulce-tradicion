@@ -2,13 +2,10 @@
 import Cards from "@/components/shared/Cards"
 import Pagination from "@/components/shared/Pagination"
 import Search from "@/components/shared/Search"
-import { Select } from "@/components/ui/select"
 import { Producto } from "@/interfaces/Product"
-import { getCategories } from "@/services/CategoryService"
 import { getProducts } from "@/services/ProductService"
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import Categories from "../(components)/Categories"
 
 import {
@@ -17,11 +14,11 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator
+  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
 const page = ({
-  searchParams
+  searchParams,
 }: {
   searchParams?: {
     query?: string
@@ -33,7 +30,7 @@ const page = ({
     queryKey: ["products"],
     queryFn: () => getProducts(currentPage, query, categoryId),
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60 * 24
+    staleTime: 1000 * 60 * 60 * 24,
   })
 
   const query = searchParams?.query || ""
@@ -67,15 +64,14 @@ const page = ({
       <div className="flex justify-start items-start w-full">
         <Categories />
       </div>
-      <section className="mx-auto max-w-[1240px] grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-5 min-h-screen">
-        {data?.data?.products.map((producto: Producto) => (
-          <div
-            className="flex"
-            key={crypto.randomUUID()}
-          >
-            <Cards product={producto} />
-          </div>
-        ))}
+      <section className="mx-auto max-w-[1240px] grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-x-6 gap-y-3">
+        {isPending ? (
+          <div className="min-h-screen flex">Loading...</div>
+        ) : (
+          data?.data?.products.map((producto: Producto) => (
+            <Cards product={producto} key={crypto.randomUUID()} />
+          ))
+        )}
       </section>
 
       <Pagination
