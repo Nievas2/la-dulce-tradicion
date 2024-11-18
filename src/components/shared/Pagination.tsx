@@ -1,6 +1,7 @@
 "use client"
 
 import { Producto } from "@/interfaces/Product"
+import { Icon } from "@iconify/react/dist/iconify.js"
 /* import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'; */
 import clsx from "clsx"
 import Link from "next/link"
@@ -9,7 +10,7 @@ import { usePathname, useSearchParams } from "next/navigation"
 export default function Pagination({
   totalPages,
   disabled,
-  products
+  products,
 }: {
   totalPages: number
   disabled: boolean
@@ -41,8 +42,8 @@ export default function Pagination({
           key={crypto.randomUUID()}
           classname={`rounded-md text-sm px-3 py-1.5 sm:text-base sm:px-3 sm:py-1 ${
             i === currentPage
-              ? "bg-secondary text-white cursor-not-allowed"
-              : "hover:bg-secondary hover:text-white cursor-pointer"
+              ? "bg-secondary text-white transition-colors duration-300 cursor-not-allowed"
+              : "hover:bg-secondary hover:text-white transition-colors duration-300 cursor-pointer"
           }`}
           href={createPageURL(i)}
           page={i}
@@ -76,7 +77,7 @@ function PaginationNumber({
   page,
   href,
   classname,
-  isActive
+  isActive,
 }: {
   page: number | string
   href: string
@@ -106,7 +107,7 @@ function PaginationNumber({
 function PaginationArrow({
   href,
   direction,
-  isDisabled
+  isDisabled,
 }: {
   href: string
   direction: "left" | "right"
@@ -116,20 +117,28 @@ function PaginationArrow({
     "flex h-10 w-10 items-center justify-center rounded-md border",
     {
       "pointer-events-none text-gray-300": isDisabled,
-      "hover:bg-gray-100": !isDisabled,
+      "hover:bg-secondary hover:text-white transition-colors duration-300":
+        !isDisabled,
       "mr-2 md:mr-4": direction === "left",
-      "ml-2 md:ml-4": direction === "right"
+      "ml-2 md:ml-4": direction === "right",
     }
   )
 
-  const icon = direction === "left" ? "<" : ">"
+  const icon =
+    direction === "left" ? (
+      <Icon
+        icon="weui:arrow-filled"
+        width="24"
+        height="24"
+        className="rotate-180"
+      />
+    ) : (
+      <Icon icon="weui:arrow-filled" width="24" height="24" />
+    )
   return isDisabled ? (
     <div className={className}>{icon}</div>
   ) : (
-    <Link
-      className={className}
-      href={href}
-    >
+    <Link className={className} href={href}>
       {icon}
     </Link>
   )
