@@ -22,6 +22,7 @@ import { SubCategoryProduct } from "@/interfaces/SubCategoryProduct"
 import { Input } from "@/components/ui/input"
 import { Label } from "@radix-ui/react-label"
 import { Button } from "@/components/ui/button"
+import Zoom from "./(components)/zoom"
 
 const page = ({ params }: { params: { name: string } }) => {
   const [imageSelected, setImageSelected] = useState(0)
@@ -56,7 +57,9 @@ const page = ({ params }: { params: { name: string } }) => {
             {data?.data?.ImagesProductAsocciations.map(
               (image: any, index: number) => (
                 <button
-                  className="size-11"
+                  className={`size-11 ${
+                    imageSelected === index && "scale-110 ring-2 ring-secondary"
+                  } hover:scale-125 transition-transform duration-150 `}
                   onClick={() => setImageSelected(index)}
                   key={image.id}
                 >
@@ -68,13 +71,12 @@ const page = ({ params }: { params: { name: string } }) => {
 
           <div className="flex w-full items-center justify-center">
             {
-              <img
+              <Zoom
                 src={
                   data?.data?.ImagesProductAsocciations[imageSelected]
                     .ImageProduct.image
                 }
-                alt="image"
-                className="max-w-96"
+                alt={data?.data?.name}
               />
             }
           </div>
@@ -87,7 +89,7 @@ const page = ({ params }: { params: { name: string } }) => {
         <div className="flex flex-col gap-4">
           <h2 className="text-5xl font-semibold">{data?.data?.name}</h2>
           <h3 className="text-3xl">{data?.data?.price}</h3>
-          <p className="" dangerouslySetInnerHTML={{__html: data?.data?.description}}></p>
+          <p dangerouslySetInnerHTML={{ __html: data?.data?.description }}></p>
           <div className="flex gap-3 items-end justify-start">
             <div>
               {data?.data?.SubCategoryProducts.length > 0 && (
