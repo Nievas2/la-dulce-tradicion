@@ -46,7 +46,7 @@ const page = ({
   console.log(data)
 
   return (
-    <section className="w-full flex flex-col gap-4 justify-center items-center pt-0 p-7">
+    <section className="w-full flex flex-col gap-4 justify-center items-center pt-2 p-7">
       <div className="flex justify-start items-start w-full ">
         <Breadcrumb>
           <BreadcrumbList>

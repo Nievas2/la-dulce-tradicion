@@ -8,14 +8,14 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator
+  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem
+  SelectItem,
 } from "@/components/ui/select"
 import { useState } from "react"
 import { SubCategoryProduct } from "@/interfaces/SubCategoryProduct"
@@ -28,7 +28,7 @@ const page = ({ params }: { params: { name: string } }) => {
   const name = params.name
   const { data, isPending } = useQuery({
     queryKey: ["productName"],
-    queryFn: () => getProductByName(name)
+    queryFn: () => getProductByName(name),
   })
   console.log(data)
 
@@ -60,10 +60,7 @@ const page = ({ params }: { params: { name: string } }) => {
                   onClick={() => setImageSelected(index)}
                   key={image.id}
                 >
-                  <img
-                    src={image.ImageProduct.image}
-                    alt="image"
-                  />
+                  <img src={image.ImageProduct.image} alt="image" />
                 </button>
               )
             )}
@@ -90,7 +87,7 @@ const page = ({ params }: { params: { name: string } }) => {
         <div className="flex flex-col gap-4">
           <h2 className="text-5xl font-semibold">{data?.data?.name}</h2>
           <h3 className="text-3xl">{data?.data?.price}</h3>
-          <p className="">{data?.data?.description}</p>
+          <p className="" dangerouslySetInnerHTML={{__html: data?.data?.description}}></p>
           <div className="flex gap-3 items-end justify-start">
             <div>
               {data?.data?.SubCategoryProducts.length > 0 && (
@@ -124,11 +121,14 @@ const page = ({ params }: { params: { name: string } }) => {
               <Input
                 className="w-[68px] text-center"
                 defaultValue={1}
+                min={1}
                 type="number"
               />
             </div>
           </div>
-          <Button variant="secondary">Agregar al carrito</Button>
+          <div>
+            <Button variant="secondary">Agregar al carrito</Button>
+          </div>
         </div>
       </div>
     </section>
