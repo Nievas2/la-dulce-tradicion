@@ -30,21 +30,13 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           isDisabled={currentPage <= 1}
         />
 
-        <div className="flex -space-x-px">
+        <div className="flex gap-2 font-semibold">
           {allPages.map((page: any, index: number) => {
-            let position: "first" | "last" | "single" | "middle" | undefined
-
-            if (index === 0) position = "first"
-            if (index === allPages.length - 1) position = "last"
-            if (allPages.length === 1) position = "single"
-            if (page === "...") position = "middle"
-
             return (
               <PaginationNumber
                 key={page}
                 href={createPageURL(page)}
                 page={page}
-                position={position}
                 isActive={currentPage === Number(page)}
               />
             )
@@ -65,31 +57,23 @@ function PaginationNumber({
   page,
   href,
   isActive,
-  position
 }: {
   page: number | string
   href: string
-  position?: "first" | "last" | "middle" | "single"
   isActive: boolean
 }) {
   const className = clsx(
-    "flex h-10 w-10 items-center justify-center text-sm border",
-    {
-      "rounded-l-md": position === "first" || position === "single",
-      "rounded-r-md": position === "last" || position === "single",
-      "z-10 bg-blue-600 border-blue-600 text-white": isActive,
-      "hover:bg-gray-100": !isActive && position !== "middle",
-      "text-gray-300": position === "middle"
-    }
+    `rounded-md text-sm px-3 py-1.5 sm:text-base sm:px-3 sm:py-1 flex items-center justify-center bg-main ${
+      isActive
+        ? "bg-secondary text-white transition-colors duration-300 cursor-not-allowed"
+        : "hover:bg-secondary hover:text-white transition-colors duration-300 cursor-pointer"
+    }`
   )
 
-  return isActive || position === "middle" ? (
+  return isActive ? (
     <div className={className}>{page}</div>
   ) : (
-    <Link
-      href={href}
-      className={className}
-    >
+    <Link href={href} className={className}>
       {page}
     </Link>
   )
@@ -98,19 +82,20 @@ function PaginationNumber({
 function PaginationArrow({
   href,
   direction,
-  isDisabled
+  isDisabled,
 }: {
   href: string
   direction: "left" | "right"
   isDisabled?: boolean
 }) {
   const className = clsx(
-    "flex h-10 w-10 items-center justify-center rounded-md border",
+    "flex h-10 w-10 items-center justify-center rounded-md bg-main",
     {
       "pointer-events-none text-gray-300": isDisabled,
-      "hover:bg-gray-100": !isDisabled,
+      "hover:bg-secondary hover:text-white transition-colors duration-300":
+        !isDisabled,
       "mr-2 md:mr-4": direction === "left",
-      "ml-2 md:ml-4": direction === "right"
+      "ml-2 md:ml-4": direction === "right",
     }
   )
 
@@ -123,20 +108,13 @@ function PaginationArrow({
         className="rotate-180"
       />
     ) : (
-      <Icon
-        icon="weui:arrow-filled"
-        width="24"
-        height="24"
-      />
+      <Icon icon="weui:arrow-filled" width="24" height="24" />
     )
 
   return isDisabled ? (
     <div className={className}>{icon}</div>
   ) : (
-    <Link
-      className={className}
-      href={href}
-    >
+    <Link className={className} href={href}>
       {icon}
     </Link>
   )
