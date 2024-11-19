@@ -1,15 +1,16 @@
-interface ItemsNavbarProps {
+export interface ItemsNavbarProps {
   link: string
   name: string
   pathname: string
+  className?: string
 }
-const ItemsNavbar = ({ link, name, pathname }: ItemsNavbarProps) => {
+const ItemsNavbar = ({ link, name, pathname, className }: ItemsNavbarProps) => {
   return (
     <a
       href={link}
-      className={`rounded-md px-3 py-2 text-sm font-medium relative group md:hover:text-black  transition-all duration-300 ${
-        pathname !== link ? "text-black" : "text-secondary font-bold"
-      }`}
+      className={`rounded-md px-3 py-2 text-sm font-medium relative group transition-all duration-300 ${
+        pathname !== link ? "text-black md:hover:text-secondary" : "text-secondary font-bold md:hover:text-black" 
+      }` + className}
     >
       {name}
       <span

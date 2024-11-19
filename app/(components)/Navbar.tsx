@@ -2,33 +2,35 @@
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import ItemsNavbar from "@/components/shared/ItemsNavbar"
+import ItemsNavbar, { ItemsNavbarProps } from "@/components/shared/ItemsNavbar"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useAuthContext } from "@/contexts/auth-context"
 import { redirect } from "next/navigation"
 import { usePathname } from "next/navigation"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+import * as React from "react"
+import { cn } from "@/lib/utils"
+import { MenuIcon } from "lucide-react"
 
 export default function Component() {
   const { authUser, setAuthUser } = useAuthContext()
   const pathname = usePathname()
-  const items = [
-    {
-      name: "Inicio",
-      link: "/"
-    },
-    {
-      name: "Productos",
-      link: "/productos"
-    },
-    /*  {
-      name: "Preguntas Frecuentes",
-      link: "/preguntas-frecuentes"
-    }, */
-    {
-      name: "Contacto",
-      link: "/contacto"
-    }
-  ]
+  console.log(pathname)
+
   function handleLogout() {
     localStorage.removeItem("user")
     setAuthUser(null)
@@ -40,10 +42,7 @@ export default function Component() {
         <SheetTrigger asChild>
           <div className="flex flex-1 justify-end bg-main lg:hidden p-2">
             <div>
-              <Button
-                variant="outline"
-                size="icon"
-              >
+              <Button variant="outline" size="icon">
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
@@ -51,19 +50,71 @@ export default function Component() {
           </div>
         </SheetTrigger>
 
-        <SheetContent
-          side="left"
-          className="bg-main"
-        >
+        <SheetContent side="left" className="bg-main">
           <ul className="flex flex-col w-full justify-center gap-2 et-menu bg-main">
-            {items.map((item) => (
-              <ItemsNavbar
-                key={crypto.randomUUID()}
-                link={item.link}
-                name={item.name}
-                pathname={pathname || ""}
-              />
-            ))}
+            <ItemsNavbar link={"/"} name={"Inicio"} pathname={pathname || ""} />
+
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+            >
+              <AccordionItem value="item-1">
+                <AccordionTrigger
+                  className={`${
+                    pathname == "/productos" && "text-secondary font-bold"
+                  }`}
+                >
+                  Productos
+                </AccordionTrigger>
+                <AccordionContent>
+                  <section className="flex flex-col text-left pl-2">
+                    <ItemsListNavbar
+                      link={"/productos"}
+                      name={"Todos los productos"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=1"}
+                      name={"Pasteleria"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=2"}
+                      name={"Lunch"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=3"}
+                      name={"Perniles y carnes"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=4"}
+                      name={"Tortas"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=5"}
+                      name={"Combos y agregados"}
+                      pathname={pathname || ""}
+                    />
+                  </section>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            <ItemsNavbar
+              link={"contact"}
+              name={"Contacto"}
+              pathname={pathname || ""}
+            />
+
             {authUser?.user.isAdmin && (
               <ItemsNavbar
                 link={"/admins"}
@@ -105,14 +156,59 @@ export default function Component() {
       <nav className="hidden w-full border-y border-secondary py-4 lg:flex gap-6 bg-main">
         <div className="flex w-full justify-between items-center text-center bg-main px-4">
           <ul className="flex w-full items-center justify-start text-center flex-row gap-2">
-            {items.map((item) => (
-              <ItemsNavbar
-                key={crypto.randomUUID()}
-                link={item.link}
-                name={item.name}
-                pathname={pathname || ""}
-              />
-            ))}
+            <ItemsNavbar link={"/"} name={"Inicio"} pathname={pathname || ""} />
+
+            <NavigationMenu>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>
+                  <ItemsNavbar
+                    link={"/productos"}
+                    name={"Productos"}
+                    pathname={pathname || ""}
+                    className="hidden md:flex"
+                  />
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="bg-main w-full flex flex-col text-left">
+           
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=1"}
+                      name={"Pasteleria"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=2"}
+                      name={"Lunch"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=3"}
+                      name={"Perniles y carnes"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=4"}
+                      name={"Tortas"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=5"}
+                      name={"Combos y agregados"}
+                      pathname={pathname || ""}
+                    />
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenu>
+
+            <ItemsNavbar
+              link={"contact"}
+              name={"Contacto"}
+              pathname={pathname || ""}
+            />
+
             {authUser?.user.isAdmin && (
               <ItemsNavbar
                 link={"/admins"}
@@ -154,12 +250,21 @@ export default function Component() {
   )
 }
 
-function MenuIcon(props: any) {
+const ItemsListNavbar = ({ link, name, pathname }: ItemsNavbarProps) => {
   return (
-    <Icon
-      icon="material-symbols:menu"
-      width="24"
-      height="24"
-    />
+    <a
+      href={link}
+      className={`rounded-md px-3 py-2 text-sm font-medium relative group transition-all duration-300 hover:text-secondary w-full"
+      `}
+    >
+      {name}
+      {/* <span
+        className={`h-[3px] inline-block bg-transparent md:bg-secondary absolute left-1/2 -translate-x-1/2 bottom-[1px] transition-[width] ease duration-300 ${
+          pathname === link ? "w-full" : "w-0"
+        }`}
+      >
+        &nbsp;
+      </span> */}
+    </a>
   )
 }
