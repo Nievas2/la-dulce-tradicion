@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export interface ItemsNavbarProps {
   link: string
   name: string
@@ -6,11 +8,15 @@ export interface ItemsNavbarProps {
 }
 const ItemsNavbar = ({ link, name, pathname, className }: ItemsNavbarProps) => {
   return (
-    <a
+    <Link
       href={link}
-      className={`rounded-md px-3 py-2 text-sm font-medium relative group transition-all duration-300 ${
-        pathname !== link ? "text-black md:hover:text-secondary" : "text-secondary font-bold md:hover:text-black" 
-      }` + className}
+      className={
+        `rounded-md px-3 py-2 text-sm font-medium relative group transition-all duration-300 ${
+          pathname !== link
+            ? "text-black md:hover:text-secondary"
+            : "text-secondary font-bold md:hover:text-black"
+        }` + className
+      }
     >
       {name}
       <span
@@ -20,7 +26,7 @@ const ItemsNavbar = ({ link, name, pathname, className }: ItemsNavbarProps) => {
       >
         &nbsp;
       </span>
-    </a>
+    </Link>
   )
 }
 export default ItemsNavbar

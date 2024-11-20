@@ -54,11 +54,7 @@ export default function Component() {
           <ul className="flex flex-col w-full justify-center gap-2 et-menu bg-main">
             <ItemsNavbar link={"/"} name={"Inicio"} pathname={pathname || ""} />
 
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full"
-            >
+            <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
                 <AccordionTrigger
                   className={`${
@@ -77,30 +73,35 @@ export default function Component() {
 
                     <ItemsListNavbar
                       link={"/productos?page=1&query=&categoryId=1"}
+                      id="1"
                       name={"Pasteleria"}
                       pathname={pathname || ""}
                     />
 
                     <ItemsListNavbar
                       link={"/productos?page=1&query=&categoryId=2"}
+                      id="2"
                       name={"Lunch"}
                       pathname={pathname || ""}
                     />
 
                     <ItemsListNavbar
                       link={"/productos?page=1&query=&categoryId=3"}
+                      id="3"
                       name={"Perniles y carnes"}
                       pathname={pathname || ""}
                     />
 
                     <ItemsListNavbar
                       link={"/productos?page=1&query=&categoryId=4"}
+                      id="4"
                       name={"Tortas"}
                       pathname={pathname || ""}
                     />
 
                     <ItemsListNavbar
                       link={"/productos?page=1&query=&categoryId=5"}
+                      id="5"
                       name={"Combos y agregados"}
                       pathname={pathname || ""}
                     />
@@ -169,36 +170,40 @@ export default function Component() {
                   />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-main w-full flex flex-col text-left">
-           
-                    <ItemsListNavbar
-                      link={"/productos?page=1&query=&categoryId=1"}
-                      name={"Pasteleria"}
-                      pathname={pathname || ""}
-                    />
+                  <ItemsListNavbar
+                    link={"/productos?page=1&query=&categoryId=1"}
+                    id="1"
+                    name={"Pasteleria"}
+                    pathname={pathname || ""}
+                  />
 
-                    <ItemsListNavbar
-                      link={"/productos?page=1&query=&categoryId=2"}
-                      name={"Lunch"}
-                      pathname={pathname || ""}
-                    />
+                  <ItemsListNavbar
+                    link={"/productos?page=1&query=&categoryId=2"}
+                    id="2"
+                    name={"Lunch"}
+                    pathname={pathname || ""}
+                  />
 
-                    <ItemsListNavbar
-                      link={"/productos?page=1&query=&categoryId=3"}
-                      name={"Perniles y carnes"}
-                      pathname={pathname || ""}
-                    />
+                  <ItemsListNavbar
+                    link={"/productos?page=1&query=&categoryId=3"}
+                    id="3"
+                    name={"Perniles y carnes"}
+                    pathname={pathname || ""}
+                  />
 
-                    <ItemsListNavbar
-                      link={"/productos?page=1&query=&categoryId=4"}
-                      name={"Tortas"}
-                      pathname={pathname || ""}
-                    />
+                  <ItemsListNavbar
+                    link={"/productos?page=1&query=&categoryId=4"}
+                    id="4"
+                    name={"Tortas"}
+                    pathname={pathname || ""}
+                  />
 
-                    <ItemsListNavbar
-                      link={"/productos?page=1&query=&categoryId=5"}
-                      name={"Combos y agregados"}
-                      pathname={pathname || ""}
-                    />
+                  <ItemsListNavbar
+                    link={"/productos?page=1&query=&categoryId=5"}
+                    id="5"
+                    name={"Combos y agregados"}
+                    pathname={pathname || ""}
+                  />
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenu>
@@ -250,12 +255,26 @@ export default function Component() {
   )
 }
 
-const ItemsListNavbar = ({ link, name, pathname }: ItemsNavbarProps) => {
+const ItemsListNavbar = ({
+  link,
+  name,
+  pathname,
+  id,
+}: {
+  link: string
+  name: string
+  pathname: string
+  id?: string
+}) => {
+  const searchParams = new URLSearchParams(window.location.search)
+  const categoryId = searchParams.get("categoryId")
+
   return (
     <a
       href={link}
       className={`rounded-md px-3 py-2 text-sm font-medium relative group transition-all duration-300 hover:text-secondary w-full"
-      `}
+      ${categoryId === id && "text-secondary"}
+        `}
     >
       {name}
       {/* <span
