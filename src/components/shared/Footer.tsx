@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="flex flex-col gap-2 mx-auto text-center lg:text-left lg:mx-0">
           <div className="flex flex-row justify-center items-center lg:justify-start gap-2">
             <img
-              src="/flor2.png"
+              src="/flor.png"
               alt="logo"
               height="80"
               width="80"
