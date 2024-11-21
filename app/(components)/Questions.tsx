@@ -5,9 +5,9 @@ const Questions = () => {
   return (
     <div className="w-full max-w-8xl">
       <div className="flex flex-col w-full gap-10">
-        <h1 className="text-4xl font-bold mb-6 text-center">
+        {/* <h1 className="text-4xl font-bold mb-6 text-center">
           Preguntas Frecuentes
-        </h1>
+        </h1> */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
           <Card className="overflow-hidden md:col-span-1 lg:col-span-2 bg-main shadow-md">
             <CardContent className="p-6 relative">

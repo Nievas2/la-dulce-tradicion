@@ -29,7 +29,6 @@ import { MenuIcon } from "lucide-react"
 export default function Component() {
   const { authUser, setAuthUser } = useAuthContext()
   const pathname = usePathname()
-  console.log(pathname)
 
   function handleLogout() {
     localStorage.removeItem("user")
@@ -277,13 +276,6 @@ const ItemsListNavbar = ({
         `}
     >
       {name}
-      {/* <span
-        className={`h-[3px] inline-block bg-transparent md:bg-secondary absolute left-1/2 -translate-x-1/2 bottom-[1px] transition-[width] ease duration-300 ${
-          pathname === link ? "w-full" : "w-0"
-        }`}
-      >
-        &nbsp;
-      </span> */}
     </a>
   )
 }
