@@ -5,6 +5,7 @@ import Carrousel from "./(components)/Carrousel"
 import Questions from "./(components)/Questions"
 import CategoriesSection from "./(components)/CategoriesSection"
 import Hero from "./(components)/Hero"
+import Redes from "@/components/shared/Redes"
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <div className="px-4">
         <Questions />
         <CategoriesSection />
+        <Redes />
       </div>
     </main>
   )
