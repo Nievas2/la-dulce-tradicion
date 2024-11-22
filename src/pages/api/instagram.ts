@@ -13,8 +13,8 @@ export default async function handler(
     const response = await axios.get(url)
     const data = response.data.data
     res.status(200).json(data)
-  } catch (error) {
+  } catch (error : any) {
     console.error("Error fetching Instagram posts:", error)
-    res.status(500).json({ error: "Failed to fetch Instagram posts" })
+    res.status(500).json({ error: "Failed to fetch Instagram posts" + error.message })
   }
 }
