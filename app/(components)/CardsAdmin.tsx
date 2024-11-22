@@ -12,7 +12,6 @@ interface CardProps {
   product: Producto
 }
 const CardsAdmin = ({ product }: CardProps) => {
-/*   console.log(product); */
   
   return (
     <div
