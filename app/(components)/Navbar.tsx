@@ -110,7 +110,7 @@ export default function Component() {
             </Accordion>
 
             <ItemsNavbar
-              link={"contact"}
+              link={"contacto"}
               name={"Contacto"}
               pathname={pathname || ""}
             />
@@ -208,7 +208,7 @@ export default function Component() {
             </NavigationMenu>
 
             <ItemsNavbar
-              link={"contact"}
+              link={"contacto"}
               name={"Contacto"}
               pathname={pathname || ""}
             />

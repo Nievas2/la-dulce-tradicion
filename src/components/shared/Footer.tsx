@@ -11,15 +11,10 @@ const Footer = () => {
       <div className="flex flex-col gap-10 lg:flex-row lg:gap-4 items-start justify-between mx-auto max-w-8xl w-full px-6 md:px-8 py-10">
         <div className="flex flex-col gap-2 mx-auto text-center lg:text-left lg:mx-0">
           <div className="flex flex-row justify-center items-center lg:justify-start gap-2">
-            <img
-              src="/flor.png"
-              alt="logo"
-              height="80"
-              width="80"
-            />
+            <img src="/flor.png" alt="logo" height="80" width="80" />
           </div>
           <p className="text-base max-w-[342px]">
-            Flor & Lucas - Pastelería y algo más
+            Desde 2018 dedicados a la cocina rica y abundante.
           </p>
         </div>
 
@@ -71,10 +66,7 @@ const Footer = () => {
                 className="flex justify-center items-center shadow-md shadow-secondary rounded-full p-[10px] h-auto hover:bg-secondary transition-all duration-300 hover:shadow-none"
                 target="_blank"
               >
-                <Icon
-                  icon="mdi:instagram"
-                  width={28}
-                />
+                <Icon icon="mdi:instagram" width={28} />
               </Link>
 
               <Link
@@ -82,10 +74,7 @@ const Footer = () => {
                 className="flex justify-center items-center shadow-md shadow-secondary rounded-full p-[10px] h-auto hover:bg-secondary transition-all duration-300 hover:shadow-none"
                 target="_blank"
               >
-                <Icon
-                  icon="ic:baseline-whatsapp"
-                  width={28}
-                />
+                <Icon icon="ic:baseline-whatsapp" width={28} />
               </Link>
             </div>
           </div>
