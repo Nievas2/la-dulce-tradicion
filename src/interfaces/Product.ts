@@ -2,7 +2,7 @@ import { Category } from "./Category"
 import { ImagesProductAsocciations } from "./ImagesProductAsocciation"
 import { SubCategoryProduct } from "./SubCategoryProduct"
 
-export interface Producto {
+export interface Product {
   id: number
   name: string
   description: string

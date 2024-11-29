@@ -2,7 +2,6 @@
 import Cards from "@/components/shared/Cards"
 import Pagination from "@/components/shared/Pagination"
 import Search from "@/components/shared/Search"
-import { Producto } from "@/interfaces/Product"
 import { getProducts } from "@/services/ProductService"
 import { useQuery } from "@tanstack/react-query"
 import { Suspense, useEffect } from "react"
@@ -17,6 +16,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import NotFound from "../(components)/NotFound"
+import { Product } from "@/interfaces/Product"
 
 const page = ({
   searchParams,
@@ -73,8 +73,8 @@ const page = ({
             <NotFound />
           </div>
         ) : (
-          data?.data?.products.map((producto: Producto) => (
-            <Cards product={producto} key={crypto.randomUUID()} />
+          data?.data?.products.map((product: Product) => (
+            <Cards product={product} key={crypto.randomUUID()} />
           ))
         )}
       </section>

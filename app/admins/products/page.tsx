@@ -2,7 +2,7 @@
 import { getProducts } from "@/services/ProductService"
 import { useQuery } from "@tanstack/react-query"
 import CardsAdmin from "../../(components)/CardsAdmin"
-import { Producto } from "@/interfaces/Product"
+import { Product } from "@/interfaces/Product"
 import {
   Dialog,
   DialogContent,
@@ -62,7 +62,7 @@ const page = ({
         </Dialog>
       </div>
       <section className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-        {data?.data?.products.map((product: Producto) => (
+        {data?.data?.products.map((product: Product) => (
           <CardsAdmin
             product={product}
             key={crypto.randomUUID()}

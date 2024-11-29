@@ -2,9 +2,13 @@
 import { User } from '@/interfaces/User';
 import { decodeJwt } from '@/utils/decodeJwt';
 import { createContext, useContext, useEffect, useState } from 'react';
-
+interface UserStorage {
+  email: string
+  id: string
+  isAdmin: boolean
+}
 export interface AuthUser {
-  user  : any;
+  user  : UserStorage;
   token : string;
 }
 

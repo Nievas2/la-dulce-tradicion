@@ -1,6 +1,6 @@
 "use client"
 
-import { Producto } from "@/interfaces/Product"
+import { Product } from "@/interfaces/Product"
 import { Icon } from "@iconify/react/dist/iconify.js"
 /* import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'; */
 import clsx from "clsx"
@@ -14,7 +14,7 @@ export default function Pagination({
 }: {
   totalPages: number
   disabled: boolean
-  products: Producto[]
+  products: Product[]
 }) {
   // NOTE: comment in this code when you get to this point in the course
   const pathname = usePathname()

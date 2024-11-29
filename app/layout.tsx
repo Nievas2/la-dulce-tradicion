@@ -1,8 +1,5 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import FloatButtons from "./(components)/FloatButtons"
-import ProviderQuery from "@/utils/ProviderQuery"
-import { AuthContextProvider } from "@/contexts/auth-context"
 import Body from "./(components)/Body"
 import { Quicksand } from "next/font/google"
 import Footer from "@/components/shared/Footer"

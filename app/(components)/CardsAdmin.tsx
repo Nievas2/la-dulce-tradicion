@@ -5,11 +5,11 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
-import { Producto } from "@/interfaces/Product"
+import { Product } from "@/interfaces/Product"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import ChangeProduct from "../admins/products/(components)/ChangeProduct"
 interface CardProps {
-  product: Producto
+  product: Product
 }
 const CardsAdmin = ({ product }: CardProps) => {
   

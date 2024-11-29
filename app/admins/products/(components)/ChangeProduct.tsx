@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Category } from "@/interfaces/Category"
-import { Producto } from "@/interfaces/Product"
+import { Product } from "@/interfaces/Product"
 import { getCategories } from "@/services/CategoryService"
 import { postProduct, putProduct } from "@/services/ProductService"
 import { ProductSchema } from "@/utils/schemas/ProductSchema"
@@ -28,7 +28,7 @@ export interface ProductForm {
   CategoryName: string
 }
 interface ChangeProductProps {
-  product: Producto | undefined
+  product: Product | undefined
   lastId?: number
 }
 const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {

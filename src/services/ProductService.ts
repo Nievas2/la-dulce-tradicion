@@ -1,5 +1,4 @@
 import axiosInstance from "@/api/axiosInstance"
-import { Producto } from "@/interfaces/Product"
 import { ProductForm } from "../../app/admins/products/(components)/ChangeProduct"
 import db from "../../db"
 
