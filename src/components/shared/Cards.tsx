@@ -25,7 +25,7 @@ interface CardProps {
 }
 
 const Cards = ({ product }: CardProps) => {
-  const [isModalOpen, setModalOpen] = useState(true)
+  const [isModalOpen, setModalOpen] = useState(false)
   const [imageSelected, setImageSelected] = useState(0)
   const [imagePosition, setImagePosition] = useState({
     x: 0,
