@@ -23,7 +23,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import Cookies from "js-cookie"
 import { MenuIcon } from "lucide-react"
 
 export default function Component() {
@@ -33,6 +33,7 @@ export default function Component() {
   function handleLogout() {
     localStorage.removeItem("user")
     setAuthUser(null)
+    Cookies.remove("token")
   }
   return (
     <header className="flex flex-col w-full max-w-8xl h-full shrink-0 bg-main sticky top-0 z-50">
