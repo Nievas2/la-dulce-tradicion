@@ -27,28 +27,6 @@ interface CardProps {
 const Cards = ({ product }: CardProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const [imageSelected, setImageSelected] = useState(0)
-  const [imagePosition, setImagePosition] = useState({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  })
-  const imageRef = useRef<HTMLDivElement>(null)
-
-  const openModal = () => {
-    if (imageRef.current) {
-      const rect = imageRef.current.getBoundingClientRect()
-      setImagePosition({
-        x: rect.x,
-        y: rect.y,
-        width: rect.width,
-        height: rect.height,
-      })
-    }
-    setModalOpen(true)
-  }
-
-  const closeModal = () => setModalOpen(false)
 
   useEffect(() => {
     // Deshabilitar scroll al abrir el modal
@@ -68,22 +46,22 @@ const Cards = ({ product }: CardProps) => {
     <div className="relative">
       {/* Producto */}
       <div
-        ref={imageRef}
         className="flex flex-col w-full bg-white rounded-b-lg px-2 pt-2 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
-        onClick={openModal}
+        onClick={() => setModalOpen(true)}
       >
         <Image
           src={
             product.ImagesProductAsocciations[0]?.ImageProduct.image ??
             "/fondos/fondos1.jpg"
           }
-          className="w-full object-cover"
-          width={225}
-          height={225}
+          className="w-full object-cover aspect-square"
+          width={400}
+          height={400}
           alt={product.name}
         />
-        <div className="flex flex-col gap-1 py-1">
+        <div className="flex flex-col gap-2 py-1">
           <h3 className="text-lg font-bold leading-none">{product.name}</h3>
+          <p className="text-base font-extralight line-clamp-3">{product.description}</p>
           <h4 className="text-lg text-end leading-none">${product.price}</h4>
         </div>
       </div>
@@ -91,51 +69,29 @@ const Cards = ({ product }: CardProps) => {
       {/* Modal */}
       <AnimatePresence>
         {isModalOpen && (
+          /* Bg modal */
           <motion.div
             className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={closeModal}
+            onClick={() => setModalOpen(false)}
           >
             <Icon
               icon="material-symbols:close-rounded"
               width="60"
               height="60"
               className="z-50 top-0 right-0 absolute p-2 cursor-pointer"
-              onClick={closeModal}
+              onClick={() => setModalOpen(false)}
             />
-            <div className="flex flex-col lg:flex-row items-center justify-center max-h-[90%] lg:max-w-[80%]">
-              {/* Imagen animada */}
+            {/* Content Modal*/}
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center w-full h-full md:max-w-[80%]">
+              {/* Carousel */}
               <motion.div
-                className="sticky top-0 z-20 size-[210px] lg:size-[390px] p-2 bg-white flex items-center justify-center basis-5/12"
+                className="p-2 bg-white flex items-center justify-center basis-5/12 w-full h-[300px] lg:h-[60vh] lg:rounded-l-md"
                 onClick={(e) => e.stopPropagation()}
-                initial={{
-                  x: imagePosition.x - 560,
-                  y: imagePosition.y - 260,
-                }}
-                /* initial={{
-                x: imagePosition.x - 560,
-                y: imagePosition.y - 260,
-              }}
-              animate={{
-                x: 0,
-                y: 0,
-                transition: { duration: 3 },
-              }} */
-                animate={{
-                  x: "50%",
-                  y: "50%",
-                  translateX: "-50%",
-                  translateY: "-50%",
-                  transition: { duration: 0.5 },
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.5,
-                  transition: { duration: 0.3 },
-                }}
               >
+                {/* Carousel Destock */}
                 <div className="hidden lg:flex items-center justify-center gap-4 sm">
                   <div className="flex flex-col items-center gap-6">
                     {product.ImagesProductAsocciations.map(
@@ -166,18 +122,21 @@ const Cards = ({ product }: CardProps) => {
                     }
                   </div>
                 </div>
+                {/* carousel Mobile */}
                 <div className="flex lg:hidden items-center justify-center">
                   <ProductCarousel images={product.ImagesProductAsocciations} />
                 </div>
               </motion.div>
+              <hr />
+              {/* Content */}
               <div
-                className="flex flex-col items-center bg-white p-2 rounded-lg shadow-lg h-full lg:h-[400px] w-full overflow-y-auto basis-7/12"
+                className="flex flex-col items-center bg-white p-8 h-full lg:h-[450px] xl:w-[400px] w-full overflow-y-auto basis-8/12 lg:rounded-md"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Contenido estático */}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 w-full">
                   <h2 className="text-3xl font-semibold">{product.name}</h2>
-                  <h3 className="text-xl">{product.price}</h3>
+                  <h3 className="text-xl">$ {product.price}</h3>
                   <p
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   ></p>

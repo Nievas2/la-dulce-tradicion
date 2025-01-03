@@ -3,9 +3,10 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
+  CarouselPrevious,
 } from "@/components/ui/carousel"
 import { ImagesProductAsocciations } from "@/interfaces/ImagesProductAsocciation"
+import Image from "next/image"
 interface ProductCarouselProps {
   images: ImagesProductAsocciations[]
 }
@@ -14,19 +15,21 @@ const ProductCarousel = ({ images }: ProductCarouselProps) => {
     <Carousel
       opts={{
         align: "start",
-        loop: true
+        loop: true,
       }}
       /* plugins={[
           Autoplay({
             delay: 2000
           })
         ]} */
-      className="max-h-80 max-w-80"
+      className="size-64 max-w-64 max-h-64"
     >
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={crypto.randomUUID()}>
-            <img
+            <Image
+              width={320}
+              height={320}
               src={image.ImageProduct.image}
               alt="imagen del producto"
             />

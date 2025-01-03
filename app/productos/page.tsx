@@ -65,7 +65,7 @@ const page = ({
         <Search placeholder="Buscar productos..." />
         <Categories />
       </div>
-      <section className="mx-auto w-full grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-x-6 gap-y-3">
+      <section className="mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-x-6 gap-y-3">
         {isPending ? (
           <div className="min-h-screen flex">Loading...</div>
         ) : data?.data?.products.length === 0 ? (
