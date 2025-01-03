@@ -33,7 +33,7 @@ export default function Component() {
   function handleLogout() {
     localStorage.removeItem("user")
     setAuthUser(null)
-    Cookies.remove("token")
+    Cookies.set("token", "")
   }
   return (
     <header className="flex flex-col w-full max-w-8xl h-full shrink-0 bg-main sticky top-0 z-50">
