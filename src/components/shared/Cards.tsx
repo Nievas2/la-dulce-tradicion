@@ -19,6 +19,8 @@ import {
   SelectItem,
 } from "@/components/ui/select"
 import { SubCategoryProduct } from "@/interfaces/SubCategoryProduct"
+import { CartProducts, useCartStore } from "@/stores/cart.store"
+import { SubCategory } from "@/interfaces/SubCategory"
 
 interface CardProps {
   product: Product
@@ -27,6 +29,10 @@ interface CardProps {
 const Cards = ({ product }: CardProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const [imageSelected, setImageSelected] = useState(0)
+  const [subCategory, setSubCategory] = useState<number | undefined>()
+  const [amount, setAmount] = useState(1)
+  const [error, setError] = useState<string | undefined>()
+  const { authUser } = useAuthContext()
 
   useEffect(() => {
     // Deshabilitar scroll al abrir el modal
@@ -41,6 +47,47 @@ const Cards = ({ product }: CardProps) => {
       document.body.style.overflow = "auto"
     }
   }, [isModalOpen])
+
+  const addProduct = useCartStore((state) => state.addProduct)
+  const productStore = useCartStore((state) =>
+    state.cart.find(
+      (productStorage) => productStorage.userId === authUser?.user.id
+    )
+  )
+  let isProductInCart
+
+  if (
+    authUser != null &&
+    productStore != undefined &&
+    productStore.products.length > 0
+  ) {
+    isProductInCart = (
+      productStore as { userId: string; products: CartProducts[] }
+    ).products.some(
+      (productStorage: CartProducts) => productStorage.product.id === product.id
+    )
+  }
+
+  function handleAddCart() {
+    if (subCategory == undefined || amount < 1) {
+      return setError("Todos los cambos son requeridos")
+    }
+
+    if (!authUser) return
+    setError(undefined)
+    console.log(product.SubCategoryProducts[Number(subCategory)]
+    .SubCategory as SubCategory,);
+    
+    addProduct({
+      userId: authUser?.user.id,
+      product: {
+        product: product,
+        amount: 1,
+        subCategory: product.SubCategoryProducts[Number(subCategory)]
+          .SubCategory as SubCategory,
+      },
+    })
+  }
 
   return (
     <div className="relative">
@@ -61,7 +108,9 @@ const Cards = ({ product }: CardProps) => {
         />
         <div className="flex flex-col gap-2 py-1">
           <h3 className="text-lg font-bold leading-none">{product.name}</h3>
-          <p className="text-base font-extralight line-clamp-3">{product.description}</p>
+          <p className="text-base font-extralight line-clamp-3">
+            {product.description}
+          </p>
           <h4 className="text-lg text-end leading-none">${product.price}</h4>
         </div>
       </div>
@@ -140,49 +189,71 @@ const Cards = ({ product }: CardProps) => {
                   <p
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   ></p>
-                  <div className="flex gap-3 items-end justify-start">
-                    <div>
-                      {product.SubCategoryProducts.length > 0 && (
-                        <>
-                          <Label>Categoria</Label>
-                          <Select>
-                            <SelectTrigger className="w-[180px]">
-                              <SelectValue placeholder="Categoria" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {product.SubCategoryProducts &&
-                                product.SubCategoryProducts.map(
-                                  (subCategoryProducts: SubCategoryProduct) => (
-                                    <SelectItem
-                                      className="text-start"
-                                      key={crypto.randomUUID()}
-                                      value={
-                                        subCategoryProducts.SubCategory.date
-                                      }
-                                    >
-                                      {subCategoryProducts.SubCategory.date} :{" "}
-                                      {subCategoryProducts.SubCategory.price}
-                                    </SelectItem>
-                                  )
-                                )}
-                            </SelectContent>
-                          </Select>
-                        </>
-                      )}
-                    </div>
-                    <div>
-                      <Label>Cantidad</Label>
-                      <Input
-                        className="w-[68px] text-center"
-                        defaultValue={1}
-                        min={1}
-                        type="number"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Button variant="secondary">Agregar al carrito</Button>
-                  </div>
+
+                  {isProductInCart ? (
+                    <small className="flex items-center justify-center text-center w-60 font-bold">
+                      Este producto ya esta agregado al carrito
+                    </small>
+                  ) : (
+                    <>
+                      <div className="flex gap-3 items-end justify-start">
+                        <div>
+                          {product.SubCategoryProducts.length > 0 && (
+                            <>
+                              <Label>Categoria</Label>
+                              <Select
+                                onValueChange={(e) => setSubCategory(Number(e))}
+                              >
+                                <SelectTrigger className="w-[180px]">
+                                  <SelectValue placeholder="Categoria" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {product.SubCategoryProducts &&
+                                    product.SubCategoryProducts.map(
+                                      (
+                                        subCategoryProducts: SubCategoryProduct,
+                                        index
+                                      ) => (
+                                        <SelectItem
+                                          className="text-start"
+                                          key={crypto.randomUUID()}
+                                          value={index.toString()}
+                                        >
+                                          {subCategoryProducts.SubCategory.date}{" "}
+                                          :{" "}
+                                          {
+                                            subCategoryProducts.SubCategory
+                                              .price
+                                          }
+                                        </SelectItem>
+                                      )
+                                    )}
+                                </SelectContent>
+                              </Select>
+                            </>
+                          )}
+                        </div>
+                        <div>
+                          <Label>Cantidad</Label>
+                          <Input
+                            className="w-[68px] text-center"
+                            defaultValue={1}
+                            onChange={(e) => setAmount(Number(e.target.value))}
+                            min={1}
+                            type="number"
+                          />
+                        </div>
+                      </div>
+                      {error && <small className="text-red-500">{error}</small>}
+                      <div>
+                        {authUser != null && (
+                          <Button variant="secondary" onClick={handleAddCart}>
+                            Agregar al carrito
+                          </Button>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

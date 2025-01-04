@@ -22,19 +22,36 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import * as React from "react"
 import Cookies from "js-cookie"
 import { MenuIcon } from "lucide-react"
+import { useEffect, useState } from "react"
+import Cart from "@/components/shared/Cart"
 
 export default function Component() {
   const { authUser, setAuthUser } = useAuthContext()
   const pathname = usePathname()
+  const [cartOpen, setCartOpen] = useState(false)
+
+  useEffect(() => {
+    // Deshabilitar scroll al abrir el modal
+    if (cartOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "auto"
+    }
+
+    // Limpiar estilo al desmontar el componente
+    return () => {
+      document.body.style.overflow = "auto"
+    }
+  }, [cartOpen])
 
   function handleLogout() {
     localStorage.removeItem("user")
     setAuthUser(null)
     Cookies.set("token", "")
   }
+
   return (
     <header className="flex flex-col w-full max-w-8xl h-full shrink-0 bg-main sticky top-0 z-50">
       {/* PARA MOBILE */}
@@ -122,6 +139,23 @@ export default function Component() {
                 name={"Administración"}
                 pathname={pathname || ""}
               />
+            )}
+            {/* Cart button mobile */}
+            {authUser != null && (
+              <div className="flex items-center md:hidden w-full">
+                <button
+                  type="button"
+                  className="absolute right-16 flex items-center justify-center rounded-md text-black-main hover:bg-gray-main/80 hover:text-black-main focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  aria-controls="mobile-menu"
+                  aria-expanded={cartOpen}
+                  onClick={() => setCartOpen(!cartOpen)}
+                >
+                  <span className="sr-only">Open main menu</span>
+
+                  {/* Open */}
+                  <Icon icon="mdi:cart" width="24" height="24" />
+                </button>
+              </div>
             )}
             {authUser ? (
               <Button
@@ -221,6 +255,23 @@ export default function Component() {
                 pathname={pathname || ""}
               />
             )}
+            {/* Cart button desktop */}
+            {authUser != null && (
+              <div>
+                <button
+                  type="button"
+                  className="px-3 py-2 inline-flex items-center justify-center rounded-md text-black-main hover:bg-gray-main/80 hover:text-black-main focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  aria-controls="mobile-menu"
+                  aria-expanded={cartOpen}
+                  onClick={() => setCartOpen(!cartOpen)}
+                >
+                  <span className="sr-only">Open main menu</span>
+
+                  {/* Open */}
+                  <Icon icon="mdi:cart" width="24" height="24" />
+                </button>
+              </div>
+            )}
           </ul>
           {authUser ? (
             <Button
@@ -251,6 +302,8 @@ export default function Component() {
           )}
         </div>
       </nav>
+      
+      <Cart cartOpen={cartOpen} setCartOpen={setCartOpen} />
     </header>
   )
 }
