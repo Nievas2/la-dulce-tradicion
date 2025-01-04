@@ -75,9 +75,11 @@ const Cards = ({ product }: CardProps) => {
 
     if (!authUser) return
     setError(undefined)
-    console.log(product.SubCategoryProducts[Number(subCategory)]
-    .SubCategory as SubCategory,);
-    
+    console.log(
+      product.SubCategoryProducts[Number(subCategory)]
+        .SubCategory as SubCategory
+    )
+
     addProduct({
       userId: authUser?.user.id,
       product: {
@@ -108,9 +110,10 @@ const Cards = ({ product }: CardProps) => {
         />
         <div className="flex flex-col gap-2 py-1">
           <h3 className="text-lg font-bold leading-none">{product.name}</h3>
-          <p className="text-base font-extralight line-clamp-3">
-            {product.description}
-          </p>
+          <p
+            className="text-base font-extralight line-clamp-3"
+            dangerouslySetInnerHTML={{ __html: product.description }}
+          />
           <h4 className="text-lg text-end leading-none">${product.price}</h4>
         </div>
       </div>
