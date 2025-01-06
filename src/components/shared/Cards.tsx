@@ -103,23 +103,23 @@ const Cards = ({ product }: CardProps) => {
             product.ImagesProductAsocciations[0]?.ImageProduct.image ??
             "/fondos/fondos1.jpg"
           }
-          className="w-full object-cover aspect-square"
+          className="w-full object-cover aspect-square rounded-lg"
           width={400}
           height={400}
           alt={product.name}
         />
         <div className="flex flex-col gap-2 py-1">
-          <h3 className="text-lg font-bold leading-none">{product.name}</h3>
+          <div className="flex items-center w-full">
+{/*             <h4 className="text-lg text-start leading-none font-bold text-red-main w-full">{product.Category.name}</h4>
+ */}          <h3 className="text-lg font-bold leading-none w-full">{product.name}</h3>
+            <h4 className="text-md text-end leading-none border border-gray-400 py-2 px-4 w-fit rounded-full">
+              ${product.price}
+            </h4>
+          </div>
           <p
             className="text-base font-extralight line-clamp-2"
             dangerouslySetInnerHTML={{ __html: product.description }}
           />
-          <div className="flex items-center w-full">
-            <h4 className="text-lg text-start leading-none font-bold text-red-main w-full">{product.Category.name}</h4>
-            <h4 className="text-lg text-end leading-none border border-gray-400 py-2 px-4 w-fit rounded-full">
-              ${product.price}
-            </h4>
-          </div>
         </div>
       </div>
 

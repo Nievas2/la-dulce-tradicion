@@ -46,7 +46,7 @@ const page = ({
   console.log(data)
 
   return (
-    <section className="w-full flex flex-col gap-4 justify-center items-center pt-2 p-7">
+    <section className="w-full flex flex-col gap-4 justify-center items-center pt-2 p-4">
       <div className="flex justify-start items-start w-full ">
         <Breadcrumb>
           <BreadcrumbList>
@@ -60,30 +60,37 @@ const page = ({
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-
-      <div className="flex w-full gap-4">
-        <Search placeholder="Buscar productos..." />
-        <Categories />
-      </div>
-      {isPending ? (
-        <div className="min-h-screen flex">Loading...</div>
-      ) : data?.data?.products.length === 0 ? (
-        <div className="flex justify-center items-center w-full col-span-full">
-          <NotFound />
+      <section className="flex flex-col lg:flex-row w-full gap-4">
+        <div className="flex flex-col">
+          <Categories />
         </div>
-      ) : (
-        <section className="mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-x-6 gap-y-3 lg:gap-12">
-          {data?.data?.products.map((product: Product) => (
-            <Cards product={product} key={crypto.randomUUID()} />
-          ))}
-        </section>
-      )}
 
-      <Pagination
-        totalPages={data?.data?.totalPages}
-        disabled={isPending}
-        products={data?.data?.products}
-      />
+        <div className="flex flex-col w-full items-center justify-center gap-4">
+          <div className="flex w-full gap-4">
+            <Search placeholder="Buscar productos..." />
+          </div>
+
+          {isPending ? (
+            <div className="min-h-screen flex">Loading...</div>
+          ) : data?.data?.products.length === 0 ? (
+            <div className="flex justify-center items-center w-full col-span-full">
+              <NotFound />
+            </div>
+          ) : (
+            <section className="mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-x-6 gap-y-3 xl:gap-8">
+              {data?.data?.products.map((product: Product) => (
+                <Cards product={product} key={crypto.randomUUID()} />
+              ))}
+            </section>
+          )}
+
+          <Pagination
+            totalPages={data?.data?.totalPages}
+            disabled={isPending}
+            products={data?.data?.products}
+          />
+        </div>
+      </section>
     </section>
   )
 }

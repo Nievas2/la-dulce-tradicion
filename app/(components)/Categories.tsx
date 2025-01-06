@@ -1,34 +1,16 @@
 "use client"
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem
-} from "@/components/ui/select"
-import { Category } from "@/interfaces/Category"
+import { Button } from "@/components/ui/button"
 import { useSearchParams, usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const Categories = () => {
-  const [categories, setCategories] = useState<Category[]>()
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-  useEffect(() => {
-    fetchCategories()
-  }, [])
+  const params = new URLSearchParams(searchParams!)
+  const categoryId = searchParams?.get("categoryId")
 
-  async function fetchCategories() {
-    try {
-      const response = await fetch("/api/categories").then((res) => res.json())
-      setCategories(response)
-    } catch (error) {
-      throw error
-    }
-  }
   function handleChange(value: string) {
-    const params = new URLSearchParams(searchParams!)
     params.set("page", "1")
     params.set("query", searchParams?.get("query")?.toString() || "")
     if (value) {
@@ -43,8 +25,95 @@ const Categories = () => {
 
     replace(`${pathname}?${params.toString()}`)
   }
+
   return (
-    <Select onValueChange={handleChange} defaultValue={searchParams?.get("categoryId") || "nothing"}>
+    <section className="flex flex-col gap-4">
+      <h2 className="text-xl text-center lg:text-start font-bold">Tipos de productos</h2>
+      <ul className="flex flex-row flex-wrap gap-4 items-center justify-center lg:justify-start lg:items-start lg:flex-col lg:gap-2">
+        <li>
+          {categoryId && (
+            <Button
+              onClick={() => handleChange("nothing")}
+              variant="items"
+              size="ghost"
+            >
+              Todos
+            </Button>
+          )}
+        </li>
+        <li>
+          <Button
+            onClick={() => handleChange("1")}
+            className={
+              categoryId === "1"
+                ? "bg-secondary text-white hover:bg-secondary/80"
+                : ""
+            }
+            variant="items"
+            size="ghost"
+          >
+            Pasteleria
+          </Button>
+        </li>
+        <li>
+          <Button
+            onClick={() => handleChange("2")}
+            variant="items"
+            className={
+              categoryId === "2"
+                ? "bg-secondary text-white hover:bg-secondary/80"
+                : ""
+            }
+            size="ghost"
+          >
+            Lunch
+          </Button>
+        </li>
+        <li>
+          <Button
+            onClick={() => handleChange("3")}
+            variant="items"
+            className={
+              categoryId === "3"
+                ? "bg-secondary text-white hover:bg-secondary/80"
+                : ""
+            }
+            size="ghost"
+          >
+            Perniles y carnes
+          </Button>
+        </li>
+        <li>
+          <Button
+            onClick={() => handleChange("4")}
+            variant="items"
+            className={
+              categoryId === "4"
+                ? "bg-secondary text-white hover:bg-secondary/80"
+                : ""
+            }
+            size="ghost"
+          >
+            Tortas
+          </Button>
+        </li>
+        <li>
+          <Button
+            onClick={() => handleChange("5")}
+            variant="items"
+            className={
+              categoryId === "5"
+                ? "bg-secondary text-white hover:bg-secondary/80"
+                : ""
+            }
+            size="ghost"
+          >
+            Combos y agregados
+          </Button>
+        </li>
+      </ul>
+    </section>
+    /*     <Select onValueChange={handleChange} defaultValue={searchParams?.get("categoryId") || "nothing"}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Categorias" />
       </SelectTrigger>
@@ -59,10 +128,8 @@ const Categories = () => {
               {category.name}
             </SelectItem>
           ))}
-        {/*         <SelectItem value="dark">Dark</SelectItem>
-        <SelectItem value="system">System</SelectItem> */}
       </SelectContent>
-    </Select>
+    </Select> */
   )
 }
 export default Categories
