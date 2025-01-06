@@ -95,7 +95,7 @@ const Cards = ({ product }: CardProps) => {
     <div className="relative">
       {/* Producto */}
       <div
-        className="flex flex-col w-full bg-white rounded-b-lg px-2 pt-2 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
+        className="flex flex-col w-full h-full bg-white rounded-b-lg px-2 py-2 gap-4 shadow-md hover:border-2 hover:border-secondary hover:shadow-none hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
         onClick={() => setModalOpen(true)}
       >
         <Image
@@ -111,10 +111,15 @@ const Cards = ({ product }: CardProps) => {
         <div className="flex flex-col gap-2 py-1">
           <h3 className="text-lg font-bold leading-none">{product.name}</h3>
           <p
-            className="text-base font-extralight line-clamp-3"
+            className="text-base font-extralight line-clamp-2"
             dangerouslySetInnerHTML={{ __html: product.description }}
           />
-          <h4 className="text-lg text-end leading-none">${product.price}</h4>
+          <div className="flex items-center w-full">
+            <h4 className="text-lg text-start leading-none font-bold text-red-main w-full">{product.Category.name}</h4>
+            <h4 className="text-lg text-end leading-none border border-gray-400 py-2 px-4 w-fit rounded-full">
+              ${product.price}
+            </h4>
+          </div>
         </div>
       </div>
 

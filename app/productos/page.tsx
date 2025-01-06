@@ -65,19 +65,19 @@ const page = ({
         <Search placeholder="Buscar productos..." />
         <Categories />
       </div>
-      <section className="mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-x-6 gap-y-3">
-        {isPending ? (
-          <div className="min-h-screen flex">Loading...</div>
-        ) : data?.data?.products.length === 0 ? (
-          <div className="flex justify-center items-center w-full col-span-full">
-            <NotFound />
-          </div>
-        ) : (
-          data?.data?.products.map((product: Product) => (
+      {isPending ? (
+        <div className="min-h-screen flex">Loading...</div>
+      ) : data?.data?.products.length === 0 ? (
+        <div className="flex justify-center items-center w-full col-span-full">
+          <NotFound />
+        </div>
+      ) : (
+        <section className="mx-auto w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-x-6 gap-y-3 lg:gap-12">
+          {data?.data?.products.map((product: Product) => (
             <Cards product={product} key={crypto.randomUUID()} />
-          ))
-        )}
-      </section>
+          ))}
+        </section>
+      )}
 
       <Pagination
         totalPages={data?.data?.totalPages}
