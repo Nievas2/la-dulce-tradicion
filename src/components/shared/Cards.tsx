@@ -21,6 +21,8 @@ import {
 import { SubCategoryProduct } from "@/interfaces/SubCategoryProduct"
 import { CartProducts, useCartStore } from "@/stores/cart.store"
 import { SubCategory } from "@/interfaces/SubCategory"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
+import Link from "next/link"
 
 interface CardProps {
   product: Product
@@ -32,6 +34,7 @@ const Cards = ({ product }: CardProps) => {
   const [subCategory, setSubCategory] = useState<number | undefined>()
   const [amount, setAmount] = useState(1)
   const [error, setError] = useState<string | undefined>()
+  const [showAuthFavoriteModal, setShowAuthFavoriteModal] = useState(false)
   const { authUser } = useAuthContext()
 
   useEffect(() => {
@@ -47,6 +50,36 @@ const Cards = ({ product }: CardProps) => {
       document.body.style.overflow = "auto"
     }
   }, [isModalOpen])
+
+  const favorites = useFavoriteStore(
+    (state) =>
+      state.favorites.find((fav) => fav.userId === authUser?.user.id)?.products
+  )
+  let isFavorite = false
+  if (favorites) {
+    isFavorite = favorites.some((fav) => fav.id === product.id)
+  }
+
+  const addFavoriteProduct = useFavoriteStore(
+    (state) => state.addFavoriteProduct
+  )
+
+  const deleteFavoriteProduct = useFavoriteStore(
+    (state) => state.deleteFavoriteProduct
+  )
+
+  const toggleFavorite = () => {
+    if (!authUser) {
+      setShowAuthFavoriteModal(true)
+      return
+    }
+
+    if (isFavorite) {
+      deleteFavoriteProduct(authUser.user.id, product.id)
+    } else {
+      addFavoriteProduct(authUser.user.id, product)
+    }
+  }
 
   const addProduct = useCartStore((state) => state.addProduct)
   const productStore = useCartStore((state) =>
@@ -95,7 +128,7 @@ const Cards = ({ product }: CardProps) => {
     <div className="relative">
       {/* Producto */}
       <div
-        className="flex flex-col w-full h-full bg-white rounded-b-lg px-2 py-2 gap-4 shadow-md hover:border-2 hover:border-secondary hover:shadow-none hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
+        className="flex flex-col w-full h-full bg-white rounded-b-lg px-2 py-2 gap-4 shadow-md hover:border-2 hover:border-secondary hover:shadow-none hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer relative"
         onClick={() => setModalOpen(true)}
       >
         <Image
@@ -108,10 +141,12 @@ const Cards = ({ product }: CardProps) => {
           height={400}
           alt={product.name}
         />
+
         <div className="flex flex-col gap-2 py-1">
           <div className="flex items-center w-full">
-{/*             <h4 className="text-lg text-start leading-none font-bold text-red-main w-full">{product.Category.name}</h4>
- */}          <h3 className="text-lg font-bold leading-none w-full">{product.name}</h3>
+            <h3 className="text-lg font-bold leading-none w-full">
+              {product.name}
+            </h3>
             <h4 className="text-md text-end leading-none border border-gray-400 py-2 px-4 w-fit rounded-full">
               ${product.price}
             </h4>
@@ -192,7 +227,42 @@ const Cards = ({ product }: CardProps) => {
               >
                 {/* Contenido estático */}
                 <div className="flex flex-col gap-4 w-full">
-                  <h2 className="text-3xl font-semibold">{product.name}</h2>
+                  <div className="flex w-full">
+                    <h2 className="text-3xl font-semibold">{product.name}</h2>
+                    <div className="flex items-center justify-end w-full">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          if (authUser) {
+                            if (isFavorite)
+                              return deleteFavoriteProduct(
+                                authUser?.user.id,
+                                product.id
+                              )
+                            return addFavoriteProduct(
+                              authUser?.user.id,
+                              product
+                            )
+                          }
+                          setShowAuthFavoriteModal(true)
+                        }}
+                      >
+                        {isFavorite ? (
+                          <div className="cursor-pointer rounded-lg transition-colors duration-300">
+                            <Heart
+                              className={`text-[#E81224] h-6 w-6 animate-heart`}
+                              fill="#E81224"
+                            />
+                          </div>
+                        ) : (
+                          <div className="cursor-pointer transition-colors duration-300">
+                            <Heart />
+                          </div>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
                   <h3 className="text-xl">$ {product.price}</h3>
                   <p
                     dangerouslySetInnerHTML={{ __html: product.description }}
@@ -268,6 +338,39 @@ const Cards = ({ product }: CardProps) => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Dialog
+        open={showAuthFavoriteModal}
+        onOpenChange={setShowAuthFavoriteModal}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>¿Te gusta este producto?</DialogTitle>
+          </DialogHeader>
+          <p className="text-center">
+            Inicia sesión o regístrate para añadirlo a tus favoritos.
+          </p>
+          <div className="flex flex-row gap-2 w-fit mx-auto">
+            <Link href="/login">
+              <Button
+                variant="secondary"
+                onClick={() => setShowAuthFavoriteModal(false)}
+              >
+                Iniciar sesión
+              </Button>
+            </Link>
+
+            <Link href="/register">
+              <Button
+                variant="secondary"
+                onClick={() => setShowAuthFavoriteModal(false)}
+              >
+                Registrarse
+              </Button>
+            </Link>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

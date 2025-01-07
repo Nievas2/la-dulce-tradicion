@@ -248,6 +248,12 @@ export default function Component() {
               pathname={pathname || ""}
             />
 
+            <ItemsNavbar
+              link={"favoritos"}
+              name={"Favoritos"}
+              pathname={pathname || ""}
+            />
+
             {authUser?.user.isAdmin && (
               <ItemsNavbar
                 link={"/admins"}

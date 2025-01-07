@@ -36,7 +36,7 @@ const Categories = () => {
               onClick={() => handleChange("nothing")}
               variant="items"
               size="ghost"
-            >
+  >
               Todos
             </Button>
           )}
@@ -51,6 +51,7 @@ const Categories = () => {
             }
             variant="items"
             size="ghost"
+            disabled={categoryId === "1"}
           >
             Pasteleria
           </Button>
@@ -65,6 +66,7 @@ const Categories = () => {
                 : ""
             }
             size="ghost"
+            disabled={categoryId === "2"}
           >
             Lunch
           </Button>
@@ -79,6 +81,7 @@ const Categories = () => {
                 : ""
             }
             size="ghost"
+            disabled={categoryId === "3"}
           >
             Perniles y carnes
           </Button>
@@ -93,6 +96,7 @@ const Categories = () => {
                 : ""
             }
             size="ghost"
+            disabled={categoryId === "4"}
           >
             Tortas
           </Button>
@@ -107,29 +111,13 @@ const Categories = () => {
                 : ""
             }
             size="ghost"
+            disabled={categoryId === "5"}
           >
             Combos y agregados
           </Button>
         </li>
       </ul>
     </section>
-    /*     <Select onValueChange={handleChange} defaultValue={searchParams?.get("categoryId") || "nothing"}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Categorias" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="nothing">Todos</SelectItem>
-        {categories &&
-          categories.map((category) => (
-            <SelectItem
-              key={category.id}
-              value={category.id?.toString() || "1"}
-            >
-              {category.name}
-            </SelectItem>
-          ))}
-      </SelectContent>
-    </Select> */
   )
 }
 export default Categories
