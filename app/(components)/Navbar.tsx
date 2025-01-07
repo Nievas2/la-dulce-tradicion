@@ -302,7 +302,7 @@ export default function Component() {
           )}
         </div>
       </nav>
-      
+
       <Cart cartOpen={cartOpen} setCartOpen={setCartOpen} />
     </header>
   )
@@ -323,13 +323,14 @@ const ItemsListNavbar = ({
   const categoryId = searchParams.get("categoryId")
 
   return (
-    <a
+    <Link
       href={link}
       className={`rounded-md px-3 py-2 text-sm font-medium relative group transition-all duration-300 hover:text-secondary w-full"
-      ${categoryId === id && "text-secondary"}
+      ${categoryId === id && "text-secondary cursor-not-allowed"}
         `}
+      aria-disabled={categoryId == id}
     >
       {name}
-    </a>
+    </Link>
   )
 }
