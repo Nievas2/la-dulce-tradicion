@@ -31,9 +31,21 @@ const CategoriesSection = () => {
           link="/productos?page=1&categoryId=4"
         />
         <Category
-          title="Combos y agregados"
+          title="Agregados y Especiales"
           img="/fondos/fondos1.jpg"
           link="/productos?page=1&categoryId=5"
+        />
+        <Category
+          title="Combos"
+          img="/fondos/fondos1.jpg"
+          link="/productos?page=1&categoryId=5"
+        />
+
+        <Category
+          title="Eventos y servicios"
+          img="/fondos/fondos1.jpg"
+          link="/productos?page=1&categoryId=5"
+          className="col-span-2 "
         />
       </div>
     </section>
