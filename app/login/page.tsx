@@ -22,7 +22,7 @@ const page = () => {
     onSuccess: async (tokenResponse) => {
       const userInfo = await axios
         .get("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
         })
         .then(async (res) => {
           const final = res.data
@@ -31,7 +31,7 @@ const page = () => {
             const data = decodeJwt(response.data.token)
             const user = {
               user: data,
-              token: response.data.token
+              token: response.data.token,
             }
             localStorage.setItem("user", JSON.stringify(user))
             Cookies.set("token", response.data.token)
@@ -43,7 +43,7 @@ const page = () => {
         .catch((error) => {
           console.log(error)
         })
-    }
+    },
   })
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState)
@@ -54,7 +54,7 @@ const page = () => {
       const userToken = decodeJwt(data.token)
       const user = {
         user: userToken,
-        token: data.token
+        token: data.token,
       }
       localStorage.setItem("user", JSON.stringify(user))
       Cookies.set("token", data.token)
@@ -62,31 +62,29 @@ const page = () => {
     },
     onError: (error) => {
       console.log(error)
-    }
+    },
   })
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: ""
+      password: "",
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
       mutate.mutate(values)
-    }
+    },
   })
   return (
     <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos1.jpg')] w-full max-w-8xl min-h-screen">
       <div className="flex justify-center items-center h-screen">
-        <div className="border border-white bg-white py-2 px-4 w-[440px] gap-2 rounded-md">
+        <div className="border border-white bg-white p-4 w-[440px] gap-2 rounded-md">
           <div className="flex flex-col gap-2">
             <div className="flex">
               <h5 className="text-lg text-wrap font-semibold">
                 Gracias por volver! Inicia sesion para realizar tu proxima
-                compra
+                compra.
               </h5>
             </div>
-
-            <h5 className="font-bold">Iniciar sesion</h5>
 
             <form
               className="flex flex-col gap-3"
@@ -136,38 +134,31 @@ const page = () => {
                   />
                 </button>
               </div>
-
-              <Button
-                className="w-full"
-                variant="secondary"
-                type="submit"
-              >
-                login
-              </Button>
-              <button
-                onClick={() => googleLogin()}
-                type="button"
-                className="text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-slate-200 rounded-md"
-              >
-                <Icon
-                  icon="devicon:google"
-                  width="24"
-                  height="24"
-                />
-                Continuá con google
-              </button>
+              <div className="flex flex-col gap-4">
+                <Button className="w-full" variant="secondary" type="submit">
+                  login
+                </Button>
+                <div className="flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-black after:mt-0.5 after:flex-1 after:border-t after:border-black dark:before:border-light dark:after:border-light">
+                  <p className="mx-4 mb-0 text-center dark:text-white">o</p>
+                </div>
+                <button
+                  onClick={() => googleLogin()}
+                  type="button"
+                  className="text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-slate-200 rounded-md"
+                >
+                  <Icon icon="devicon:google" width="24" height="24" />
+                  Continuá con google
+                </button>
               {error && (
                 <small className="text-red-500">Error al iniciar sesion</small>
               )}
               <h5 className="text-sm">
                 Si no tiene una cuenta puede crearse una desde{" "}
-                <Link
-                  className="text-blue-800 font-bold"
-                  href="register"
-                >
+                <Link className="text-blue-800 font-bold" href="register">
                   aqui
                 </Link>
               </h5>
+              </div>
             </form>
           </div>
         </div>
