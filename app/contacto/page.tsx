@@ -143,7 +143,7 @@ const page = () => {
                 <div className="rounded p-2">
                   <h4>
                     ¡Para poder hacer compras es necesario que este logueado,
-                    por favor redirijase <Link href="/login">aquí</Link>
+                    por favor redirijase <Link href="/iniciar-sesion">aquí</Link>
                   </h4>
                 </div>
               )}

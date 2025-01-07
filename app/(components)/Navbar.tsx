@@ -173,14 +173,14 @@ export default function Component() {
                   size="default"
                   className="rounded-[10px]"
                 >
-                  <Link href="/register">Registrarse</Link>
+                  <Link href="/registro">Registrarse</Link>
                 </Button>
                 <Button
                   variant={"main"}
                   size="default"
                   className="rounded-[10px]"
                 >
-                  <Link href="/login">Iniciar Sesión</Link>
+                  <Link href="/iniciar-sesion">Iniciar Sesión</Link>
                 </Button>
               </>
             )}
@@ -295,14 +295,14 @@ export default function Component() {
                 size="default"
                 className="rounded-[10px]"
               >
-                <Link href="/register">Registrarse</Link>
+                <Link href="/registro">Registrarse</Link>
               </Button>
               <Button
                 variant={"main"}
                 size="default"
                 className="rounded-[10px]"
               >
-                <Link href="/login">Iniciar Sesión</Link>
+                <Link href="/iniciar-sesion">Iniciar Sesión</Link>
               </Button>
             </>
           )}

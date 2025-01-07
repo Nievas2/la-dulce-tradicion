@@ -2,9 +2,9 @@ import axiosInstance from "@/api/axiosInstance"
 import { LoginData } from "@/interfaces/Login"
 import db from "../../db"
 
-export async function login(login: LoginData) {
+export async function iniciar-sesion(iniciar-sesion: LoginData) {
   try {
-    const response = await axiosInstance.post("auth", login)
+    const response = await axiosInstance.post("auth", iniciar-sesion)
     return response.data
   } catch (error) {
     throw error
@@ -12,7 +12,7 @@ export async function login(login: LoginData) {
 }
 export async function loginGoogle(token: string) {
   try {
-    const response = await axiosInstance.post("auth/login/google", {
+    const response = await axiosInstance.post("auth/iniciar-sesion/google", {
       token: token
     })
     return response

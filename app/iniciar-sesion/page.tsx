@@ -154,7 +154,7 @@ const page = () => {
               )}
               <h5 className="text-sm">
                 Si no tiene una cuenta puede crearse una desde{" "}
-                <Link className="text-blue-800 font-bold" href="register">
+                <Link className="text-blue-800 font-bold" href="registro">
                   aqui
                 </Link>
               </h5>

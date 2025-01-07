@@ -243,7 +243,7 @@ const page = () => {
                 )}
                 <h5 className="text-center">
                   Si ya tiene una cuenta puede ingresar desde{" "}
-                  <Link className="text-blue-800 font-bold" href="/login">
+                  <Link className="text-blue-800 font-bold" href="/iniciar-sesion">
                     aqui
                   </Link>
                 </h5>

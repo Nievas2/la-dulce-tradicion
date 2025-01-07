@@ -351,7 +351,7 @@ const Cards = ({ product }: CardProps) => {
             Inicia sesión o regístrate para añadirlo a tus favoritos.
           </p>
           <div className="flex flex-row gap-2 w-fit mx-auto">
-            <Link href="/login">
+            <Link href="/iniciar-sesion">
               <Button
                 variant="secondary"
                 onClick={() => setShowAuthFavoriteModal(false)}
@@ -360,7 +360,7 @@ const Cards = ({ product }: CardProps) => {
               </Button>
             </Link>
 
-            <Link href="/register">
+            <Link href="/registro">
               <Button
                 variant="secondary"
                 onClick={() => setShowAuthFavoriteModal(false)}

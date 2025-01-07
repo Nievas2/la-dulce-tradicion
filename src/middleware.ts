@@ -7,8 +7,8 @@ export async function middleware(request: NextRequest) {
   const protectedRoutes = ["/admins/:path*"]
   const publicRoutes = [
     "/",
-    "/login",
-    "/register",
+    "/iniciar-sesion",
+    "/registro",
     "/contacto",
     "/productos/:path*"
   ]
@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/", request.url))
     }
   } else {
-    return NextResponse.redirect(new URL("/login", request.url))
+    return NextResponse.redirect(new URL("/iniciar-sesion", request.url))
   }
   return NextResponse.redirect(new URL("/", request.url))
 }
