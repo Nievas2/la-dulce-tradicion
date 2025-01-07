@@ -1,53 +1,27 @@
+import Link from "next/link"
+
 interface CategoryProps {
   img: string
   title: string
-  subtitle: string
-  description: string
-  reverse: boolean
+  link: string
 }
-const Category = ({
-  img,
-  title,
-  subtitle,
-  description,
-  reverse
-}: CategoryProps) => {
+const Category = ({ img, title, link }: CategoryProps) => {
   return (
-    <div
-      className={`flex flex-col items-center ${
-        reverse ? "md:flex-row-reverse gap-32" : "md:flex-row"
-      } z-20`}
-    >
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-row items-center gap-6">
-          {/* <div className="p-[17px] bg-main rounded-full">
-            <Icon
-                icon="formkit:people"
-                width="24"
-                height="24"
-                className="text-light"
-              />
-          </div> */}
+    <div className="flex items-center justify-center text-white w-full h-40 relative group">
+      <Link
+        href={link}
+        className="flex items-center justify-center w-fit h-fit p-8 rounded-full bg-secondary border-red-main absolute left-0 shadow-lg duration-200 transition-transform group-hover:scale-110 z-40"
+      >
+        <img src={img} alt={title} className="size-28" />
+      </Link>
 
-          <h3 className="text-3xl font-bold">{title}</h3>
-        </div>
-
-        <h4 className="text-2xl leading-[1.3] font-semibold lg:text-[30px] lg:leading-[51px] xl:max-w-[80%]">
-          <span className="text-secondary">{subtitle}</span>
-        </h4>
-
-        <div className="text-base leading-[27px] xl:max-w-[70%]">
-          <p>
-           {description}
-          </p>
-        </div>
-      </div>
-
-      <img
-        src={img}
-        alt={title}
-        className="w-[352px] lg:w-[40%] lg:max-w-[300px] lg:flex"
-      />
+      <Link
+        href={link}
+        className="flex items-center justify-center gap-2 bg-secondary w-4/6 h-20 rounded-r-3xl shadow-lg duration-200 transition-transform group-hover:scale-105"
+      >
+        {/* <div className="flex items-center justify-center gap-2 bg-secondary w-64 -ml-8 h-20 rounded-r-3xl shadow-lg"> */}
+        <p className="text-xl font-bold">{title}</p>
+      </Link>
     </div>
   )
 }

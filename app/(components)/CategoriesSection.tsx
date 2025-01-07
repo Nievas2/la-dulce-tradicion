@@ -2,67 +2,38 @@ import Category from "./Category"
 
 const CategoriesSection = () => {
   return (
-    <section className="flex flex-col gap-10">
+    <section className="flex flex-col gap-10 min-h-screen py-8">
       <h2 className="text-4xl font-bold text-center ">
         Categorias que queremos recomendarte
       </h2>
 
       <div
-        className={`flex flex-col w-full text-black dark:text-light transition-colors duration-150 relative gap-16 xl:gap-0`}
+        className={`grid grid-cols-1 md:grid-cols-2 gap-8 w-full place-content-center place-items-center items-center justify-center`}
       >
         <Category
-          title="title"
-          subtitle="subtitle"
-          description=" Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat,
-            culpa placeat corrupti fuga dolores ducimus labore dignissimos
-            assumenda magnam a non, consequatur unde officiis eaque sunt veniam
-            aliquam reiciendis dicta. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Natus quo earum saepe quisquam ipsam voluptatibus
-            asperiores maxime nesciunt nobis odit. Mollitia ab cum numquam
-            corrupti doloribus quo laudantium, obcaecati aspernatur."
+          title="Pasteleria"
           img="/fondos/fondos1.jpg"
-          reverse={true}
-        />
-
-        <Category
-          title="title"
-          subtitle="subtitle"
-          description=" Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat,
-            culpa placeat corrupti fuga dolores ducimus labore dignissimos
-            assumenda magnam a non, consequatur unde officiis eaque sunt veniam
-            aliquam reiciendis dicta. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Natus quo earum saepe quisquam ipsam voluptatibus
-            asperiores maxime nesciunt nobis odit. Mollitia ab cum numquam
-            corrupti doloribus quo laudantium, obcaecati aspernatur."
-          img="/fondos/fondos1.jpg"
-          reverse={false}
+          link="/productos?page=1&categoryId=1"
         />
         <Category
-          title="title"
-          subtitle="subtitle"
-          description=" Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat,
-            culpa placeat corrupti fuga dolores ducimus labore dignissimos
-            assumenda magnam a non, consequatur unde officiis eaque sunt veniam
-            aliquam reiciendis dicta. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Natus quo earum saepe quisquam ipsam voluptatibus
-            asperiores maxime nesciunt nobis odit. Mollitia ab cum numquam
-            corrupti doloribus quo laudantium, obcaecati aspernatur."
+          title="Lunch"
           img="/fondos/fondos1.jpg"
-          reverse={true}
+          link="/productos?page=1&categoryId=2"
         />
-
         <Category
-          title="title"
-          subtitle="subtitle"
-          description=" Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat,
-            culpa placeat corrupti fuga dolores ducimus labore dignissimos
-            assumenda magnam a non, consequatur unde officiis eaque sunt veniam
-            aliquam reiciendis dicta. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Natus quo earum saepe quisquam ipsam voluptatibus
-            asperiores maxime nesciunt nobis odit. Mollitia ab cum numquam
-            corrupti doloribus quo laudantium, obcaecati aspernatur."
+          title="Perniles y carnes"
           img="/fondos/fondos1.jpg"
-          reverse={false}
+          link="/productos?page=1&categoryId=3"
+        />
+        <Category
+          title="Tortas"
+          img="/fondos/fondos1.jpg"
+          link="/productos?page=1&categoryId=4"
+        />
+        <Category
+          title="Combos y agregados"
+          img="/fondos/fondos1.jpg"
+          link="/productos?page=1&categoryId=5"
         />
       </div>
     </section>
