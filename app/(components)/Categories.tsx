@@ -28,7 +28,9 @@ const Categories = () => {
 
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-xl text-center lg:text-start font-bold">Tipos de productos</h2>
+      <h2 className="text-xl text-center lg:text-start font-bold">
+        Tipos de productos
+      </h2>
       <ul className="flex flex-row flex-wrap gap-4 items-center justify-center lg:justify-start lg:items-start lg:flex-col lg:gap-2">
         <li>
           {categoryId && (
@@ -36,7 +38,7 @@ const Categories = () => {
               onClick={() => handleChange("nothing")}
               variant="items"
               size="ghost"
-  >
+            >
               Todos
             </Button>
           )}
@@ -113,7 +115,37 @@ const Categories = () => {
             size="ghost"
             disabled={categoryId === "5"}
           >
-            Combos y agregados
+            Agregados y especiales
+          </Button>
+        </li>
+        <li>
+          <Button
+            onClick={() => handleChange("6")}
+            variant="items"
+            className={
+              categoryId === "6"
+                ? "bg-secondary text-white hover:bg-secondary/80"
+                : ""
+            }
+            size="ghost"
+            disabled={categoryId === "6"}
+          >
+            Combos
+          </Button>
+        </li>
+        <li>
+          <Button
+            onClick={() => handleChange("7")}
+            variant="items"
+            className={
+              categoryId === "7"
+                ? "bg-secondary text-white hover:bg-secondary/80"
+                : ""
+            }
+            size="ghost"
+            disabled={categoryId === "7"}
+          >
+            Eventos y servicios
           </Button>
         </li>
       </ul>

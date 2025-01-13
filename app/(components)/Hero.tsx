@@ -23,7 +23,7 @@ const Hero = () => {
   })
   return (
     /* bg-[url('/hero.jpg')] */
-    <section className=" w-full h-screen flex justify-center items-center bg-black bg-cover bg-no-repeat">
+    <section className=" w-full h-[90vh] flex justify-center items-center bg-[url('/hero.webp')] bg-cover bg-no-repeat">
       <div className="p-4 flex flex-col items-center justify-center gap-6">
         <div className="px-1 py-2 border border-main rounded-full">
           <img

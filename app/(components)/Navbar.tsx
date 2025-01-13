@@ -119,7 +119,21 @@ export default function Component() {
                     <ItemsListNavbar
                       link={"/productos?page=1&query=&categoryId=5"}
                       id="5"
-                      name={"Combos y agregados"}
+                      name={"Agregados y especiales"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=6"}
+                      id="6"
+                      name={"Combos"}
+                      pathname={pathname || ""}
+                    />
+
+                    <ItemsListNavbar
+                      link={"/productos?page=1&query=&categoryId=5"}
+                      id="7"
+                      name={"Eventos y servicios"}
                       pathname={pathname || ""}
                     />
                   </section>
@@ -235,7 +249,21 @@ export default function Component() {
                   <ItemsListNavbar
                     link={"/productos?page=1&query=&categoryId=5"}
                     id="5"
-                    name={"Combos y agregados"}
+                    name={"Agregados y especiales"}
+                    pathname={pathname || ""}
+                  />
+
+                  <ItemsListNavbar
+                    link={"/productos?page=1&query=&categoryId=6"}
+                    id="6"
+                    name={"Combos"}
+                    pathname={pathname || ""}
+                  />
+
+                  <ItemsListNavbar
+                    link={"/productos?page=1&query=&categoryId=5"}
+                    id="7"
+                    name={"Eventos y servicios"}
                     pathname={pathname || ""}
                   />
                 </NavigationMenuContent>
@@ -261,6 +289,7 @@ export default function Component() {
                 pathname={pathname || ""}
               />
             )}
+          </ul>
             {/* Cart button desktop */}
             {authUser != null && (
               <div>
@@ -278,7 +307,6 @@ export default function Component() {
                 </button>
               </div>
             )}
-          </ul>
           {authUser ? (
             <Button
               variant={"main"}

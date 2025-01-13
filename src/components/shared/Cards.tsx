@@ -321,15 +321,16 @@ const Cards = ({ product }: CardProps) => {
                             type="number"
                           />
                         </div>
+                        <div className="w-full flex items-end justify-end">
+                          {authUser != null && (
+                            <Button variant="secondary" className="flex gap-2" onClick={handleAddCart}>
+                              <Icon icon="mdi:cart" width="16" height="16" />
+                              Agregar al carrito
+                            </Button>
+                          )}
+                        </div>
                       </div>
                       {error && <small className="text-red-500">{error}</small>}
-                      <div>
-                        {authUser != null && (
-                          <Button variant="secondary" onClick={handleAddCart}>
-                            Agregar al carrito
-                          </Button>
-                        )}
-                      </div>
                     </>
                   )}
                 </div>
