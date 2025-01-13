@@ -5,7 +5,7 @@ const layout = ({
 }>) => {
   return (
     <div>
-      <title>La dulce tradicion | contacto</title>
+      <title>La dulce tradicion | Contacto</title>
       {children}
     </div>
   )
