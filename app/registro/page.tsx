@@ -19,15 +19,17 @@ const page = () => {
   const [error, setError] = useState(false)
   const [password, setPassword] = useState("password")
   const [confirmPassword, setConfirmPassword] = useState("password")
+
   const mutation = useMutation({
     mutationFn: postUser,
     onSuccess: (data) => {
       console.log(data)
     },
     onError: (error) => {
-      console.log(error)
+      setError(true)
     },
   })
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -43,6 +45,7 @@ const page = () => {
       mutation.mutate(data)
     },
   })
+
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const userInfo = await axios
@@ -70,9 +73,9 @@ const page = () => {
     },
   })
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos3.jpg')] w-full max-w-8xl">
+    <div className="bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] w-full max-w-8xl">
       <div className="flex justify-center items-center min-h-screen py-8">
-        <div className="border border-white bg-main p-4 rounded-md">
+        <div className="border border-black bg-main p-4 rounded-md">
           <div className="flex flex-col">
             <h5 className="font-bold text-xl text-center">Registro</h5>
 
@@ -214,14 +217,33 @@ const page = () => {
                       {formik.errors.confirmPassword}
                     </small>
                   )}
+                {error ||
+                  (mutation.error && (
+                    <small className=" font-bold text-red-500">
+                      Error al iniciar sesion
+                    </small>
+                  ))}
               </div>
               <div className="flex flex-col gap-4">
                 <Button
-                  className="text-white w-full"
+                  className="text-white w-full flex"
                   type="submit"
                   variant="secondary"
+                  disabled={mutation.isPending}
                 >
-                  Suscribirse
+                  {mutation.isPending ? (
+                    <>
+                      <Icon
+                        icon="eos-icons:loading"
+                        className="animate-spin"
+                        width="24"
+                        height="24"
+                      />{" "}
+                      Cargando...
+                    </>
+                  ) : (
+                    "Suscribirse"
+                  )}
                 </Button>
 
                 <div className="flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-black after:mt-0.5 after:flex-1 after:border-t after:border-black dark:before:border-light dark:after:border-light">
@@ -229,21 +251,22 @@ const page = () => {
                 </div>
 
                 <button
-                  onClick={() => googleLogin()}
+                  onClick={() => {
+                    googleLogin()
+                  }}
                   type="button"
-                  className="text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-slate-200 rounded-md"
+                  disabled={mutation.isPending}
+                  className="bg-white text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-gray-200 transition-colors duration-200 rounded-md"
                 >
                   <Icon icon="devicon:google" width="24" height="24" />
-                  Continuá con google
+                  Continuár con google
                 </button>
-                {error && (
-                  <small className="text-red-500">
-                    Error al iniciar sesion
-                  </small>
-                )}
                 <h5 className="text-center">
                   Si ya tiene una cuenta puede ingresar desde{" "}
-                  <Link className="text-blue-800 font-bold" href="/iniciar-sesion">
+                  <Link
+                    className="text-blue-800 font-bold"
+                    href="/iniciar-sesion"
+                  >
                     aqui
                   </Link>
                 </h5>

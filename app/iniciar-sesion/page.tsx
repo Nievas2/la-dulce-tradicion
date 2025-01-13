@@ -48,7 +48,7 @@ const page = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState)
   }
-  const mutate = useMutation({
+  const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       const userToken = decodeJwt(data.token)
@@ -71,19 +71,21 @@ const page = () => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      mutate.mutate(values)
+      mutation.mutate(values)
     },
   })
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos1.jpg')] w-full max-w-8xl min-h-screen">
+    <div className="bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] w-full max-w-8xl min-h-screen">
       <div className="flex justify-center items-center h-screen">
-        <div className="border border-white bg-white p-4 w-[440px] gap-2 rounded-md">
+        <div className="border border-black bg-main p-4 w-[440px] gap-2 rounded-md">
           <div className="flex flex-col gap-2">
-            <div className="flex">
-              <h5 className="text-lg text-wrap font-semibold">
-                Gracias por volver! Inicia sesion para realizar tu proxima
-                compra.
-              </h5>
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-lg text-wrap font-semibold">
+                Gracias por volver!
+              </p>
+              <p className="text-lg text-wrap font-semibold">
+                Inicia sesion para realizar tu proxima compra.
+              </p>
             </div>
 
             <form
@@ -96,7 +98,7 @@ const page = () => {
                 type="email"
                 placeholder="Escribe tu email"
                 {...formik.getFieldProps("email")}
-                disabled={mutate.isPending}
+                disabled={mutation.isPending}
               />
               {formik.touched.email && formik.errors.email && (
                 <small className="text-red-500">{formik.errors.email}</small>
@@ -108,7 +110,7 @@ const page = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="************"
                   {...formik.getFieldProps("password")}
-                  disabled={mutate.isPending}
+                  disabled={mutation.isPending}
                 />
                 {formik.touched.password && formik.errors.password && (
                   <small className="text-red-500">
@@ -119,6 +121,7 @@ const page = () => {
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={togglePasswordVisibility}
+                  disabled={mutation.isPending}
                 >
                   <Icon
                     className={`h-5 w-5 text-black transition-opacity duration-200 ${
@@ -134,30 +137,42 @@ const page = () => {
                   />
                 </button>
               </div>
+              {error ||
+                (mutation.error && (
+                  <small className=" font-bold text-red-500">
+                    Error al iniciar sesion
+                  </small>
+                ))}
               <div className="flex flex-col gap-4">
-                <Button className="w-full" variant="secondary" type="submit">
-                  login
+                <Button
+                  className="w-full"
+                  variant="secondary"
+                  type="submit"
+                  disabled={mutation.isPending}
+                >
+                  Iniciar sesion
                 </Button>
                 <div className="flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-black after:mt-0.5 after:flex-1 after:border-t after:border-black dark:before:border-light dark:after:border-light">
                   <p className="mx-4 mb-0 text-center dark:text-white">o</p>
                 </div>
                 <button
-                  onClick={() => googleLogin()}
+                  onClick={() => {
+                    googleLogin()
+                  }}
                   type="button"
-                  className="text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-slate-200 rounded-md"
+                  disabled={mutation.isPending}
+                  className="bg-white text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-gray-200 transition-colors duration-200 rounded-md"
                 >
                   <Icon icon="devicon:google" width="24" height="24" />
-                  Continuá con google
+                  Continuár con google
                 </button>
-              {error && (
-                <small className="text-red-500">Error al iniciar sesion</small>
-              )}
-              <h5 className="text-sm">
-                Si no tiene una cuenta puede crearse una desde{" "}
-                <Link className="text-blue-800 font-bold" href="registro">
-                  aqui
-                </Link>
-              </h5>
+
+                <h5 className="text-sm">
+                  Si no tiene una cuenta puede crearse una desde{" "}
+                  <Link className="text-blue-800 font-bold" href="registro">
+                    aqui
+                  </Link>
+                </h5>
               </div>
             </form>
           </div>
