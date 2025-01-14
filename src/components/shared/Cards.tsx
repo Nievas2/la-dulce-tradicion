@@ -18,6 +18,13 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 import { SubCategoryProduct } from "@/interfaces/SubCategoryProduct"
 import { CartProducts, useCartStore } from "@/stores/cart.store"
 import { SubCategory } from "@/interfaces/SubCategory"
@@ -35,6 +42,10 @@ const Cards = ({ product }: CardProps) => {
   const [amount, setAmount] = useState(1)
   const [error, setError] = useState<string | undefined>()
   const [showAuthFavoriteModal, setShowAuthFavoriteModal] = useState(false)
+  const [added, setAdded] = useState(false)
+  const [productsInCart, setProductsInCart] = useState<
+    { userId: string; products: CartProducts[] } | undefined
+  >()
   const { authUser } = useAuthContext()
 
   useEffect(() => {
@@ -87,42 +98,248 @@ const Cards = ({ product }: CardProps) => {
       (productStorage) => productStorage.userId === authUser?.user.id
     )
   )
-  let isProductInCart
+  const getProductsByUserId = useCartStore((state) => state.getProductsByUserId)
+  const addSubCategory = useCartStore((state) => state.addSubCategory)
 
-  if (
-    authUser != null &&
-    productStore != undefined &&
-    productStore.products.length > 0
-  ) {
-    isProductInCart = (
-      productStore as { userId: string; products: CartProducts[] }
-    ).products.some(
-      (productStorage: CartProducts) => productStorage.product.id === product.id
-    )
+  function handleAddCartSubCategories() {
+    if (
+      subCategory == undefined ||
+      amount < 1 ||
+      !authUser ||
+      subCategory == 999
+    ) {
+      setAdded(false)
+      return setError("Todos los cambos son requeridos")
+    }
+    if (!authUser) return
+    setError(undefined)
+    setSubCategory(999)
+    if (
+      productsInCart?.products.some(
+        (products) => product.id == products.product.id
+      )
+    ) {
+      const sub = product.SubCategoryProducts.filter((subcategory) => {
+        return subcategory.SubCategory.id == subCategory
+      })
+
+      addSubCategory({
+        userId: authUser?.user.id,
+        productCart: {
+          product: product,
+          amount: 1,
+          subCategory: [{ subCategory: sub[0].SubCategory, amount: amount }],
+        },
+      })
+      setAdded(true)
+      return
+    } else {
+      const sub = product.SubCategoryProducts.filter((subcategory) => {
+        return subcategory.SubCategory.id == subCategory
+      })
+
+      addProduct({
+        userId: authUser?.user.id,
+        product: {
+          product: product,
+          amount: 1,
+          subCategory: [{ subCategory: sub[0].SubCategory, amount: amount }],
+        },
+      })
+      setAdded(true)
+    }
   }
-
   function handleAddCart() {
-    if (subCategory == undefined || amount < 1) {
+    if (amount < 1 || !authUser) {
+      setAdded(false)
       return setError("Todos los cambos son requeridos")
     }
 
-    if (!authUser) return
-    setError(undefined)
-    console.log(
-      product.SubCategoryProducts[Number(subCategory)]
-        .SubCategory as SubCategory
-    )
-
     addProduct({
-      userId: authUser?.user.id,
+      userId: authUser.user.id,
       product: {
-        product: product,
-        amount: 1,
-        subCategory: product.SubCategoryProducts[Number(subCategory)]
-          .SubCategory as SubCategory,
+        product,
+        amount,
+        subCategory: undefined,
       },
     })
   }
+
+  function getAvailableSubcategories() {
+    const allSubcategories = product.SubCategoryProducts
+    /* Revisa si en el carrito ua hay un producto agregado con ese id */
+    const productInCart = productStore?.products.find(
+      (item) => item.product.id === product.id
+    ) as CartProducts
+    console.log(productInCart)
+
+    if (product.SubCategoryProducts.length <= 0) {
+      return productsInCart?.products.some(
+        (item) => item.product.id === product.id
+      ) ? (
+        <span>Ya se agregaron todas las posibles subcategorias</span>
+      ) : (
+        <>
+          <div>
+            <Label>Cantidad</Label>
+            <Input
+              className="w-[68px] text-center"
+              defaultValue={1}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              min={1}
+              type="number"
+            />
+          </div>
+          <div className="w-full flex items-end justify-end">
+            {authUser != null && (
+              <Button
+                variant="secondary"
+                className="flex gap-2"
+                onClick={handleAddCart}
+              >
+                <Icon icon="mdi:cart" width="16" height="16" />
+                Agregar al carrito
+              </Button>
+            )}
+          </div>
+        </>
+      )
+    }
+
+    /* Revisa si el producto esta en el carro, cuales son las subcategorias que estan añadidas */
+    if (productInCart) {
+      const subCategoriesFiltered = allSubcategories.filter((item) => {
+        return !productInCart.subCategory?.some(
+          (subCategory) => subCategory.subCategory.id === item.SubCategory.id
+        );
+      });
+
+      return subCategoriesFiltered.length > 0 ? (
+        <>
+          <div>
+            <Label>Categorias</Label>
+            <Select
+              value={subCategory?.toString()}
+              defaultValue="999"
+              onValueChange={(e) => setSubCategory(Number(e))}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Categorias" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem
+                  className="text-start"
+                  key={crypto.randomUUID()}
+                  value="999"
+                >
+                  categorias
+                </SelectItem>
+                {subCategoriesFiltered.map((subCategory) => (
+                  <SelectItem
+                    className="text-start"
+                    key={crypto.randomUUID()}
+                    value={subCategory.SubCategoryId.toString()}
+                  >
+                    {subCategory.SubCategory.date} :{" "}
+                    {subCategory.SubCategory.price}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label>Cantidad</Label>
+            <Input
+              className="w-[68px] text-center"
+              defaultValue={1}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              min={1}
+              type="number"
+            />
+          </div>
+          <div className="w-full flex items-end justify-end">
+            {authUser != null && (
+              <Button
+                variant="secondary"
+                className="flex gap-2"
+                onClick={handleAddCartSubCategories}
+              >
+                <Icon icon="mdi:cart" width="16" height="16" />
+                Agregar al carrito
+              </Button>
+            )}
+          </div>
+        </>
+      ) : (
+        <span>Ya se agregaron todas las posibles subcategorias</span>
+      )
+    }
+    return allSubcategories.length > 0 ? (
+      <>
+        <div>
+          <Label>Categorias</Label>
+          <Select
+            value={subCategory?.toString()}
+            defaultValue="999"
+            onValueChange={(e) => setSubCategory(Number(e))}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Categoria" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem
+                className="text-start"
+                key={crypto.randomUUID()}
+                value="999"
+              >
+                categorias
+              </SelectItem>
+              {allSubcategories.map((subCategory) => (
+                <SelectItem
+                  className="text-start"
+                  key={crypto.randomUUID()}
+                  value={subCategory.SubCategoryId.toString()}
+                >
+                  {subCategory.SubCategory.date} :{" "}
+                  {subCategory.SubCategory.price}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label>Cantidad</Label>
+          <Input
+            className="w-[68px] text-center"
+            defaultValue={1}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            min={1}
+            type="number"
+          />
+        </div>
+        <div className="w-full flex items-end justify-end">
+          {authUser != null && (
+            <Button
+              variant="secondary"
+              className="flex gap-2"
+              onClick={handleAddCartSubCategories}
+            >
+              <Icon icon="mdi:cart" width="16" height="16" />
+              Agregar al carrito
+            </Button>
+          )}
+        </div>
+      </>
+    ) : (
+      <span>Todas las subcategorias fueron agregadas</span>
+    )
+  }
+  useEffect(() => {
+    if (authUser != null) {
+      const products = getProductsByUserId(authUser?.user.id)
+      setProductsInCart(products)
+    }
+  }, [productStore])
 
   return (
     <div className="relative">
@@ -228,111 +445,69 @@ const Cards = ({ product }: CardProps) => {
                 {/* Contenido estático */}
                 <div className="flex flex-col gap-4 w-full">
                   <div className="flex w-full">
-                    <h2 className="text-3xl font-semibold">{product.name}</h2>
-                    <div className="flex items-center justify-end w-full">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          if (authUser) {
-                            if (isFavorite)
-                              return deleteFavoriteProduct(
-                                authUser?.user.id,
-                                product.id
-                              )
-                            return addFavoriteProduct(
-                              authUser?.user.id,
-                              product
-                            )
-                          }
-                          setShowAuthFavoriteModal(true)
-                        }}
-                      >
-                        {isFavorite ? (
-                          <div className="cursor-pointer rounded-lg transition-colors duration-300">
-                            <Heart
-                              className={`text-[#E81224] h-6 w-6 animate-heart`}
-                              fill="#E81224"
-                            />
-                          </div>
-                        ) : (
-                          <div className="cursor-pointer transition-colors duration-300">
-                            <Heart />
-                          </div>
-                        )}
-                      </Button>
+                    <h2 className="text-3xl font-semibold w-full">
+                      {product.name}
+                    </h2>
+                    <div className="flex items-center justify-end ">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={(e) => {
+                                if (authUser) {
+                                  if (isFavorite)
+                                    return deleteFavoriteProduct(
+                                      authUser?.user.id,
+                                      product.id
+                                    )
+                                  return addFavoriteProduct(
+                                    authUser?.user.id,
+                                    product
+                                  )
+                                }
+                                setShowAuthFavoriteModal(true)
+                              }}
+                            >
+                              {isFavorite ? (
+                                <div className="cursor-pointer rounded-lg transition-colors duration-300">
+                                  <Heart
+                                    className={`text-[#E81224] h-6 w-6 animate-heart`}
+                                    fill="#E81224"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="cursor-pointer transition-colors duration-300">
+                                  <Heart />
+                                </div>
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Añadir a favoritos</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </div>
                   <h3 className="text-xl">$ {product.price}</h3>
                   <p
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   ></p>
-
-                  {isProductInCart ? (
-                    <small className="flex items-center justify-center text-center w-60 font-bold">
-                      Este producto ya esta agregado al carrito
-                    </small>
-                  ) : (
-                    <>
-                      <div className="flex gap-3 items-end justify-start">
-                        <div>
-                          {product.SubCategoryProducts.length > 0 && (
-                            <>
-                              <Label>Categoria</Label>
-                              <Select
-                                onValueChange={(e) => setSubCategory(Number(e))}
-                              >
-                                <SelectTrigger className="w-[180px]">
-                                  <SelectValue placeholder="Categoria" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {product.SubCategoryProducts &&
-                                    product.SubCategoryProducts.map(
-                                      (
-                                        subCategoryProducts: SubCategoryProduct,
-                                        index
-                                      ) => (
-                                        <SelectItem
-                                          className="text-start"
-                                          key={crypto.randomUUID()}
-                                          value={index.toString()}
-                                        >
-                                          {subCategoryProducts.SubCategory.date}{" "}
-                                          :{" "}
-                                          {
-                                            subCategoryProducts.SubCategory
-                                              .price
-                                          }
-                                        </SelectItem>
-                                      )
-                                    )}
-                                </SelectContent>
-                              </Select>
-                            </>
-                          )}
-                        </div>
-                        <div>
-                          <Label>Cantidad</Label>
-                          <Input
-                            className="w-[68px] text-center"
-                            defaultValue={1}
-                            onChange={(e) => setAmount(Number(e.target.value))}
-                            min={1}
-                            type="number"
-                          />
-                        </div>
-                        <div className="w-full flex items-end justify-end">
-                          {authUser != null && (
-                            <Button variant="secondary" className="flex gap-2" onClick={handleAddCart}>
-                              <Icon icon="mdi:cart" width="16" height="16" />
-                              Agregar al carrito
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                      {error && <small className="text-red-500">{error}</small>}
-                    </>
-                  )}
+                  <>
+                    <div className="flex gap-3 items-end justify-start">
+                      {getAvailableSubcategories()}
+                    </div>
+                    {error && (
+                      <small className="text-red-500 font-bold">{error}</small>
+                    )}
+                    {added && (
+                      <small className="text-green-500 font-bold">
+                        Se agrego correctamente el producto al carrito
+                      </small>
+                    )}
+                  </>
                 </div>
               </div>
             </div>

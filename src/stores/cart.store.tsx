@@ -3,20 +3,35 @@ import { SubCategory } from "@/interfaces/SubCategory"
 import { StateCreator, create } from "zustand"
 import { persist } from "zustand/middleware"
 import { immer } from "zustand/middleware/immer"
+interface SubCategoryCart {
+  subCategory: SubCategory
+  amount: number
+}
 export interface CartProducts {
   product: Product
-  amount: number
-  subCategory: SubCategory
+  amount?: number
+  subCategory?: SubCategoryCart[]
 }
 
 interface CartState {
   cart: { userId: string; products: CartProducts[] }[]
+  getProductsByUserId: (userId: string) => {
+    userId: string
+    products: CartProducts[]
+  }
   addProduct: ({
     userId,
     product,
   }: {
     userId: string
     product: CartProducts
+  }) => void
+  addSubCategory: ({
+    userId,
+    productCart,
+  }: {
+    userId: string
+    productCart: CartProducts
   }) => void
   deleteProductFromCart: (userId: string, productId: number) => void
   findCartByUserId: (userId: string) => CartProducts[]
@@ -33,7 +48,7 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
   // Función para agregar un producto al carrito de un usuario
   addProduct: ({
     userId,
-    product
+    product,
   }: {
     userId: string
     product: CartProducts
@@ -43,7 +58,6 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
         (product: any) => product.userId === userId
       ) // Busca el índice de los productos del usuario
       if (existingIndex !== -1) {
-
         // Si ya existen, agrega la nueva Product a la lista
         state.cart[existingIndex].products.push(product)
         // Actualiza el localStorage con la nueva lista de products
@@ -63,7 +77,38 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
       }
     })
   },
+  getProductsByUserId: (userId) => {
+    const cartItem = useCartStore
+      .getState()
+      .cart.find((cartItem) => cartItem.userId === userId)
+    return cartItem || { userId, products: [] } // Devuelve un valor por defecto si no encuentra el carrito
+  },
 
+  addSubCategory({ userId, productCart }) {
+    console.log(productCart);
+    
+    set((state) => {
+      const existingIndex = state.cart.findIndex(
+        (product: any) => product.userId === userId
+      ) // Busca el índice de los productos del usuario
+      if (existingIndex !== -1) {
+        // Si ya existen, agrega la nueva Product a la lista
+        state.cart[existingIndex].products.forEach((product: any) => {
+          if (
+            product.product.id === productCart.product.id &&
+            productCart.subCategory != undefined
+          ) {
+            product.subCategory.push(productCart.subCategory[0])
+          }
+        })
+        // Actualiza el localStorage con la nueva lista de products
+        localStorage.setItem(
+          `cart-${userId}`,
+          JSON.stringify(state.cart[existingIndex].products)
+        )
+      }
+    })
+  },
   // Función para eliminar un producto del carrito de un usuario
   deleteProductFromCart: (userId: string, productId: number) => {
     set((state) => {
@@ -101,7 +146,10 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
         (product: CartProducts) => product.product.id === productId
       ) // Busca el índice de los productos del usuario
 
-      if (existingIndex !== -1) {
+      if (
+        existingIndex !== -1 &&
+        state.cart[0].products[existingIndex].amount != undefined
+      ) {
         state.cart[0].products[existingIndex].amount -= 1
         localStorage.setItem(
           `cart-${userId}`,
@@ -116,7 +164,10 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
       const existingIndex = state.cart[0].products.findIndex(
         (product: CartProducts) => product.product.id === productId
       ) // Busca el índice de los productos del usuario
-      if (existingIndex !== -1) {
+      if (
+        existingIndex !== -1 &&
+        state.cart[0].products[existingIndex].amount != undefined
+      ) {
         state.cart[0].products[existingIndex].amount += 1
         localStorage.setItem(
           `cart-${userId}`,
@@ -126,18 +177,16 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
     })
   },
   clearCart(userId) {
-    set((state)=>{
+    set((state) => {
       const existingIndex = state.cart.findIndex(
         (product: any) => product.userId === Number(userId)
-      ) 
-      
+      )
+
       if (existingIndex !== -1) {
-        localStorage.removeItem(
-          `cart-${userId}`
-        )
+        localStorage.removeItem(`cart-${userId}`)
         state.cart[existingIndex] = {
           userId: userId,
-          products: []
+          products: [],
         }
       }
     })

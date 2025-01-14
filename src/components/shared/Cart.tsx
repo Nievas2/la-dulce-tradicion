@@ -30,11 +30,11 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
 
   let subtotal: number = 0
 
-  if (products) {
+ /*  if (products) {
     products.forEach((product: CartProducts) => {
       subtotal += product.amount * product.product.price
     })
-  }
+  } */
 
   function handleSubmit() {
     if (products != undefined && products.length > 0) {
@@ -77,6 +77,7 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
                 key={crypto.randomUUID()}
                 amount={product.amount}
                 product={product.product}
+                cartProduct={product}
                 userId={Number(authUser!.user.id)}
                 decreaseAmountProduct={decreaseAmountProduct}
                 increaseAmountProduct={increaseAmountProduct}
@@ -113,10 +114,11 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
 
 interface CartCardProps {
   product: Product
-  amount: number
+  amount: number | undefined
   increaseAmountProduct: Function
   decreaseAmountProduct: Function
   userId: number
+  cartProduct : CartProducts
 }
 
 function CartCard({
@@ -125,6 +127,7 @@ function CartCard({
   decreaseAmountProduct,
   increaseAmountProduct,
   userId,
+  cartProduct
 }: CartCardProps) {
   const deleteProductFromCart = useCartStore(
     (state) => state.deleteProductFromCart
@@ -157,8 +160,9 @@ function CartCard({
                   className="text-xs py-1 w-[80%]"
                   onClick={handleDeleteProduct}
                 >
-                  Eliminar del carrito
+                 
                 </Button>
+               {/*  {cartProduct.subCategory[0].date} */}
               </div>
             </div>
 
@@ -166,11 +170,11 @@ function CartCard({
               <div>
                 <button
                   className="rounded-full bg-gray-200 p-2 min-h-8 min-w-8"
-                  onClick={() => {
+                  /* onClick={() => {
                     if (amount > 1) {
                       decreaseAmountProduct(userId, product.id)
                     }
-                  }}
+                  }} */
                 >
                   <Icon icon="material-symbols:remove" width="16" height="16" />
                 </button>
