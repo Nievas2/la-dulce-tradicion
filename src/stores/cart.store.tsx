@@ -3,7 +3,7 @@ import { SubCategory } from "@/interfaces/SubCategory"
 import { StateCreator, create } from "zustand"
 import { persist } from "zustand/middleware"
 import { immer } from "zustand/middleware/immer"
-interface SubCategoryCart {
+export interface SubCategoryCart {
   subCategory: SubCategory
   amount: number
 }
@@ -36,7 +36,17 @@ interface CartState {
   deleteProductFromCart: (userId: string, productId: number) => void
   findCartByUserId: (userId: string) => CartProducts[]
   decreaseAmountProduct: (userId: string, productId: number) => void
+  decreaseAmountSubCategory: (
+    userId: string,
+    productId: number,
+    subCategoryId: number
+  ) => void
   increaseAmountProduct: (userId: string, productId: number) => void
+  increaseAmountSubCategory: (
+    userId: string,
+    productId: number,
+    subCategoryId: number
+  ) => void
   clearCart: (userId: string) => void
 }
 
@@ -85,8 +95,8 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
   },
 
   addSubCategory({ userId, productCart }) {
-    console.log(productCart);
-    
+    console.log(productCart)
+
     set((state) => {
       const existingIndex = state.cart.findIndex(
         (product: any) => product.userId === userId
@@ -158,6 +168,40 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
       }
     })
   },
+  decreaseAmountSubCategory(userId, productId, subCategoryId) {
+    set((state) => {
+      const existingIndex = state.cart.findIndex(
+        (product: any) => product.userId === Number(userId)
+      )
+      if (existingIndex !== -1) {
+        state.cart[existingIndex].products.forEach(
+          (product: CartProducts, index: number) => {
+            if (
+              product.product.id === productId &&
+              product.subCategory != undefined
+            ) {
+              // Busca la subcategoría específica y reduce su `amount`
+              const subCategory = product.subCategory.findIndex(
+                (subCategory: SubCategoryCart) => {
+                  return subCategory.subCategory.id === subCategoryId
+                }
+              )
+
+              if (subCategory >= 0) {
+                product.subCategory[subCategory].amount -= 1 // decrementa el valor
+    
+              }
+            }
+          }
+        )
+        // Guarda el carrito actualizado en localStorage
+        localStorage.setItem(
+          `cart-${userId}`,
+          JSON.stringify(state.cart[existingIndex].products)
+        )
+      }
+    })
+  },
 
   increaseAmountProduct(userId, productId) {
     set((state) => {
@@ -176,6 +220,42 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
       }
     })
   },
+
+  increaseAmountSubCategory(userId, productId, subCategoryId) {
+    set((state) => {
+      const existingIndex = state.cart.findIndex(
+        (product: any) => product.userId === Number(userId)
+      )
+      if (existingIndex !== -1) {
+        state.cart[existingIndex].products.forEach(
+          (product: CartProducts, index: number) => {
+            if (
+              product.product.id === productId &&
+              product.subCategory != undefined
+            ) {
+              // Busca la subcategoría específica y aumenta su `amount`
+              const subCategory = product.subCategory.findIndex(
+                (subCategory: SubCategoryCart) => {
+                  return subCategory.subCategory.id === subCategoryId
+                }
+              )
+
+              if (subCategory >= 0) {
+                product.subCategory[subCategory].amount += 1 // Incrementa el valor
+    
+              }
+            }
+          }
+        )
+        // Guarda el carrito actualizado en localStorage
+        localStorage.setItem(
+          `cart-${userId}`,
+          JSON.stringify(state.cart[existingIndex].products)
+        )
+      }
+    })
+  },
+
   clearCart(userId) {
     set((state) => {
       const existingIndex = state.cart.findIndex(
