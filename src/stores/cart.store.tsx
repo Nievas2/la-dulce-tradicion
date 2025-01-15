@@ -36,13 +36,18 @@ interface CartState {
   deleteProductFromCart: (userId: string, productId: number) => void
   findCartByUserId: (userId: string) => CartProducts[]
   decreaseAmountProduct: (userId: string, productId: number) => void
+  increaseAmountProduct: (userId: string, productId: number) => void
   decreaseAmountSubCategory: (
     userId: string,
     productId: number,
     subCategoryId: number
   ) => void
-  increaseAmountProduct: (userId: string, productId: number) => void
   increaseAmountSubCategory: (
+    userId: string,
+    productId: number,
+    subCategoryId: number
+  ) => void
+  deleteSubCategory: (
     userId: string,
     productId: number,
     subCategoryId: number
@@ -189,7 +194,6 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
 
               if (subCategory >= 0) {
                 product.subCategory[subCategory].amount -= 1 // decrementa el valor
-    
               }
             }
           }
@@ -242,7 +246,6 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
 
               if (subCategory >= 0) {
                 product.subCategory[subCategory].amount += 1 // Incrementa el valor
-    
               }
             }
           }
@@ -256,6 +259,66 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
     })
   },
 
+  deleteSubCategory(userId, productId, subCategoryId) {
+    set((state) => {
+      const existingIndex = state.cart.findIndex(
+        (product: any) => product.userId === Number(userId)
+      )
+  
+      if (existingIndex !== -1) {
+        const updatedProducts = state.cart[existingIndex].products.map((product) => {
+          if (
+            product.product.id === productId &&
+            product.subCategory !== undefined
+          ) {
+            // Filtrar las subcategorías eliminando la específica
+            const updatedSubCategories = product.subCategory.filter(
+              (subCategory) => subCategory.subCategory.id !== subCategoryId
+            );
+  
+            if (updatedSubCategories.length === 0) {
+              // Si no quedan subcategorías, eliminamos el producto
+              return null;
+            }
+  
+            // Si quedan subcategorías, actualizamos el producto
+            return {
+              ...product,
+              subCategory: updatedSubCategories,
+            };
+          }
+          return product;
+        });
+  
+        // Filtramos los productos eliminados (aquellos que retornaron `null`)
+        const filteredProducts = updatedProducts.filter(
+          (product) => product !== null
+        );
+  
+        // Actualizamos el carrito con los productos restantes
+        const updatedCart = state.cart.map((cartItem, index) => {
+          if (index === existingIndex) {
+            return {
+              ...cartItem,
+              products: filteredProducts,
+            };
+          }
+          return cartItem;
+        });
+  
+        // Guardar el estado actualizado
+        state.cart = updatedCart;
+  
+        // Guarda el carrito actualizado en localStorage
+        localStorage.setItem(
+          `cart-${userId}`,
+          JSON.stringify(updatedCart[existingIndex].products)
+        );
+      }
+    });
+  },
+  
+  
   clearCart(userId) {
     set((state) => {
       const existingIndex = state.cart.findIndex(

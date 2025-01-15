@@ -27,7 +27,7 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
       (productStorage) => productStorage.userId === authUser?.user.id
     )
   )
-  console.log(productStore)
+  
   useEffect(() => {
     if (authUser != null) {
       const products = getProductsByUserId(authUser?.user.id)
@@ -142,6 +142,7 @@ function CartCard({ product, amount, userId, cartProduct }: CartCardProps) {
   const decreaseAmountSubCategory = useCartStore(
     (state) => state.decreaseAmountSubCategory
   )
+  const deleteSubCategory = useCartStore((state) => state.deleteSubCategory)
   function handleDeleteProduct() {
     deleteProductFromCart(userId.toString(), product.id!)
   }
@@ -292,7 +293,13 @@ function CartCard({ product, amount, userId, cartProduct }: CartCardProps) {
                   variant="secondary"
                   className="text-xs py-1 w-fit"
                   size="sm"
-                  onClick={handleDeleteProduct}
+                  onClick={() =>
+                    deleteSubCategory(
+                      userId.toString(),
+                      product.id,
+                      subCategory.subCategory.id
+                    )
+                  }
                 >
                   <Icon icon="material-symbols:delete" width="24" height="24" />
                 </Button>
@@ -300,16 +307,24 @@ function CartCard({ product, amount, userId, cartProduct }: CartCardProps) {
             </div>
           ))}
         {cartProduct.subCategory != undefined && (
-          <span className="text-center"> total:  $ {" "}
+          <span className="text-center">
+            {" "}
+            total: ${" "}
             {cartProduct.subCategory
-              .map((subCategory: SubCategoryCart) => subCategory.amount * subCategory.subCategory.price) 
-              .reduce((a, b) => a + b, 0)} 
+              .map(
+                (subCategory: SubCategoryCart) =>
+                  subCategory.amount * subCategory.subCategory.price
+              )
+              .reduce((a, b) => a + b, 0)}
           </span>
         )}
-        {
-          cartProduct.subCategory == undefined && cartProduct.amount != undefined &&
-          <span className="text-center"> total:  $ {product.price * cartProduct.amount}</span>
-        }
+        {cartProduct.subCategory == undefined &&
+          cartProduct.amount != undefined && (
+            <span className="text-center">
+              {" "}
+              total: $ {product.price * cartProduct.amount}
+            </span>
+          )}
       </section>
     </li>
   )
