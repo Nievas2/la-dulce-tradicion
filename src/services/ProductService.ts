@@ -1,6 +1,7 @@
 import axiosInstance from "@/api/axiosInstance"
 import { ProductForm } from "../../app/admins/products/(components)/ChangeProduct"
 import db from "../../db"
+import { CheckPrices } from "../../app/ticket/page"
 
 export async function getProducts(
   page: number,
@@ -58,6 +59,18 @@ export async function putProduct(product: ProductForm, id: number) {
 export async function deleteProduct(id: number) {
   try {
     const response = axiosInstance.delete(`product/${id}`)
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function checkCart(cart : CheckPrices){
+  try {
+    const response = await axiosInstance.post("product/ticket",{
+      products: cart.products,
+      subcategories: cart.subcategories
+    })
     return response
   } catch (error) {
     throw error

@@ -10,6 +10,7 @@ import {
 } from "@/stores/cart.store"
 import { Product } from "@/interfaces/Product"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 interface CartProps {
   cartOpen: boolean
@@ -27,7 +28,7 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
       (productStorage) => productStorage.userId === authUser?.user.id
     )
   )
-  
+
   useEffect(() => {
     if (authUser != null) {
       const products = getProductsByUserId(authUser?.user.id)
@@ -40,16 +41,16 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
 
   let subtotal: number = 0
 
-  /*  if (products) {
-    products.forEach((product: CartProducts) => {
-      subtotal += product.amount * product.product.price
+  if (products) {
+    products.products.forEach((product: CartProducts) => {
+      if (product.subCategory != undefined) {
+        product.subCategory.map((subcategory) => {
+          subtotal += subcategory.amount * subcategory.subCategory.price
+        })
+      }
+      if (product.amount != undefined)
+        subtotal += product.amount * product.product.price
     })
-  } */
-
-  function handleSubmit() {
-    if (products != undefined && products.products.length > 0) {
-      window.location.href = "/ticket"
-    }
   }
 
   return (
@@ -100,19 +101,16 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
             <span className="w-full">Subtotal: </span>
             <span className="w-full text-end">$ {subtotal}</span>
           </div>
-
-          <Button
-            variant="main"
-            className="flex gap-2 w-full"
-            onClick={handleSubmit}
-          >
-            <Icon
-              icon="material-symbols:shopping-cart"
-              width="24"
-              height="24"
-            />
-            Ir al ticket
-          </Button>
+          <Link href="/ticket">
+            <Button variant="main" className="flex gap-2 w-full" onClick={()=> setCartOpen(false)}>
+              <Icon
+                icon="material-symbols:shopping-cart"
+                width="24"
+                height="24"
+              />
+              Ir al ticket
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

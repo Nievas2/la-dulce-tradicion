@@ -291,7 +291,7 @@ export default function Component() {
             )}
           </ul>
             {/* Cart button desktop */}
-            {authUser != null && (
+            {authUser != null && pathname !== "/ticket" && (
               <div>
                 <button
                   type="button"
