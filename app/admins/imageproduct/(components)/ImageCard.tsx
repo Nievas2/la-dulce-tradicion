@@ -3,7 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import { ImageProduct } from "@/interfaces/ImageProduct"
 import { Icon } from "@iconify/react/dist/iconify.js"
@@ -28,14 +28,14 @@ const ImageCard = ({ image }: ImageCardProps) => {
           image.image != null || image.image != undefined
             ? image.image
             : "/fondos/fondos1.jpg"
-        })`
+        })`,
       }}
-      /* backgroundImage: `url(${product.ImagesProductAsocciations[0].ImageProduct.image})` */
     >
-      <span className="text-white">{image.Product}</span>
-      <span className="absolute bottom-2 left-2 text-white">{image.id}</span>
+      <span className="absolute bottom-2 left-2 text-white bg-secondary rounded-full px-2 line-clamp-1">
+        {image.id}
+      </span>
       <Dialog>
-        <DialogTrigger className="absolute top-2 right-2">
+        <DialogTrigger className="absolute top-2 right-2 p-2 bg-secondary rounded-full line-clamp-1">
           <Icon
             icon="fluent:edit-24-filled"
             width="24"
@@ -54,12 +54,12 @@ const ImageCard = ({ image }: ImageCardProps) => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <button className="absolute bottom-2 right-2">
+      <button className="absolute bottom-2 right-2 p-2 bg-red-500 rounded-full  line-clamp-1">
         <Icon
           icon="fluent:delete-24-filled"
           width="24"
           height="24"
-          color="#f00"
+          color="white"
         />
       </button>
     </div>

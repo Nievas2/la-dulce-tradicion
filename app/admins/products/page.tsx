@@ -9,16 +9,16 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import ChangeProduct from "./(components)/ChangeProduct"
 import { useEffect } from "react"
 import Pagination from "@/components/shared/Pagination"
 import Search from "@/components/shared/Search"
-import Categories from "../../(components)/Categories"
+import Categories from "./(components)/Categories"
 
 const page = ({
-  searchParams
+  searchParams,
 }: {
   searchParams?: {
     query?: string
@@ -30,7 +30,7 @@ const page = ({
     queryKey: ["products"],
     queryFn: () => getProducts(currentPage, query, categoryId),
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60 * 24
+    staleTime: 1000 * 60 * 60 * 24,
   })
   console.log(data)
   const query = searchParams?.query || ""
@@ -40,12 +40,11 @@ const page = ({
   useEffect(() => {
     refetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, currentPage])
+  }, [query, currentPage, categoryId])
   return (
     <section className="w-full flex flex-col gap-4 justify-center items-center p-4 relative z-20">
-      <Search placeholder="Buscar productos..." />
-      <div className="flex items-start justify-start w-full gap-4">
-        <Categories />
+      <div className="flex gap-4 w-full justify-between items-center">
+        <Search placeholder="Buscar productos..." />
         <Dialog>
           <DialogTrigger className="flex border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
             Add
@@ -53,20 +52,17 @@ const page = ({
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Agregar un producto</DialogTitle>
-              <ChangeProduct
-                product={undefined}
-                lastId={data?.data.lastId}
-              />
+              <ChangeProduct product={undefined} lastId={data?.data.lastId} />
             </DialogHeader>
           </DialogContent>
         </Dialog>
       </div>
+      <div className="flex items-start justify-start w-full gap-4">
+        <Categories />
+      </div>
       <section className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
         {data?.data?.products.map((product: Product) => (
-          <CardsAdmin
-            product={product}
-            key={crypto.randomUUID()}
-          />
+          <CardsAdmin product={product} key={crypto.randomUUID()} />
         ))}
       </section>
 

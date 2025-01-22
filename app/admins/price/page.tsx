@@ -2,7 +2,7 @@ import { getPagesPrice } from "@/services/PriceService"
 import Search from "./(componets)/Search"
 import Table from "./(componets)/Table"
 import Pagination from "./(componets)/Pagination"
-import Categories from "../../(components)/Categories"
+import Categories from "../products/(components)/Categories"
 
 export default async function Page({
   searchParams
@@ -22,17 +22,10 @@ export default async function Page({
   const product = searchParams?.product || ""
   const value = searchParams?.value || ""
   return (
-    <div className="w-full">
-      <div className="flex w-full items-center justify-between">
-        <h1 className={`text-2xl`}>Precios</h1>
-      </div>
+    <div className="flex flex-col gap-4 w-full">
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Buscar productos..." />
       </div>
-      {/* <Suspense
-        key={query + currentPage}
-        fallback={<InvoicesTableSkeleton />}
-      > */}
       <Categories />
       <Table
         query={query}

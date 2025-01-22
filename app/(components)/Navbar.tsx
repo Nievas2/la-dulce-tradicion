@@ -57,7 +57,7 @@ export default function Component() {
       {/* PARA MOBILE */}
       <Sheet>
         <SheetTrigger asChild>
-          <div className="flex flex-1 justify-end bg-main lg:hidden p-2">
+          <div className="flex flex-1 justify-end bg-main lg:hidden p-2 border-b border-secondary">
             <div>
               <Button variant="outline" size="icon">
                 <MenuIcon className="h-6 w-6" />

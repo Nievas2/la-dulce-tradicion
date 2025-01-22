@@ -38,38 +38,47 @@ export async function checkAdmins(email: string): Promise<any> {
 export async function getProductsPrice(
   query: string,
   currentPage: number,
-  categoryId: string
+  categoryId: number
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
   try {
     const results = await new Promise<Product[]>((resolve, reject) => {
-      db.query(
-        `
+      let sqlQuery = `
         SELECT id, name, price FROM Products
-        ${query ? `WHERE name LIKE '%${query}%'` : ""} 
-        ${query && categoryId ? "AND" : ""}
-        ${categoryId ? `CategoryId = ${categoryId}` : ""}
-        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-        `,
-        (err, results) => {
-          if (err) {
-            return reject(err)
-          }
+      `
 
-          // Verifica si results es un array
-          if (Array.isArray(results)) {
-            resolve(results as Product[]) // Asegúrate de que sea del tipo correcto
-          } else {
-            reject(new Error("El resultado no es un array"))
-          }
+      const conditions = []
+      if (query) {
+        conditions.push(`name LIKE '%${query}%'`)
+      }
+      if (categoryId) {
+        conditions.push(`CategoryId = ${categoryId}`)
+      }
+
+      if (conditions.length > 0) {
+        sqlQuery += ` WHERE ${conditions.join(' AND ')}`
+      }
+
+      sqlQuery += ` LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`
+
+      db.query(sqlQuery, (err, results) => {
+        if (err) {
+          return reject(err)
         }
-      )
+
+        // Verifica si results es un array
+        if (Array.isArray(results)) {
+          resolve(results as Product[]) // Asegúrate de que sea del tipo correcto
+        } else {
+          reject(new Error("Unexpected result format"))
+        }
+      })
     })
 
     return results
   } catch (error) {
-    console.error("Database Error:", error)
+    console.error("Error fetching product prices:", error)
     throw error
   }
 }

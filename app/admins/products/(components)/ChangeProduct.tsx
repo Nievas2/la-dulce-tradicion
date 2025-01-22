@@ -7,7 +7,7 @@ import {
   Select,
   SelectValue,
   SelectItem,
-  SelectContent
+  SelectContent,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Category } from "@/interfaces/Category"
@@ -33,22 +33,21 @@ interface ChangeProductProps {
 }
 const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
   const [step, setStep] = useState(0)
-  const {
-    data: categories,
-    error,
-    isPending
-  } = useQuery({
-    queryKey: ["categories"],
-    queryFn: getCategories,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60 * 24
-  })
+
+  const categories = [
+    { id: 1, name: "Pasteleria" },
+    { id: 2, name: "Lunch" },
+    { id: 3, name: "perniles y carnes" },
+    { id: 4, name: "Tortas" },
+    { id: 5, name: "Agregados y especiales" },
+    { id: 6, name: "Combos" },
+    { id: 7, name: "Eventos y servicios" },
+  ]
 
   const mutation = useMutation({
     mutationFn: (values: ProductForm) => {
       if (product) {
         console.log("put")
-
         return putProduct(values, product.id)
       }
       console.log("post")
@@ -56,13 +55,15 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
       return postProduct(values)
     },
     onSuccess: (data) => {
+      if (product) {
+        return setStep(3)
+      }
       setStep(1)
       formik.resetForm()
-      console.log(data)
     },
     onError: (error) => {
       console.log(error)
-    }
+    },
   })
 
   const formik = useFormik({
@@ -70,12 +71,12 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
       name: product ? product.name : "",
       description: product ? product.description : "",
       price: product ? product.price : 0,
-      CategoryName: product ? product.Category.name : ""
+      CategoryName: product ? product.Category.name : "",
     },
     validationSchema: ProductSchema,
     onSubmit: (values) => {
       mutation.mutate(values)
-    }
+    },
   })
 
   function handleChangeCategory(value: string) {
@@ -83,20 +84,17 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
   }
   return (
     <>
-      <div className="flex flex-col mb-3 mt-3 offset-lg-2">
-        <div className="text-white mb-3">
+      <div className="flex flex-col mt-3 offset-lg-2">
+        <div className="text-white">
           {step == 0 && (
             <form
-              className="flex flex-1 flex-col p-4"
+              className="flex flex-1 flex-col p-4 gap-4"
               onSubmit={formik.handleSubmit}
             >
-              <div className="row mb-3">
-                <Label className="form-Label mb-0 p-0">
-                  <b>Nombre</b>
-                </Label>
+              <div className="flex flex-col gap-2 items-start">
+                <Label>Nombre</Label>
                 <Input
                   type="text"
-                  className="form-control"
                   placeholder="Ingrese Nombre"
                   {...formik.getFieldProps("name")}
                 />
@@ -107,13 +105,11 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                 )}
               </div>
 
-              <div className="row mb-3">
-                <Label className="form-Label mb-0 p-0">
-                  <b>Precio</b>
-                </Label>
+              <div className="flex flex-col gap-2 items-start">
+                <Label>Precio</Label>
                 <Input
                   type="number"
-                  className="form-control mt-2"
+                  className=" mt-2"
                   placeholder="Ingrese el precio"
                   {...formik.getFieldProps("price")}
                 />
@@ -123,12 +119,10 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                   </small>
                 )}
               </div>
-              <div className="row mb-3">
-                <Label className="form-Label mb-0 p-0">
-                  <b>Descripción</b>
-                </Label>
+              <div className="flex flex-col gap-2 items-start">
+                <Label>Descripción</Label>
                 <Textarea
-                  className="form-control mt-2"
+                  className=" mt-2"
                   placeholder="Ingrese descripcion"
                   {...formik.getFieldProps("description")}
                 />
@@ -138,10 +132,8 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                   </small>
                 )}
               </div>
-              <div className="row mb-3">
-                <Label className="form-Label mb-0 p-0">
-                  <b>Nombre de la categoria</b>
-                </Label>
+              <div className="flex flex-col gap-2 items-start">
+                <Label>Nombre de la categoria</Label>
                 <Select
                   onValueChange={(values) => handleChangeCategory(values)}
                   defaultValue={formik.values.CategoryName}
@@ -150,17 +142,14 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                     <SelectValue placeholder="Selecciona una categoría" />
                   </SelectTrigger>
                   <SelectContent>
-                    {!error &&
-                      categories &&
-                      !isPending &&
-                      categories?.data.map((category: Category) => (
-                        <SelectItem
-                          key={crypto.randomUUID()}
-                          value={category.name}
-                        >
-                          {category.name}
-                        </SelectItem>
-                      ))}
+                    {categories.map((category: any) => (
+                      <SelectItem
+                        key={crypto.randomUUID()}
+                        value={category.name}
+                      >
+                        {category.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 {formik.touched.CategoryName && formik.errors.CategoryName && (
@@ -169,8 +158,8 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                   </small>
                 )}
               </div>
-              {error && <small>{error.message}</small>}
-              <div className="row mb-3 mt-2 text-center">
+
+              <div className="flex flex-col gap-2 items-start mt-2 text-center">
                 <div className="col-lg-6">
                   <Button
                     type="submit"
@@ -202,15 +191,22 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
             />
           )}
           {step == 3 && (
-            <div className="flex flex-col justify-center items-center">
-              <h4 className="text-black">Todo cargado correctamente</h4>
-              <Button
-                variant="main"
-                onClick={() => setStep(0)}
-              >
-                Cargar más
-              </Button>
-            </div>
+            <>
+              {product ? (
+                <div className="flex flex-col justify-center items-center">
+                  <h4 className="text-black">
+                    Producto actualizado correctamente
+                  </h4>
+                </div>
+              ) : (
+                <div className="flex flex-col justify-center items-center">
+                  <h4 className="text-black">Todo cargado correctamente</h4>
+                  <Button variant="main" onClick={() => setStep(0)}>
+                    Cargar más
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

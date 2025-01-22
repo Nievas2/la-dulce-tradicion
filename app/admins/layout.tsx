@@ -7,7 +7,7 @@ const layout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos1.jpg')] w-full max-w-8xl min-h-screen">
+    <div className="w-full max-w-8xl min-h-screen">
       <div className="flex w-full h-full flex-row relative">
         <div className="">
           <SideNav />

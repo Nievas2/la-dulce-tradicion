@@ -23,10 +23,12 @@ const page = () => {
   console.log(data)
 
   return (
-    <section className="flex flex-col relative">
+    <section className="flex flex-col gap-8 relative">
+      <div className="flex justify-end w-full">
+
       <Dialog>
-        <DialogTrigger className="absolute -top-10 right-0 border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
-          Add
+        <DialogTrigger className="w-fit border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
+          Agregar una imagen
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -39,28 +41,13 @@ const page = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <div className="flex flex-wrap gap-4">
+      </div>
+      <div className="flex flex-wrap gap-4 items-center justify-center">
         {data?.data?.map((image: any) => (
           <ImageCard
             key={crypto.randomUUID()}
             image={image}
           />
-          /*  <Dialog key={crypto.randomUUID()}>
-            <DialogTrigger className="border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
-              Add
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Agregar un producto</DialogTitle>
-
-                <ChangeImageProduct
-                  Product={undefined}
-                  image={image.image}
-                  imageId={image.id}
-                />
-              </DialogHeader>
-            </DialogContent>
-          </Dialog> */
         ))}
       </div>
     </section>

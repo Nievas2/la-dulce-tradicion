@@ -20,7 +20,7 @@ const SideNav = () => {
       <div
         className={`${
           width! < 768 && open ? "sticky top-0" : "hidden"
-        } w-14 md:w-64 h-full md:flex flex-col min-h-screen left-0 z-40 bg-main`}
+        } w-14 md:w-64 h-full md:flex flex-col min-h-screen left-0 z-40 bg-main border-r border-secondary`}
       >
         <ul className="flex flex-col p-2 gap-3 w-full sticky top-14 md:top-20 overflow-y-auto bg-main">
           {open == true && width! < 768 && (
@@ -41,11 +41,11 @@ const SideNav = () => {
             name="Productos"
             link="/admins/products"
           />
-          <SideItem
+          {/* <SideItem
             icon="mdi:tag-outline"
             name="Categorias"
             link="/admins/categories"
-          />
+          /> */}
           <SideItem
             icon="ph:tag-chevron-fill"
             name="Sub Categorias"

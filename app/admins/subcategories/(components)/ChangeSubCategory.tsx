@@ -22,8 +22,9 @@ const ChangeSubCategoryProduct = ({
   Product,
   subCategory,
   id,
-  setStep
+  setStep,
 }: ChangeSubCategoryProps) => {
+  const [success, setSuccess] = useState("")
   const [error, setError] = useState("")
   const [subCategories, setSubCategories] = useState([{ price: 0, date: "" }]) // Array para las subcategorías
 
@@ -34,7 +35,7 @@ const ChangeSubCategoryProduct = ({
           const body = {
             Product: formik.values.Product,
             price: element.price,
-            date: element.date
+            date: element.date,
           }
           postSubCategory(body)
         })
@@ -43,38 +44,39 @@ const ChangeSubCategoryProduct = ({
       } else {
         const body = {
           price: subCategories[0].price,
-          date: subCategories[0].date
+          date: subCategories[0].date,
         }
         return putSubCategory(body, id!)
       }
       if (setStep) setStep(3)
     },
     onSuccess: (data) => {
+      if (subCategory) setSuccess("Subcategoría actualizada correctamente")
       formik.resetForm()
       console.log(data)
     },
     onError: (error) => {
       setError(error.message)
       console.log(error)
-    }
+    },
   })
 
   const formik = useFormik({
     initialValues: {
       Product: Product ? Product : 0,
-      subCategories: subCategory ? subCategory : subCategories
+      subCategories: subCategory ? subCategory : subCategories,
     },
     onSubmit: (values) => {
       mutation.mutate()
       console.log(values)
-    }
+    },
   })
 
   useEffect(() => {
     if (subCategory) {
       const data = {
         price: subCategory.price,
-        date: subCategory.date
+        date: subCategory.date,
       }
       setSubCategories([data])
     }
@@ -102,94 +104,82 @@ const ChangeSubCategoryProduct = ({
   }
 
   return (
-    <>
-      <div className="flex flex-col mb-3 mt-3">
-        <div className="text-white mb-3">
-          <form
-            className="flex flex-1 flex-col p-4"
-            onSubmit={formik.handleSubmit}
-          >
-            <div className="row mb-3">
-              <Label className="form-Label mb-0 p-0">
-                <b>Producto</b>
-              </Label>
+    <form className="flex flex-1 flex-col gap-3" onSubmit={formik.handleSubmit}>
+      {success ? (
+        <p>{success}</p>
+      ) : (
+        <>
+          {!Product && (
+            <div className="flex flex-col gap-2 items-start">
+              <Label>Producto</Label>
               <Input
                 type="number"
-                className="form-control mt-2"
                 placeholder="Ingrese el ID del producto"
                 {...formik.getFieldProps("Product")}
               />
             </div>
-            {subCategories.map((subCategory, index) => (
-              <div
-                className="row mb-3"
-                key={index}
-              >
-                <div>
-                  <Label className="form-Label mb-0 p-0">Precio</Label>
-                  <Input
-                    type="number"
-                    className="form-control mt-2"
-                    placeholder="Ingrese el precio"
-                    value={subCategory.price}
-                    onChange={(e) =>
-                      handleSubCategoryChange(index, "price", e.target.value)
-                    }
-                  />
-                </div>
-                <div>
-                  <Label className="form-Label mb-0 p-0">Información</Label>
-                  <Input
-                    type="text"
-                    className="form-control mt-2"
-                    placeholder="Ingrese la data"
-                    value={subCategory.date}
-                    onChange={(e) =>
-                      handleSubCategoryChange(index, "date", e.target.value)
-                    }
-                  />
-                </div>
-                {subCategories.length > 1 && (
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={() => handleRemoveSubCategory(index)}
-                    className="btn btn-danger mt-2"
-                  >
-                    - Eliminar
-                  </Button>
-                )}
+          )}
+
+          {subCategories.map((subCategory, index) => (
+            <div className="flex flex-col gap-2" key={index}>
+              <div className="flex flex-col gap-4 items-start">
+                <Label>Precio</Label>
+                <Input
+                  type="number"
+                  placeholder="Ingrese el precio"
+                  value={subCategory.price}
+                  onChange={(e) =>
+                    handleSubCategoryChange(index, "price", e.target.value)
+                  }
+                />
               </div>
-            ))}
-            {!subCategory && (
-              <div className="flex justify-center items-center">
+              <div className="flex flex-col gap-4 items-start">
+                <Label>Información</Label>
+                <Input
+                  type="text"
+                  placeholder="Ingrese la data"
+                  value={subCategory.date}
+                  onChange={(e) =>
+                    handleSubCategoryChange(index, "date", e.target.value)
+                  }
+                />
+              </div>
+              {subCategories.length > 1 && (
                 <Button
                   type="button"
                   variant="secondary"
-                  onClick={handleAddSubCategory}
-                  className="btn btn-secondary mb-3"
+                  onClick={() => handleRemoveSubCategory(index)}
+                  className="btn btn-danger "
                 >
-                  + Agregar Subcategoría
+                  - Eliminar
                 </Button>
-              </div>
-            )}
-
-            {error && <small>{error}</small>}
-            <div className="row mb-3 mt-2 text-center">
-              <div className="col-lg-6">
-                <Button
-                  type="submit"
-                  className="btn boton"
-                  variant="secondary"
-                >
-                  Aceptar
-                </Button>
-              </div>
+              )}
             </div>
-          </form>
-        </div>
-      </div>
-    </>
+          ))}
+          {!subCategory && (
+            <div className="flex justify-center items-center">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleAddSubCategory}
+                className="btn btn-secondary"
+              >
+                + Agregar Subcategoría
+              </Button>
+            </div>
+          )}
+
+          {error && <small>{error}</small>}
+          <div className="flex flex-col gap-2  text-center">
+            <div className="col-lg-6">
+              <Button type="submit" className="btn boton" variant="secondary">
+                Aceptar
+              </Button>
+            </div>
+          </div>
+        </>
+      )}
+    </form>
   )
 }
 

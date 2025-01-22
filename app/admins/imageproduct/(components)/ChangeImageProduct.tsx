@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 import {
   getImageProductById,
   postImageProduct,
-  putImageProduct
+  putImageProduct,
 } from "@/services/ImageProduct"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useFormik } from "formik"
@@ -25,7 +25,7 @@ const ChangeImageProduct = ({
   Product,
   image,
   imageId,
-  setStep
+  setStep,
 }: ChangeProductProps) => {
   const [error, setError] = useState("")
   const [images, setImages] = useState([]) // Array para las imágenes
@@ -38,16 +38,17 @@ const ChangeImageProduct = ({
     useDropzone({
       onDrop,
       accept: {
-        "image/*": [] // Aceptar solo imágenes
-      }
+        "image/*": [], // Aceptar solo imágenes
+      },
     })
+
   const { data } = useQuery({
     queryKey: ["productImageById"],
     queryFn: () => {
       if (Product) return getImageProductById(Product)
     },
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60 * 24
+    staleTime: 1000 * 60 * 60 * 24,
   })
 
   const mutation = useMutation({
@@ -76,18 +77,19 @@ const ChangeImageProduct = ({
     onError: (error) => {
       setError(error.message)
       console.log(error)
-    }
+    },
   })
 
   const formik = useFormik({
     initialValues: {
-      Product: Product ? Product : 0 // inicializar con el array de imágenes
+      Product: Product ? Product : 0, // inicializar con el array de imágenes
     },
     onSubmit: (values) => {
       mutation.mutate()
       console.log(values)
-    }
+    },
   })
+
   function handleSubmit() {
     if (imageId) {
       const imagesUpload = [...images]
@@ -99,8 +101,8 @@ const ChangeImageProduct = ({
           console.log(response)
         }
       })
-      if(setStep) setStep(2)
-      return 
+      if (setStep) setStep(2)
+      return
     }
     const imagesUpload = [...images]
     imagesUpload.forEach(async (imageUp) => {
@@ -111,21 +113,15 @@ const ChangeImageProduct = ({
         console.log(response)
       }
     })
-    if(setStep) setStep(2)
+    if (setStep) setStep(2)
   }
-    function handleRemoveImage(index: any) {
+
+  function handleRemoveImage(index: any) {
     const newImages = [...images]
     newImages.splice(index, 1)
     setImages(newImages)
   }
 
-  /*   const handleImageChange = (index: any, value: any) => {
-    const newImages = images.map((img, i) =>
-      i === index ? { ...img, image: value } : img
-    )
-    setImages(newImages)
-    formik.setFieldValue("images", newImages) // Actualizar formik con las nuevas imágenes
-  } */
   return (
     <>
       <div className="flex flex-col mb-3 mt-3 offset-lg-2">
@@ -135,26 +131,7 @@ const ChangeImageProduct = ({
               className="flex flex-1 flex-col p-4"
               onSubmit={formik.handleSubmit}
             >
-              {/*   {images.map((img, index) => (
-                <div
-                  className="row mb-3"
-                  key={index}
-                >
-                  <Label className="form-Label mb-0 p-0">
-                    <b>Imagen {index + 1}</b>
-                  </Label>
-                </div>
-              ))} */}
-              {/*  {!image && (
-                <Button
-                  type="button"
-                  onClick={handleAddImage}
-                  className="btn btn-secondary mb-3"
-                >
-                  + Agregar Imagen
-                </Button>
-              )} */}
-              {!image && (
+              {!Product && (
                 <div className="row mb-3">
                   <Label className="form-Label mb-0 p-0">
                     <b>Producto</b>
@@ -167,45 +144,50 @@ const ChangeImageProduct = ({
                   />
                 </div>
               )}
-              <div className="flex flex-col gap-10">
-                <div
-                  {...getRootProps()}
-                  className="border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md"
-                >
-                  <input {...getInputProps()} />
-                  {isDragActive ? (
-                    <p>Suelta las imágenes aquí ...</p>
-                  ) : isDragReject ? (
-                    <p>¡Solo se permiten imágenes!</p>
-                  ) : (
-                    <p>
-                      Arrastra y suelta algunas imágenes aquí, o haz clic para
-                      seleccionar archivos
-                    </p>
-                  )}
+              <div className="flex flex-col gap-4 items-start">
+                <Label>Agregar imagenes</Label>
+                <div className="flex flex-col gap-6">
+                  <div
+                    {...getRootProps()}
+                    className="border border-secondary hover:bg-secondary hover:text-white bg-white text-black transition-colors duration-300 px-4 py-2 rounded-md h-56 cursor-pointer"
+                  >
+                    <input {...getInputProps()} />
+                    {isDragActive ? (
+                      <p>Suelta las imágenes aquí ...</p>
+                    ) : isDragReject ? (
+                      <p>¡Solo se permiten imágenes!</p>
+                    ) : (
+                      <p>
+                        Arrastra y suelta algunas imágenes aquí, o haz clic para
+                        seleccionar archivos
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap justify-around items-center">
+                    {image && (
+                      <img
+                        src={image}
+                        width={100}
+                        height={100}
+                        key={crypto.randomUUID()}
+                        alt={image}
+                      />
+                    )}
+                    {images.map((image: any, index: number) => (
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt="uploaded"
+                        width={100}
+                        height={100}
+                        key={image.name}
+                        onClick={() => handleRemoveImage(index)}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="flex justify-around items-center">
-                  {image && (
-                    <img
-                      src={image}width={90}
-                      height={90}
-                      key={crypto.randomUUID()}
-                      alt={image}
-                    />
-                  )}
-                  {images.map((image: any, index: number) => (
-                    <img
-                      src={URL.createObjectURL(image)}
-                      alt="uploaded"
-                      width={90}
-                      height={90}
-                      key={image.name}
-                      onClick={() => handleRemoveImage(index)}
-                    /> 
-                  ))}
-                </div>
+                {error && <small>{error}</small>}
               </div>
-              {error && <small>{error}</small>}
               <div className="row mb-3 mt-2 text-center">
                 <div className="col-lg-6">
                   <Button

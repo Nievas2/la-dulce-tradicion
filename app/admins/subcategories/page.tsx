@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import { SubCategory } from "@/interfaces/SubCategory"
 import { getSubCategories } from "@/services/SubCategoryService"
@@ -16,33 +16,39 @@ const page = () => {
     queryKey: ["sub-categories"],
     queryFn: getSubCategories,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60 * 24
+    staleTime: 1000 * 60 * 60 * 24,
   })
   console.log(data)
 
   return (
-    <section className="flex flex-col relative">
-      <Dialog>
-        <DialogTrigger className="absolute -top-10 right-0 border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
-          Add
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Agregar una sub categoría</DialogTitle>
-            <ChangeSubCategoryProduct Product={3} />
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+    <section className="flex flex-col gap-8">
+      <div className="flex justify-end w-full">
+        <Dialog>
+          <DialogTrigger className="w-fit border border-secondary hover:bg-secondary/80 hover:text-white bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
+            Agregar sub categoria
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Agregar una sub categoría</DialogTitle>
+              <ChangeSubCategoryProduct Product={3} />
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      </div>
       <div className="flex flex-wrap gap-4">
         {data?.data?.map((subCategory: SubCategory) => (
           <Dialog key={crypto.randomUUID()}>
             <DialogTrigger className="border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md">
-              edit
+              {subCategory.date} - {subCategory.price}
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Editar una sub categoría</DialogTitle>
-                <ChangeSubCategoryProduct Product={3} subCategory={subCategory} id={subCategory.id} />
+                <ChangeSubCategoryProduct
+                  Product={3}
+                  subCategory={subCategory}
+                  id={subCategory.id}
+                />
               </DialogHeader>
             </DialogContent>
           </Dialog>

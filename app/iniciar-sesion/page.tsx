@@ -61,6 +61,7 @@ const page = () => {
       window.location.href = "/"
     },
     onError: (error) => {
+      setError(true)
       console.log(error)
     },
   })
@@ -140,7 +141,10 @@ const page = () => {
               {error ||
                 (mutation.error && (
                   <small className=" font-bold text-red-500">
-                    Error al iniciar sesion
+                    Error al iniciar sesion, verfique su contraseña o email.{" "}
+                    <br />
+                    Si el error persiste, Verifique que se haya registrado
+                    anteriormente.
                   </small>
                 ))}
               <div className="flex flex-col gap-4">

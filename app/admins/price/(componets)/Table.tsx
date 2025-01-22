@@ -6,7 +6,7 @@ export default async function Table({
   currentPage,
   categoryId,
   product,
-  value
+  value,
 }: {
   query: string
   currentPage: number
@@ -14,32 +14,16 @@ export default async function Table({
   product: string
   value: string
 }) {
-  const products = await getProductsPrice(query, currentPage, categoryId)
+  const products = await getProductsPrice(
+    query,
+    currentPage,
+    Number(categoryId)
+  )  
+
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-        {/*   <div className="md:hidden">
-            {products?.map((product) => (
-              <div
-                key={crypto.randomUUID()}
-                className="mb-2 w-full rounded-md bg-white p-4"
-              >
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <p>{product.name}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full items-center justify-between pt-4">
-                  <div>
-                    <p className="text-xl font-medium">{product.price}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div> */}
           <table className="min-w-full text-gray-900 table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
@@ -49,10 +33,7 @@ export default async function Table({
                 >
                   name
                 </th>
-                <th
-                  scope="col"
-                  className="px-3 py-5 font-medium"
-                >
+                <th scope="col" className="px-3 py-5 font-medium">
                   price
                 </th>
               </tr>
