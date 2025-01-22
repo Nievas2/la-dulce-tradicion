@@ -211,8 +211,8 @@ const Cards = ({ product }: CardProps) => {
       const subCategoriesFiltered = allSubcategories.filter((item) => {
         return !productInCart.subCategory?.some(
           (subCategory) => subCategory.subCategory.id === item.SubCategory.id
-        );
-      });
+        )
+      })
 
       return subCategoriesFiltered.length > 0 ? (
         <>

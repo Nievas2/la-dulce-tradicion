@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import NotFound from "../(components)/NotFound"
 import { Product } from "@/interfaces/Product"
+import { renderSkeletonProducts } from "@/components/shared/skeletons/CardsProducts"
 
 const page = ({
   searchParams,
@@ -71,7 +72,7 @@ const page = ({
           </div>
 
           {isPending ? (
-            <div className="min-h-screen flex">Loading...</div>
+            renderSkeletonProducts()
           ) : data?.data?.products.length === 0 ? (
             <div className="flex justify-center items-center w-full col-span-full">
               <NotFound />
