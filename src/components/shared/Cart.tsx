@@ -9,7 +9,7 @@ import {
   useCartStore,
 } from "@/stores/cart.store"
 import { Product } from "@/interfaces/Product"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 
 interface CartProps {
@@ -35,23 +35,26 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
 
       setProducts(products)
     }
-  }, [])
+  }, [productStore])
 
   const clearCart = useCartStore((state) => state.clearCart)
 
-  let subtotal: number = 0
-
-  if (products) {
-    products.products.forEach((product: CartProducts) => {
-      if (product.subCategory != undefined) {
-        product.subCategory.map((subcategory) => {
-          subtotal += subcategory.amount * subcategory.subCategory.price
-        })
-      }
-      if (product.amount != undefined)
-        subtotal += product.amount * product.product.price
-    })
-  }
+  const total = useMemo(() => {
+    let subtotal: number = 0
+  
+    if (products && products.products) {
+      products.products.forEach((product: CartProducts) => {
+        if (product.subCategory != undefined) {
+          product.subCategory.map((subcategory) => {
+            subtotal += subcategory.amount * subcategory.subCategory.price
+          })
+        }
+        if (product.amount != undefined)
+          subtotal += product.amount * product.product.price
+      })
+    }
+    return subtotal
+  }, [products])
 
   return (
     <div
@@ -99,10 +102,14 @@ export default function Cart({ cartOpen, setCartOpen }: CartProps) {
         <div className="flex flex-col w-full gap-8">
           <div className="flex">
             <span className="w-full">Subtotal: </span>
-            <span className="w-full text-end">$ {subtotal}</span>
+            <span className="w-full text-end">$ {total.toString()}</span>
           </div>
           <Link href="/ticket">
-            <Button variant="main" className="flex gap-2 w-full" onClick={()=> setCartOpen(false)}>
+            <Button
+              variant="main"
+              className="flex gap-2 w-full"
+              onClick={() => setCartOpen(false)}
+            >
               <Icon
                 icon="material-symbols:shopping-cart"
                 width="24"
