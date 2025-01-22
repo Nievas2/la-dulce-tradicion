@@ -32,14 +32,14 @@ const SideNav = () => {
             </button>
           )}
           <SideItem
-            icon="clarity:dollar-solid"
-            name="Precios"
-            link="/admins/price"
-          />
-          <SideItem
             icon="mingcute:chicken-fill"
             name="Productos"
             link="/admins/products"
+          />
+          <SideItem
+            icon="clarity:dollar-solid"
+            name="Precios"
+            link="/admins/price"
           />
           {/* <SideItem
             icon="mdi:tag-outline"

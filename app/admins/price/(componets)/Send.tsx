@@ -3,6 +3,7 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import Cookies from "js-cookie"
 import { decodeJwt } from "@/utils/decodeJwt"
+import { Button } from "@/components/ui/button"
 export default function Send({
   product,
   defaultValue
@@ -57,7 +58,7 @@ export default function Send({
           defaultValue={defaultValue}
           onChange={(e) => formik.setFieldValue("price", e.target.value)}
         />
-        <button type="submit">enviar</button>
+        <Button variant="secondary" type="submit">Enviar</Button>
       </form>
     </div>
   )

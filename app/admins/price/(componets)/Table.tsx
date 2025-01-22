@@ -31,10 +31,10 @@ export default async function Table({
                   scope="col"
                   className="px-0 sm:px-4 py-0 sm:py-5 font-medium sm:pl-6"
                 >
-                  name
+                  Nombre del producto
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  price
+                  Precio
                 </th>
               </tr>
             </thead>
