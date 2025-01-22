@@ -8,7 +8,7 @@ const CategoriesSection = () => {
       </h2>
 
       <div
-        className={`grid grid-cols-1 md:grid-cols-2 gap-8 w-full place-content-center place-items-center items-center justify-center`}
+        className={`grid grid-cols-1 lg:grid-cols-2 gap-y-2 md:gap-y-8 w-full place-content-center place-items-center items-center justify-center`}
       >
         <Category
           title="Pasteleria"
@@ -45,7 +45,7 @@ const CategoriesSection = () => {
           title="Eventos y servicios"
           img="/fondos/fondos1.jpg"
           link="/productos?page=1&categoryId=5"
-          className="col-span-2 "
+          className="col-span-full"
         />
       </div>
     </section>

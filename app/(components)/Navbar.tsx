@@ -290,23 +290,23 @@ export default function Component() {
               />
             )}
           </ul>
-            {/* Cart button desktop */}
-            {authUser != null && pathname !== "/ticket" && (
-              <div>
-                <button
-                  type="button"
-                  className="px-3 py-2 inline-flex items-center justify-center rounded-md text-black-main hover:bg-gray-main/80 hover:text-black-main focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                  aria-controls="mobile-menu"
-                  aria-expanded={cartOpen}
-                  onClick={() => setCartOpen(!cartOpen)}
-                >
-                  <span className="sr-only">Open main menu</span>
+          {/* Cart button desktop */}
+          {authUser != null && pathname !== "/ticket" && (
+            <div>
+              <button
+                type="button"
+                className="px-3 py-2 inline-flex items-center justify-center rounded-md text-black-main hover:bg-gray-main/80 hover:text-black-main focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                aria-controls="mobile-menu"
+                aria-expanded={cartOpen}
+                onClick={() => setCartOpen(!cartOpen)}
+              >
+                <span className="sr-only">Open main menu</span>
 
-                  {/* Open */}
-                  <Icon icon="mdi:cart" width="24" height="24" />
-                </button>
-              </div>
-            )}
+                {/* Open */}
+                <Icon icon="mdi:cart" width="24" height="24" />
+              </button>
+            </div>
+          )}
           {authUser ? (
             <Button
               variant={"main"}
