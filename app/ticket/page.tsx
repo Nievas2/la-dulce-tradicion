@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const NEXT_PUBLIC_PHONE = process.env.NEXT_PUBLIC_PHONE
 
@@ -132,61 +133,100 @@ const page = () => {
   }
 
   return (
-    <section className="flex flex-col w-full items-center justify-center p-2">
-      <h2 className="text-xl font-bold">Tus productos</h2>
-      <Table>
-        <TableCaption>
-          Envianos tu pedido y a la brevedad te responderemos.
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Producto</TableHead>
-            <TableHead className="w-[100px]">Cantidad</TableHead>
-            <TableHead className="w-[100px]">Precio U</TableHead>
-            <TableHead className="w-[100px]">Total</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {productStore?.products.map((product) => (
-            <>
-              {product.subCategory != undefined ? (
-                product.subCategory.map((subcategory) => (
+    <section className="flex flex-col w-full min-h-[78vh] items-center justify-center p-0 sm:p-2 gap-6 relative">
+      <img
+        src={"/svgs/Blob.svg"}
+        height={300}
+        width={300}
+        alt="blob"
+        className="absolute top-0 right-0 z-0"
+      />
+      <img
+        src={"/svgs/Blob2.svg"}
+        height={300}
+        width={300}
+        alt="blob"
+        className="absolute bottom-0 left-0 z-0"
+      />
+      <img
+        src={"/svgs/Blob3.svg"}
+        height={150}
+        width={150}
+        alt="blob"
+        className="hidden md:block absolute bottom-10 left-[450px] z-0"
+      />
+      <img
+        src={"/svgs/Blob4.svg"}
+        height={100}
+        width={100}
+        alt="blob"
+        className="hidden md:block absolute bottom-28 right-64 z-0"
+      />
+      <img
+        src={"/svgs/Blob3.svg"}
+        height={100}
+        width={100}
+        alt="blob"
+        className="hidden md:block absolute top-10 left-96 z-0"
+      />
+      <div className="flex flex-col w-full items-center justify-center gap-6 p-0 py-6 sm:p-4 backdrop-blur-md bg-white/30 border border-secondary rounded-xl">
+      <h2 className="text-3xl font-bold">Finalizar compra</h2>
+        <Table>
+          <TableCaption>
+            Envianos tu pedido y a la brevedad te responderemos.
+          </TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Producto</TableHead>
+              <TableHead className="max-w-[100px]">Cantidad</TableHead>
+              <TableHead className="max-w-[100px]">Precio U</TableHead>
+              <TableHead className="max-w-[100px]">Total</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {productStore?.products.map((product) => (
+              <>
+                {product.subCategory != undefined ? (
+                  product.subCategory.map((subcategory) => (
+                    <TableRow key={crypto.randomUUID()}>
+                      <TableCell>
+                        {product.product.name} | {subcategory.subCategory.date}
+                      </TableCell>
+                      <TableCell>{subcategory.amount}</TableCell>
+                      <TableCell>$ {subcategory.subCategory.price}</TableCell>
+                      <TableCell>
+                        $ {subcategory.amount * subcategory.subCategory.price}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
                   <TableRow key={crypto.randomUUID()}>
+                    <TableCell>{product.product.name}</TableCell>
+                    <TableCell>{product.amount}</TableCell>
+                    <TableCell>$ {product.product.price}</TableCell>
                     <TableCell>
-                      {product.product.name} | {subcategory.subCategory.date}
-                    </TableCell>
-                    <TableCell>{subcategory.amount}</TableCell>
-                    <TableCell>$ {subcategory.subCategory.price}</TableCell>
-                    <TableCell>
-                      $ {subcategory.amount * subcategory.subCategory.price}
+                      ${" "}
+                      {product.amount != undefined &&
+                        product.amount * product.product.price}
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow key={crypto.randomUUID()}>
-                  <TableCell>{product.product.name}</TableCell>
-                  <TableCell>{product.amount}</TableCell>
-                  <TableCell>$ {product.product.price}</TableCell>
-                  <TableCell>
-                    ${" "}
-                    {product.amount != undefined &&
-                      product.amount * product.product.price}
-                  </TableCell>
-                </TableRow>
-              )}
-            </>
-          ))}
-          <TableRow>
-            <TableCell colSpan={3} className="text-right font-medium">
-              Total:
-            </TableCell>
-            <TableCell className="text-right font-medium">$ {total}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <Button variant="main" onClick={handleSubmit}>
-        Enviar a whatsapp
-      </Button>
+                )}
+              </>
+            ))}
+            <TableRow>
+              <TableCell colSpan={3} className="text-right font-medium">
+                Total:
+              </TableCell>
+              <TableCell className="text-right font-medium">
+                $ {total}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <Button variant="main" onClick={handleSubmit}>
+          Enviar a whatsapp
+        </Button>
+      </div>
     </section>
   )
 }
