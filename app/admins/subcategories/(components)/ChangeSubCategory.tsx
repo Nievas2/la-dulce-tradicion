@@ -170,12 +170,21 @@ const ChangeSubCategoryProduct = ({
           )}
 
           {error && <small>{error}</small>}
-          <div className="flex flex-col gap-2  text-center">
-            <div className="col-lg-6">
-              <Button type="submit" className="btn boton" variant="secondary">
-                Aceptar
+          <div className="flex justify-between gap-2 text-center">
+            {subCategory && (
+              <Button
+                variant="main"
+                type="button"
+                onClick={() => {
+                  if (setStep) setStep(3)
+                }}
+              >
+                Omitir subcategoria
               </Button>
-            </div>
+            )}
+            <Button type="submit" variant="secondary">
+              Aceptar
+            </Button>
           </div>
         </>
       )}
