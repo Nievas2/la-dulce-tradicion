@@ -24,4 +24,19 @@ axiosInstance.interceptors.request.use(
   }
 )
 
+axiosInstance.interceptors.response.use(
+  function (response: any) {
+    return response
+  },
+
+  function (error: any) {
+    if (error.response.status === 401) {
+      localStorage.removeItem("user")
+      window.location.href = "/iniciar-sesion"
+    }
+
+    return Promise.reject(error)
+  }
+)
+
 export default axiosInstance
