@@ -37,7 +37,7 @@ const ChangeSubCategoryProduct = ({
             price: element.price,
             date: element.date,
           }
-          postSubCategory(body)
+          return postSubCategory(body)
         })
 
         await Promise.all(promises)
@@ -109,7 +109,7 @@ const ChangeSubCategoryProduct = ({
         <p>{success}</p>
       ) : (
         <>
-          {!Product && (
+          {Product === undefined && (
             <div className="flex flex-col gap-2 items-start">
               <Label>Producto</Label>
               <Input

@@ -99,6 +99,7 @@ export async function getSubCategoriesPrice(
     if (query) {
       sqlQuery += ` WHERE sc.date LIKE '%${query}%'`
     }
+
     sqlQuery += ` LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`
 
     const results = await new Promise<any[]>((resolve, reject) => {

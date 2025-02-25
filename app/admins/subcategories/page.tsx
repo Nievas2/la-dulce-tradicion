@@ -30,7 +30,7 @@ const page = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Agregar una sub categoría</DialogTitle>
-              <ChangeSubCategoryProduct Product={3} />
+              <ChangeSubCategoryProduct />
             </DialogHeader>
           </DialogContent>
         </Dialog>
@@ -45,7 +45,7 @@ const page = () => {
               <DialogHeader>
                 <DialogTitle>Editar una sub categoría</DialogTitle>
                 <ChangeSubCategoryProduct
-                  Product={3}
+                  Product={subCategory.Product}
                   subCategory={subCategory}
                   id={subCategory.id}
                 />

@@ -48,7 +48,7 @@ const Categories = () => {
             onClick={() => handleChange("1")}
             className={
               categoryId === "1"
-                ? "bg-secondary text-white hover:bg-secondary/80"
+                ? "bg-secondary text-white hover:bg-secondary/80 cursor-not-allowed"
                 : ""
             }
             variant="items"
@@ -64,7 +64,7 @@ const Categories = () => {
             variant="items"
             className={
               categoryId === "2"
-                ? "bg-secondary text-white hover:bg-secondary/80"
+                ? "bg-secondary text-white hover:bg-secondary/80 cursor-not-allowed"
                 : ""
             }
             size="ghost"
@@ -79,7 +79,7 @@ const Categories = () => {
             variant="items"
             className={
               categoryId === "3"
-                ? "bg-secondary text-white hover:bg-secondary/80"
+                ? "bg-secondary text-white hover:bg-secondary/80 cursor-not-allowed"
                 : ""
             }
             size="ghost"
@@ -94,7 +94,7 @@ const Categories = () => {
             variant="items"
             className={
               categoryId === "4"
-                ? "bg-secondary text-white hover:bg-secondary/80"
+                ? "bg-secondary text-white hover:bg-secondary/80 cursor-not-allowed"
                 : ""
             }
             size="ghost"
@@ -109,7 +109,7 @@ const Categories = () => {
             variant="items"
             className={
               categoryId === "5"
-                ? "bg-secondary text-white hover:bg-secondary/80"
+                ? "bg-secondary text-white hover:bg-secondary/80 cursor-not-allowed"
                 : ""
             }
             size="ghost"
@@ -124,7 +124,7 @@ const Categories = () => {
             variant="items"
             className={
               categoryId === "6"
-                ? "bg-secondary text-white hover:bg-secondary/80"
+                ? "bg-secondary text-white hover:bg-secondary/80 cursor-not-allowed"
                 : ""
             }
             size="ghost"
@@ -139,7 +139,7 @@ const Categories = () => {
             variant="items"
             className={
               categoryId === "7"
-                ? "bg-secondary text-white hover:bg-secondary/80"
+                ? "bg-secondary text-white hover:bg-secondary/80 cursor-not-allowed"
                 : ""
             }
             size="ghost"
