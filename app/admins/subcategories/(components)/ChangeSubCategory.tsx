@@ -12,7 +12,7 @@ export interface SubCategoryForm {
 }
 
 interface ChangeSubCategoryProps {
-  Product: number | undefined
+  Product?: numbe
   subCategory?: SubCategoryForm // Prop para manejar las subcategorías
   id?: number
   setStep?: Dispatch<SetStateAction<number>>
