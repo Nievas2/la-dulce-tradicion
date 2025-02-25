@@ -28,9 +28,9 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
     useDropzone({
       onDrop,
       accept: {
-        "image/*": [] // Aceptar solo imágenes
+        "image/*": [], // Aceptar solo imágenes
       },
-      maxFiles: 1
+      maxFiles: 1,
     })
   const mutation = useMutation({
     mutationFn: async () => {
@@ -47,16 +47,22 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
       if (imageUp != undefined) {
         let formData = new FormData()
         formData.append("image", imageUp)
-        response = await uploadImage(formData
+        response = await uploadImage(formData)
       }
     }
 
     //si se agregan imagesnes
     if (images.length > 0 && response != undefined) {
       if (id !== undefined) {
-        return putCategory({ image: response.data.url, name: formik.values.name }, id)
+        return putCategory(
+          { image: response.data.url, name: formik.values.name },
+          id
+        )
       }
-      return postCategory({ image: response.data.url, name: formik.values.name })
+      return postCategory({
+        image: response.data.url,
+        name: formik.values.name,
+      })
     }
 
     //si no se agregan imagenes
@@ -69,19 +75,16 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
   const formik = useFormik({
     initialValues: {
       name: name ? name : "",
-      image: image ? image : ""
+      image: image ? image : "",
     },
     validationSchema: CategorySchema,
     onSubmit: (values: FormCategory) => {
       mutation.mutate()
-    }
+    },
   })
 
   return (
-    <form
-      className="flex flex-1 flex-col p-4"
-      onSubmit={formik.handleSubmit}
-    >
+    <form className="flex flex-1 flex-col p-4" onSubmit={formik.handleSubmit}>
       <div className="row mb-3">
         <Label>Nombre</Label>
         <Input
