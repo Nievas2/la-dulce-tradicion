@@ -42,9 +42,7 @@ const page = ({
 
   useEffect(() => {
     refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, currentPage, categoryId])
-  console.log(data)
 
   return (
     <section className="w-full flex flex-col gap-4 justify-center items-center pt-2 p-4">

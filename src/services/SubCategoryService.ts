@@ -30,9 +30,7 @@ export function postSubCategory(subCategory: SubCategoryForm) {
 }
 
 export function putSubCategory(subCategory: SubCategoryForm, id: number) {
-  try {
-    console.log(subCategory, id);
-    
+  try {    
     const response = axiosInstance.put(`subcategory/edit/${id}`, subCategory)
     return response
   } catch (error) {

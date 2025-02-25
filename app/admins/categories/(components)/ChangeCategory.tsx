@@ -22,7 +22,6 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
   const [images, setImages] = useState([]) // Array para las imágenes
   const onDrop = (acceptedFiles: any) => {
     // Aquí puedes manejar los archivos aceptados
-    console.log("Archivos aceptados:", acceptedFiles)
     setImages(acceptedFiles)
   }
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
@@ -37,27 +36,18 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
     mutationFn: async () => {
       return handleSubmit()
     },
-
-    onSuccess: (data: any) => {
-      console.log(data)
-    },
-    onError: (error: any) => {
-      console.log(error)
-    }
   })
 
   async function handleSubmit() {
     //maneja si encuentra imagenes
     let imageUp
     let response
-    console.log(imageUp)
     if (images.length > 0) {
       imageUp = images[0]
       if (imageUp != undefined) {
         let formData = new FormData()
         formData.append("image", imageUp)
-        response = await uploadImage(formData)
-        console.log(response)
+        response = await uploadImage(formData
       }
     }
 
@@ -84,7 +74,6 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
     validationSchema: CategorySchema,
     onSubmit: (values: FormCategory) => {
       mutation.mutate()
-      console.log(values)
     }
   })
 

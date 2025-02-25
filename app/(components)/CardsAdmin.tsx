@@ -21,9 +21,6 @@ const CardsAdmin = ({ product }: CardProps) => {
     mutationFn: () => {
       return deleteProduct(product.id)
     },
-    onError: (error) => {
-      console.log(error)
-    },
   })
   const handleDelete = () => {
     mutate()

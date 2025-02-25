@@ -192,8 +192,6 @@ export async function getPagesPriceSubCategories(query: string) {
 export async function updatePrice(id: number, price: number, email: string) {
   try {
     const checkAdmin = await checkAdmins(email)
-    console.log("107", checkAdmin)
-
     if (checkAdmin!.admin === 1) {
       const response = new Promise((resolve, reject) => {
         db.query(
@@ -221,8 +219,6 @@ export async function updatePriceSubCategory(
 ) {
   try {
     const checkAdmin = await checkAdmins(email)
-    console.log("107", checkAdmin)
-
     if (checkAdmin!.admin === 1) {
       const response = new Promise((resolve, reject) => {
         db.query(

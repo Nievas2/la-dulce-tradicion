@@ -53,11 +53,9 @@ const ChangeSubCategoryProduct = ({
     onSuccess: (data) => {
       if (subCategory) setSuccess("Subcategoría actualizada correctamente")
       formik.resetForm()
-      console.log(data)
     },
     onError: (error) => {
       setError(error.message)
-      console.log(error)
     },
   })
 
@@ -68,7 +66,6 @@ const ChangeSubCategoryProduct = ({
     },
     onSubmit: (values) => {
       mutation.mutate()
-      console.log(values)
     },
   })
 

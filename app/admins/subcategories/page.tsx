@@ -18,7 +18,6 @@ const page = () => {
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24,
   })
-  console.log(data)
 
   return (
     <section className="flex flex-col gap-8">

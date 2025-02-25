@@ -171,7 +171,6 @@ const Cards = ({ product }: CardProps) => {
     const productInCart = productStore?.products.find(
       (item) => item.product.id === product.id
     ) as CartProducts
-    console.log(productInCart)
 
     if (product.SubCategoryProducts.length <= 0) {
       return productsInCart?.products.some(

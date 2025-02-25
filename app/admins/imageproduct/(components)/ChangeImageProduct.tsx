@@ -31,7 +31,6 @@ const ChangeImageProduct = ({
   const [images, setImages] = useState([]) // Array para las imágenes
   const onDrop = (acceptedFiles: any) => {
     // Aquí puedes manejar los archivos aceptados
-    console.log("Archivos aceptados:", acceptedFiles)
     setImages(acceptedFiles)
   }
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
@@ -54,29 +53,12 @@ const ChangeImageProduct = ({
   const mutation = useMutation({
     mutationFn: async () => {
       return handleSubmit()
-      /* if (image) {
-        console.log("put")
-        return await putImageProduct(images[0].image, data?.data.id)
-      }
-
-      const promises = images.map((element) => {
-        const body = {
-          Product: formik.values.Product,
-          image: element.image
-        }
-        return postImageProduct(body)
-      })
-
-      await Promise.all(promises)
-      return true */
     },
     onSuccess: (data) => {
       formik.resetForm()
-      console.log(data)
     },
     onError: (error) => {
       setError(error.message)
-      console.log(error)
     },
   })
 
@@ -86,7 +68,6 @@ const ChangeImageProduct = ({
     },
     onSubmit: (values) => {
       mutation.mutate()
-      console.log(values)
     },
   })
 
@@ -98,7 +79,6 @@ const ChangeImageProduct = ({
           let formData = new FormData()
           formData.append("image", imageUp)
           const response = await putImageProduct(formData, imageId)
-          console.log(response)
         }
       })
       if (setStep) setStep(2)
@@ -110,7 +90,6 @@ const ChangeImageProduct = ({
         let formData = new FormData()
         formData.append("image", imageUp)
         const response = await postImageProduct(formData, formik.values.Product)
-        console.log(response)
       }
     })
     if (setStep) setStep(2)

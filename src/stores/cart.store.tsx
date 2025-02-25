@@ -100,8 +100,6 @@ const storeApi: StateCreator<CartState, [["zustand/immer", never]]> = (
   },
 
   addSubCategory({ userId, productCart }) {
-    console.log(productCart)
-
     set((state) => {
       const existingIndex = state.cart.findIndex(
         (product: any) => product.userId === userId

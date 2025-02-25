@@ -22,9 +22,6 @@ const page = () => {
 
   const mutation = useMutation({
     mutationFn: postUser,
-    onSuccess: (data) => {
-      console.log(data)
-    },
     onError: (error) => {
       setError(true)
     },

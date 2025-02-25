@@ -252,8 +252,6 @@ function CartCard({ product, amount, userId, cartProduct }: CartCardProps) {
                     className="rounded-full bg-gray-200 p-2 min-h-8 min-w-8"
                     onClick={() => {
                       if (subCategory.amount > 1) {
-                        console.log("decre")
-
                         decreaseAmountSubCategory(
                           userId.toString(),
                           product.id,

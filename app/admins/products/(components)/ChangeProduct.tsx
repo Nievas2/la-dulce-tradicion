@@ -47,11 +47,8 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
   const mutation = useMutation({
     mutationFn: (values: ProductForm) => {
       if (product) {
-        console.log("put")
         return putProduct(values, product.id)
-      }
-      console.log("post")
-
+      }      
       return postProduct(values)
     },
     onSuccess: (data) => {
@@ -60,9 +57,6 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
       }
       setStep(1)
       formik.resetForm()
-    },
-    onError: (error) => {
-      console.log(error)
     },
   })
 

@@ -70,13 +70,10 @@ const page = () => {
       })
       setCart(body)
       mutate()
-      console.log(body)
     }
   }, [productStore])
 
   useEffect(() => {
-    console.log(data?.data)
-
     if (
       data?.data.productDiscrepancies.length === 0 &&
       data?.data.subcategoryDiscrepancies.length === 0
@@ -84,7 +81,6 @@ const page = () => {
       return setSuccess("Carrito cargado correctamente")
 
     if (data?.data.productDiscrepancies.length > 0) {
-      console.log("hay discrepancias en products")
       data?.data.productDiscrepancies.map(
         (discrepancy: { id: number; price: number }) => {
           productStore?.products.forEach((product) => {
@@ -97,7 +93,6 @@ const page = () => {
     }
 
     if (data?.data.subcategoryDiscrepancies.length > 0) {
-      console.log("hay discrepancias en subcategories")
       data?.data.subcategoryDiscrepancies.map(
         (discrepancy: { id: number; price: number }) => {
           productStore?.products.forEach((product) => {

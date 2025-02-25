@@ -21,7 +21,6 @@ export async function getCategoryById(id: number) {
 }
 
 export async function postCategory(Category: FormCategory) {
-  console.log(Category)
   try {
     const response = axiosInstance.post("category/add", {
       name: Category.name,

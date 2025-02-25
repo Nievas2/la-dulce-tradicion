@@ -62,7 +62,6 @@ const page = () => {
     },
     onError: (error) => {
       setError(true)
-      console.log(error)
     },
   })
   const formik = useFormik({

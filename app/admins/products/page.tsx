@@ -32,7 +32,6 @@ const page = ({
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60 * 24,
   })
-  console.log(data)
   const query = searchParams?.query || ""
   const currentPage = Number(searchParams?.page) || 1
   const categoryId = searchParams?.categoryId || ""

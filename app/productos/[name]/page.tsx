@@ -31,7 +31,6 @@ const page = ({ params }: { params: { name: string } }) => {
     queryKey: ["productName"],
     queryFn: () => getProductByName(name),
   })
-  console.log(data)
 
   return (
     <section className="flex flex-col p-4 gap-4">
