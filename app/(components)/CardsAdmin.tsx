@@ -18,7 +18,9 @@ interface CardProps {
 const CardsAdmin = ({ product }: CardProps) => {
   const { mutate, isSuccess } = useMutation({
     mutationKey: ["products"],
-    mutationFn: () => deleteProduct(product.id),
+    mutationFn: () => {
+      return deleteProduct(product.id)
+    },
     onError: (error) => {
       console.log(error)
     },

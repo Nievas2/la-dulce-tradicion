@@ -35,7 +35,7 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
     })
   const mutation = useMutation({
     mutationFn: async () => {
-      handleSubmit()
+      return handleSubmit()
     },
 
     onSuccess: (data: any) => {

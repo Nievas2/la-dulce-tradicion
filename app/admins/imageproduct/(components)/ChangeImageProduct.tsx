@@ -53,7 +53,7 @@ const ChangeImageProduct = ({
 
   const mutation = useMutation({
     mutationFn: async () => {
-      handleSubmit()
+      return handleSubmit()
       /* if (image) {
         console.log("put")
         return await putImageProduct(images[0].image, data?.data.id)
