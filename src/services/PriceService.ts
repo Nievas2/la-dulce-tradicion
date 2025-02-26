@@ -8,7 +8,7 @@ interface Product {
   name: string
   price: number // Cambia el tipo según sea necesario
 }
-const ITEMS_PER_PAGE = 6
+const ITEMS_PER_PAGE = 12
 interface adminProp {
   admin: number
 }
