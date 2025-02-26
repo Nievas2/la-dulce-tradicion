@@ -30,7 +30,11 @@ const ProductCarousel = ({ images }: ProductCarouselProps) => {
             <Image
               width={320}
               height={320}
-              src={image.ImageProduct.image}
+              src={
+                image.ImageProduct != null
+                  ? image.ImageProduct.image
+                  : "/fondos/fondos1.jpg"
+              }
               alt="imagen del producto"
             />
           </CarouselItem>

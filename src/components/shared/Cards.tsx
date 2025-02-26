@@ -412,7 +412,14 @@ const Cards = ({ product }: CardProps) => {
                           onClick={() => setImageSelected(index)}
                           key={image.id}
                         >
-                          <img src={image.ImageProduct.image} alt="image" />
+                          <img
+                            src={
+                              image.ImageProduct != null
+                                ? image.ImageProduct.image
+                                : "/fondos/fondos1.jpg"
+                            }
+                            alt="image"
+                          />
                         </button>
                       )
                     )}
