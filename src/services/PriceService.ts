@@ -39,7 +39,8 @@ export async function checkAdmins(email: string): Promise<any> {
 export async function getProductsPrice(
   query: string,
   currentPage: number,
-  categoryId: number
+  categoryId: number,
+  nulls: string
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
@@ -56,13 +57,18 @@ export async function getProductsPrice(
       if (categoryId) {
         conditions.push(`CategoryId = ${categoryId}`)
       }
+      if (nulls === "true") {
+        conditions.push(`(price IS NULL OR price IS NOT NULL)`)
+      } else if (nulls === "false") {
+        conditions.push(`price IS NOT NULL`)
+      }
 
       if (conditions.length > 0) {
         sqlQuery += ` WHERE ${conditions.join(" AND ")}`
       }
 
       sqlQuery += ` LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`
-
+      
       db.query(sqlQuery, (err, results) => {
         if (err) {
           return reject(err)
@@ -113,18 +119,24 @@ export async function getSubCategoriesPrice(
 
     // Agrupar las subcategorías por producto
     const groupedResults = results.reduce((acc, curr) => {
-      const { productId, productName, subCategoryId, subCategoryDate, subCategoryPrice } = curr
+      const {
+        productId,
+        productName,
+        subCategoryId,
+        subCategoryDate,
+        subCategoryPrice,
+      } = curr
       if (!acc[productId]) {
         acc[productId] = {
           productId,
           productName,
-          subCategories: []
+          subCategories: [],
         }
       }
       acc[productId].subCategories.push({
         subCategoryId,
         subCategoryDate,
-        subCategoryPrice
+        subCategoryPrice,
       })
       return acc
     }, {})
@@ -135,27 +147,41 @@ export async function getSubCategoriesPrice(
   }
 }
 
-export async function getPagesPrice(query: string, categoryId: string) {
+export async function getPagesPrice(query: string, categoryId: string, nulls: string) {
   try {
-    const results = await new Promise<any[]>((resolve, reject) => {
-      db.query(
-        `SELECT id FROM Products ${
-          categoryId ? `WHERE CategoryId = ${categoryId}` : ""
-        }`,
-        (err, results) => {
-          if (err) {
-            return reject(err)
-          }
+    const conditions = []
+    if (categoryId) {
+      conditions.push(`CategoryId = ${categoryId}`)
+    }
+    if (query) {
+      conditions.push(`name LIKE '%${query}%'`)
+    }
+    if (nulls === "true") {
+      conditions.push(`(price IS NULL OR price IS NOT NULL)`)
+    } else if (nulls === "false") {
+      conditions.push(`price IS NOT NULL`)
+    }
 
-          // Verifica si results es un array
-          if (Array.isArray(results)) {
-            resolve(results as any[]) // Asegúrate de que sea del tipo correcto
-          } else {
-            reject(new Error("El resultado no es un array"))
-          }
+    let sqlQuery = `SELECT * FROM ${process.env.NEXT_PUBLIC_DB_DATABASE}.Products`
+    if (conditions.length > 0) {
+      sqlQuery += ` WHERE ${conditions.join(" AND ")}`
+    }    
+
+    const results = await new Promise<any[]>((resolve, reject) => {
+      db.query(sqlQuery, (err, results) => {
+        if (err) {
+          return reject(err)
         }
-      )
+
+        // Verifica si results es un array
+        if (Array.isArray(results)) {
+          resolve(results as any[]) // Asegúrate de que sea del tipo correcto
+        } else {
+          reject(new Error("El resultado no es un array"))
+        }
+      })
     })
+
     const totalPages = Math.ceil(Number(results.length) / ITEMS_PER_PAGE)
     return totalPages
   } catch (error) {

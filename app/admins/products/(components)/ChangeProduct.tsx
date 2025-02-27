@@ -102,7 +102,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
               </div>
 
               <div className="flex flex-col gap-2 items-start">
-                <Label>Precio</Label>
+                <Label>Precio {"(opcional)"}</Label>
                 <Input
                   type="number"
                   className=" mt-2"

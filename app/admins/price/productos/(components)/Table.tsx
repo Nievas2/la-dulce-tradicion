@@ -7,18 +7,22 @@ export default async function Table({
   categoryId,
   product,
   value,
+  nullable
 }: {
   query: string
   currentPage: number
   categoryId: string
   product: string
   value: string
+  nullable:string
 }) {
   const products = await getProductsPrice(
     query,
     currentPage,
-    Number(categoryId)
+    Number(categoryId),
+    nullable
   )  
+console.log(products);
 
   return (
     <div className="mt-6 flow-root">
