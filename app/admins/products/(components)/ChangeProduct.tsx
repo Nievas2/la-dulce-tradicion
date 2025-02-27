@@ -20,11 +20,12 @@ import { useFormik } from "formik"
 import { useState } from "react"
 import ChangeImageProduct from "../../imageproduct/(components)/ChangeImageProduct"
 import ChangeSubCategoryProduct from "../../subcategories/(components)/ChangeSubCategory"
+import { AxiosError } from "axios"
 
 export interface ProductForm {
   name: string
   description: string
-  price: number
+  price: number | null
   CategoryName: string
 }
 interface ChangeProductProps {
@@ -44,7 +45,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
     { id: 7, name: "Eventos y servicios" },
   ]
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: (values: ProductForm) => {
       if (product) {
         return putProduct(values, product.id)
@@ -64,7 +65,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
     initialValues: {
       name: product ? product.name : "",
       description: product ? product.description : "",
-      price: product ? product.price : 0,
+      price: product ? product.price : null,
       CategoryName: product ? product.Category.name : "",
     },
     validationSchema: ProductSchema,
@@ -156,6 +157,12 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                   </small>
                 )}
               </div>
+
+              {error instanceof AxiosError && error.response && (
+                <small className="text-red-500 font-bold">
+                  {error.response.data.message}
+                </small>
+              )}
 
               <div className="flex flex-col gap-2 items-start mt-2 text-center">
                 <div className="col-lg-6">
