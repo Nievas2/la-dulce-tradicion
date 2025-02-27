@@ -43,7 +43,7 @@ const page = ({
   useEffect(() => {
     refetch()
   }, [query, currentPage, categoryId])
-
+  
   return (
     <section className="w-full flex flex-col gap-4 justify-center items-center pt-2 p-4">
       <div className="flex justify-start items-start w-full ">

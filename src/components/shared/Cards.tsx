@@ -363,9 +363,17 @@ const Cards = ({ product }: CardProps) => {
             <h3 className="text-lg font-bold leading-none w-full">
               {product.name}
             </h3>
-            <h4 className="text-md text-end leading-none border border-gray-400 py-2 px-4 w-fit rounded-full">
-              ${product.price}
-            </h4>
+            {product.price ||
+              (product.SubCategoryProducts.length > 0 && (
+                <h4 className="text-md text-end leading-none border border-gray-400 py-2 px-4 w-fit rounded-full">
+                  $
+                  {product.price
+                    ? product.price
+                    : product.SubCategoryProducts.length > 0
+                    ? product.SubCategoryProducts[0].SubCategory.price
+                    : 0}
+                </h4>
+              ))}
           </div>
           <p
             className="text-base font-extralight line-clamp-2"
@@ -497,7 +505,18 @@ const Cards = ({ product }: CardProps) => {
                       </TooltipProvider>
                     </div>
                   </div>
-                  <h3 className="text-xl">$ {product.price}</h3>
+                  {product.price ||
+                    (product.SubCategoryProducts.length > 0 && (
+                      <h3 className="text-xl">
+                        ${" "}
+                        {product.price
+                          ? product.price
+                          : product.SubCategoryProducts.length > 0
+                          ? product.SubCategoryProducts[0].SubCategory.price
+                          : 0}
+                      </h3>
+                    ))}
+
                   <p
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   ></p>
