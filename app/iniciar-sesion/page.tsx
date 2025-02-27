@@ -12,7 +12,7 @@ import { useState } from "react"
 import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google"
 import { GoogleLogin } from "@react-oauth/google"
 import { useGoogleLogin } from "@react-oauth/google"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { decodeJwt } from "@/utils/decodeJwt"
 import Cookies from "js-cookie"
 const page = () => {
@@ -64,9 +64,11 @@ const page = () => {
         user: userToken,
         token: data.token,
       }
+      console.log(data);
+      
       localStorage.setItem("user", JSON.stringify(user))
       Cookies.set("token", data.token)
-      window.location.href = "/"
+      /* window.location.href = "/" */
     },
     onError: (error) => {
       setError(true)
@@ -147,7 +149,7 @@ const page = () => {
                   />
                 </button>
               </div>
-              {error ||
+              {/* {error ||
                 (mutation.error && (
                   <small className=" font-bold text-red-500">
                     Error al iniciar sesion, verfique su contraseña o email.{" "}
@@ -155,7 +157,15 @@ const page = () => {
                     Si el error persiste, Verifique que se haya registrado
                     anteriormente.
                   </small>
-                ))}
+                ))} */}
+
+              {mutation.error instanceof AxiosError &&
+                mutation.error.response && (
+                  <small className="text-red-500 font-bold">
+                    {mutation.error.response.data.message}
+                  </small>
+                )}
+
               <div className="flex flex-col gap-4">
                 <Button
                   className="w-full"
@@ -179,7 +189,11 @@ const page = () => {
                 >
                   {loading ? (
                     <>
-                      <Icon icon="eos-icons:bubble-loading" width="24" height="24" />{" "}
+                      <Icon
+                        icon="eos-icons:bubble-loading"
+                        width="24"
+                        height="24"
+                      />{" "}
                       Cargando
                     </>
                   ) : (
