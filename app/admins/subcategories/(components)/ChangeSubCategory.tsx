@@ -13,7 +13,7 @@ export interface SubCategoryForm {
 
 interface ChangeSubCategoryProps {
   Product?: number
-  subCategory?: SubCategoryForm // Prop para manejar las subcategorías
+  subCategory?: SubCategoryForm
   id?: number
   setStep?: Dispatch<SetStateAction<number>>
 }
@@ -24,11 +24,11 @@ const ChangeSubCategoryProduct = ({
   id,
   setStep,
 }: ChangeSubCategoryProps) => {
-  const [success, setSuccess] = useState("")
+  const [success, setSuccess] = useState(false)
   const [error, setError] = useState("")
   const [subCategories, setSubCategories] = useState([{ price: 0, date: "" }]) // Array para las subcategorías
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: async () => {
       if (!subCategory) {
         const promises = subCategories.map((element) => {
@@ -51,7 +51,7 @@ const ChangeSubCategoryProduct = ({
       if (setStep) setStep(3)
     },
     onSuccess: (data) => {
-      if (subCategory) setSuccess("Subcategoría actualizada correctamente")
+      setSuccess(true)
       formik.resetForm()
     },
     onError: (error) => {
@@ -103,10 +103,28 @@ const ChangeSubCategoryProduct = ({
   return (
     <form className="flex flex-1 flex-col gap-3" onSubmit={formik.handleSubmit}>
       {success ? (
-        <p>{success}</p>
+        <div className="flex flex-col gap-4 justify-center items-center">
+          <p>
+            La subcategoría se ha{" "}
+            {subCategory == undefined ? "creado" : "actualizado"} correctamente
+          </p>
+          {subCategory == undefined && Product == undefined && (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => {
+                setSuccess(false)
+                formik.resetForm()
+                setSubCategories([{ price: 0, date: "" }])
+              }}
+            >
+              Crear otra subcategoría
+            </Button>
+          )}
+        </div>
       ) : (
         <>
-          {Product === undefined && (
+          {Product === undefined && subCategory == undefined && (
             <div className="flex flex-col gap-2 items-start">
               <Label>Producto</Label>
               <Input
@@ -157,7 +175,7 @@ const ChangeSubCategoryProduct = ({
               )}
             </div>
           ))}
-          
+
           {!subCategory && (
             <div className="flex justify-center items-center">
               <Button
@@ -174,9 +192,10 @@ const ChangeSubCategoryProduct = ({
 
           {error && <small>{error}</small>}
           <div className="flex justify-between gap-2 text-center">
-            {subCategory && (
+            {subCategory == undefined && Product != undefined && (
               <Button
-                variant="main"
+                variant="ghost"
+                className="text-black"
                 type="button"
                 disabled={isPending}
                 onClick={() => {
@@ -187,7 +206,7 @@ const ChangeSubCategoryProduct = ({
               </Button>
             )}
             <Button type="submit" variant="secondary" disabled={isPending}>
-              Aceptar
+              Enviar
             </Button>
           </div>
         </>

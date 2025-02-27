@@ -110,7 +110,7 @@ const ChangeImageProduct = ({
               className="flex flex-1 flex-col p-4"
               onSubmit={formik.handleSubmit}
             >
-              {!Product && (
+              {Product == undefined && image == undefined && (
                 <div className="row mb-3">
                   <Label className="form-Label mb-0 p-0">
                     <b>Producto</b>
