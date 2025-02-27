@@ -23,6 +23,9 @@ const page = () => {
 
   const mutation = useMutation({
     mutationFn: postUser,
+    onSuccess: (data) => {
+      window.location.href = "/"
+    },
     onError: (error) => {
       setError(true)
     },

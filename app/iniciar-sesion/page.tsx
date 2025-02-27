@@ -64,11 +64,11 @@ const page = () => {
         user: userToken,
         token: data.token,
       }
-      console.log(data);
-      
+      console.log(data)
+
       localStorage.setItem("user", JSON.stringify(user))
       Cookies.set("token", data.token)
-      /* window.location.href = "/" */
+      window.location.href = "/"
     },
     onError: (error) => {
       setError(true)
@@ -207,6 +207,12 @@ const page = () => {
                 <h5 className="text-sm">
                   Si no tiene una cuenta puede crearse una desde{" "}
                   <Link className="text-blue-800 font-bold" href="registro">
+                    aqui
+                  </Link>
+                </h5>
+                <h5 className="text-sm">
+                  ¿Olvidate tu contraseña?{" "}
+                  <Link className="text-blue-800 font-bold" href="actualizar-contrasena">
                     aqui
                   </Link>
                 </h5>
