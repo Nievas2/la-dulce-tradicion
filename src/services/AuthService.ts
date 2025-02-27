@@ -13,7 +13,7 @@ export async function login(login: LoginData) {
 export async function loginGoogle(token: string) {
   try {
     const response = await axiosInstance.post("auth/login/google", {
-      token: token
+      token: token,
     })
     return response
   } catch (error) {
@@ -30,6 +30,17 @@ export function passwordRecovery(email: string) {
   }
 }
 
+export function passwordReset(code: string, password: string, email: string) {
+  try {
+    const res = axiosInstance.patch(`user/newpassword/${code}/${email}`, {
+      password: password,
+    })
+    return res
+  } catch (error) {
+    throw error
+  }
+}
+
 export function createPassword(password: string) {
   try {
     const response = axiosInstance.post("user/createpassword", { password })
@@ -38,4 +49,3 @@ export function createPassword(password: string) {
     throw error
   }
 }
-
