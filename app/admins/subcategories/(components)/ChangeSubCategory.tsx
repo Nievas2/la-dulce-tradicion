@@ -28,7 +28,7 @@ const ChangeSubCategoryProduct = ({
   const [error, setError] = useState("")
   const [subCategories, setSubCategories] = useState([{ price: 0, date: "" }]) // Array para las subcategorías
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       if (!subCategory) {
         const promises = subCategories.map((element) => {
@@ -65,7 +65,7 @@ const ChangeSubCategoryProduct = ({
       subCategories: subCategory ? subCategory : subCategories,
     },
     onSubmit: (values) => {
-      mutation.mutate()
+      mutate()
     },
   })
 
@@ -111,6 +111,7 @@ const ChangeSubCategoryProduct = ({
               <Label>Producto</Label>
               <Input
                 type="number"
+                disabled={isPending}
                 placeholder="Ingrese el ID del producto"
                 {...formik.getFieldProps("Product")}
               />
@@ -124,6 +125,7 @@ const ChangeSubCategoryProduct = ({
                 <Input
                   type="number"
                   placeholder="Ingrese el precio"
+                  disabled={isPending}
                   value={subCategory.price}
                   onChange={(e) =>
                     handleSubCategoryChange(index, "price", e.target.value)
@@ -135,6 +137,7 @@ const ChangeSubCategoryProduct = ({
                 <Input
                   type="text"
                   placeholder="Ingrese la data"
+                  disabled={isPending}
                   value={subCategory.date}
                   onChange={(e) =>
                     handleSubCategoryChange(index, "date", e.target.value)
@@ -145,6 +148,7 @@ const ChangeSubCategoryProduct = ({
                 <Button
                   type="button"
                   variant="secondary"
+                  disabled={isPending}
                   onClick={() => handleRemoveSubCategory(index)}
                   className="btn btn-danger "
                 >
@@ -153,11 +157,13 @@ const ChangeSubCategoryProduct = ({
               )}
             </div>
           ))}
+          
           {!subCategory && (
             <div className="flex justify-center items-center">
               <Button
                 type="button"
                 variant="secondary"
+                disabled={isPending}
                 onClick={handleAddSubCategory}
                 className="btn btn-secondary"
               >
@@ -172,6 +178,7 @@ const ChangeSubCategoryProduct = ({
               <Button
                 variant="main"
                 type="button"
+                disabled={isPending}
                 onClick={() => {
                   if (setStep) setStep(3)
                 }}
@@ -179,7 +186,7 @@ const ChangeSubCategoryProduct = ({
                 Omitir subcategoria
               </Button>
             )}
-            <Button type="submit" variant="secondary">
+            <Button type="submit" variant="secondary" disabled={isPending}>
               Aceptar
             </Button>
           </div>

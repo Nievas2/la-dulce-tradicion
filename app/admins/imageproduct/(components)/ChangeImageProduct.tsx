@@ -50,7 +50,7 @@ const ChangeImageProduct = ({
     staleTime: 1000 * 60 * 60 * 24,
   })
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       return handleSubmit()
     },
@@ -67,7 +67,7 @@ const ChangeImageProduct = ({
       Product: Product ? Product : 0, // inicializar con el array de imágenes
     },
     onSubmit: (values) => {
-      mutation.mutate()
+      mutate()
     },
   })
 
@@ -119,6 +119,7 @@ const ChangeImageProduct = ({
                     type="number"
                     className="form-control mt-2"
                     placeholder="Ingrese el ID del producto"
+                    disabled={isPending}
                     {...formik.getFieldProps("Product")}
                   />
                 </div>
@@ -130,7 +131,7 @@ const ChangeImageProduct = ({
                     {...getRootProps()}
                     className="border border-secondary hover:bg-secondary hover:text-white bg-white text-black transition-colors duration-300 px-4 py-2 rounded-md h-56 cursor-pointer"
                   >
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} disabled={isPending} />
                     {isDragActive ? (
                       <p>Suelta las imágenes aquí ...</p>
                     ) : isDragReject ? (
@@ -173,6 +174,7 @@ const ChangeImageProduct = ({
                     type="submit"
                     className="btn boton"
                     variant="secondary"
+                    disabled={isPending}
                   >
                     Aceptar
                   </Button>

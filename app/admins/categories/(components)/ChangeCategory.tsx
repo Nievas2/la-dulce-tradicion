@@ -32,7 +32,7 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
       },
       maxFiles: 1,
     })
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       return handleSubmit()
     },
@@ -79,7 +79,7 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
     },
     validationSchema: CategorySchema,
     onSubmit: (values: FormCategory) => {
-      mutation.mutate()
+      mutate()
     },
   })
 
@@ -91,6 +91,7 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
           type="text"
           className="form-control"
           placeholder="Ingrese Nombre"
+          disabled={isPending}
           {...formik.getFieldProps("name")}
           /* disabled={finished} */
         />
@@ -107,6 +108,7 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
             type="text"
             className="form-control"
             placeholder="Ingrese Nombre"
+            disabled={isPending}
             {...formik.getFieldProps("image")}
             /* disabled={finished} */
           />
@@ -121,7 +123,7 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
         {...getRootProps()}
         className="border border-secondary hover:bg-secondary/80 bg-white text-black transition-colors duration-300 h-10 px-4 py-2 rounded-md"
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} disabled={isPending} />
         {isDragActive ? (
           <p>Suelta las imágenes aquí ...</p>
         ) : isDragReject ? (
@@ -133,7 +135,9 @@ const ChangeCategory = ({ id, name, image }: ChangeCategoryProps) => {
           </p>
         )}
       </div>
-      <Button variant="default">Enviar</Button>
+      <Button variant="secondary" type="submit" disabled={isPending}>
+        Enviar
+      </Button>
     </form>
   )
 }

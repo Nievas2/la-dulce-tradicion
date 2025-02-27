@@ -44,11 +44,11 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
     { id: 7, name: "Eventos y servicios" },
   ]
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (values: ProductForm) => {
       if (product) {
         return putProduct(values, product.id)
-      }      
+      }
       return postProduct(values)
     },
     onSuccess: (data) => {
@@ -69,7 +69,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
     },
     validationSchema: ProductSchema,
     onSubmit: (values) => {
-      mutation.mutate(values)
+      mutate(values)
     },
   })
 
@@ -90,6 +90,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                 <Input
                   type="text"
                   placeholder="Ingrese Nombre"
+                  disabled={isPending}
                   {...formik.getFieldProps("name")}
                 />
                 {formik.touched.name && formik.errors.name && (
@@ -105,6 +106,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                   type="number"
                   className=" mt-2"
                   placeholder="Ingrese el precio"
+                  disabled={isPending}
                   {...formik.getFieldProps("price")}
                 />
                 {formik.touched.price && formik.errors.price && (
@@ -118,6 +120,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                 <Textarea
                   className=" mt-2"
                   placeholder="Ingrese descripcion"
+                  disabled={isPending}
                   {...formik.getFieldProps("description")}
                 />
                 {formik.touched.description && formik.errors.description && (
@@ -130,6 +133,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                 <Label>Nombre de la categoria</Label>
                 <Select
                   onValueChange={(values) => handleChangeCategory(values)}
+                  disabled={isPending}
                   defaultValue={formik.values.CategoryName}
                 >
                   <SelectTrigger className="w-full">
@@ -159,6 +163,7 @@ const ChangeProduct = ({ product, lastId }: ChangeProductProps) => {
                     type="submit"
                     className="btn boton"
                     variant="secondary"
+                    disabled={isPending}
                   >
                     Aceptar
                   </Button>
