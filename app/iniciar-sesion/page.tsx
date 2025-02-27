@@ -17,7 +17,9 @@ import { decodeJwt } from "@/utils/decodeJwt"
 import Cookies from "js-cookie"
 const page = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const userInfo = await axios
@@ -41,13 +43,19 @@ const page = () => {
           }
         })
         .catch((error) => {
+          setError(error.response.data.message)
           console.log(error)
+        })
+        .finally(() => {
+          setLoading(false)
         })
     },
   })
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState)
   }
+
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
@@ -64,6 +72,7 @@ const page = () => {
       setError(true)
     },
   })
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -74,8 +83,9 @@ const page = () => {
       mutation.mutate(values)
     },
   })
+
   return (
-    <div className="bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] w-full max-w-8xl min-h-screen">
+    <main className="bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] w-full max-w-8xl min-h-screen">
       <div className="flex justify-center items-center h-screen">
         <div className="border border-black bg-main p-4 w-[440px] gap-2 rounded-md">
           <div className="flex flex-col gap-2">
@@ -160,14 +170,24 @@ const page = () => {
                 </div>
                 <button
                   onClick={() => {
+                    setLoading(true)
                     googleLogin()
                   }}
                   type="button"
-                  disabled={mutation.isPending}
+                  disabled={mutation.isPending || loading}
                   className="bg-white text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-gray-200 transition-colors duration-200 rounded-md"
                 >
-                  <Icon icon="devicon:google" width="24" height="24" />
-                  Continuár con google
+                  {loading ? (
+                    <>
+                      <Icon icon="eos-icons:bubble-loading" width="24" height="24" />{" "}
+                      Cargando
+                    </>
+                  ) : (
+                    <>
+                      <Icon icon="devicon:google" width="24" height="24" />{" "}
+                      Continuár con google
+                    </>
+                  )}
                 </button>
 
                 <h5 className="text-sm">
@@ -181,7 +201,7 @@ const page = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 export default page

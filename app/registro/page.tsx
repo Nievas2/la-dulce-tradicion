@@ -17,6 +17,7 @@ import { useState } from "react"
 import { loginGoogle } from "@/services/AuthService"
 const page = () => {
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState("password")
   const [confirmPassword, setConfirmPassword] = useState("password")
 
@@ -66,6 +67,9 @@ const page = () => {
         })
         .catch((error) => {
           console.log(error)
+        })
+        .finally(() => {
+          setLoading(false)
         })
     },
   })
@@ -249,15 +253,30 @@ const page = () => {
 
                 <button
                   onClick={() => {
+                    setLoading(true)
                     googleLogin()
                   }}
                   type="button"
-                  disabled={mutation.isPending}
+                  disabled={mutation.isPending || loading}
                   className="bg-white text-black w-full p-2 flex items-center justify-center gap-2 border border-black hover:bg-gray-200 transition-colors duration-200 rounded-md"
                 >
-                  <Icon icon="devicon:google" width="24" height="24" />
-                  Continuár con google
+                  {loading ? (
+                    <>
+                      <Icon
+                        icon="eos-icons:bubble-loading"
+                        width="24"
+                        height="24"
+                      />{" "}
+                      Cargando
+                    </>
+                  ) : (
+                    <>
+                      <Icon icon="devicon:google" width="24" height="24" />{" "}
+                      Continuár con google
+                    </>
+                  )}
                 </button>
+
                 <h5 className="text-center">
                   Si ya tiene una cuenta puede ingresar desde{" "}
                   <Link
