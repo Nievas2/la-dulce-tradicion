@@ -237,7 +237,7 @@ const Cards = ({ product }: CardProps) => {
                   <SelectItem
                     className="text-start"
                     key={crypto.randomUUID()}
-                    value={subCategory.SubCategoryId.toString()}
+                    value={subCategory.SubCategory.id.toString()}
                   >
                     {subCategory.SubCategory.date} :{" "}
                     {subCategory.SubCategory.price}
@@ -297,7 +297,7 @@ const Cards = ({ product }: CardProps) => {
                 <SelectItem
                   className="text-start"
                   key={crypto.randomUUID()}
-                  value={subCategory.SubCategoryId.toString()}
+                  value={subCategory.SubCategory.id.toString()}
                 >
                   {subCategory.SubCategory.date} :{" "}
                   {subCategory.SubCategory.price}
