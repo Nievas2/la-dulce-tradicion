@@ -24,13 +24,35 @@ import {
 } from "@/components/ui/navigation-menu"
 import Cookies from "js-cookie"
 import { MenuIcon } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Cart from "@/components/shared/Cart"
+import { CartProducts, useCartStore } from "@/stores/cart.store"
 
 export default function Component() {
   const { authUser, setAuthUser } = useAuthContext()
   const pathname = usePathname()
   const [cartOpen, setCartOpen] = useState(false)
+  const productStore = useCartStore((state) =>
+    state.cart.find(
+      (productStorage) => productStorage.userId === authUser?.user.id
+    )
+  )
+
+  const total = useMemo(() => {
+    let amount: number = 0
+    if (productStore && productStore.products) {
+      productStore.products.forEach((product: CartProducts) => {
+        if (product.subCategory != undefined) {
+          product.subCategory.map((subcategory) => {
+            return (amount += subcategory.amount)
+          })
+        } else {
+          return (amount += product.amount!)
+        }
+      })
+    }
+    return amount
+  }, [productStore])
 
   useEffect(() => {
     // Deshabilitar scroll al abrir el modal
@@ -55,16 +77,38 @@ export default function Component() {
     <header className="flex flex-col w-full max-w-8xl h-full shrink-0 bg-main sticky top-0 z-50">
       {/* PARA MOBILE */}
       <Sheet>
-        <SheetTrigger asChild>
-          <div className="flex flex-1 justify-end bg-main lg:hidden p-2 border-b border-secondary">
+        <div className="flex flex-1 justify-between bg-main lg:hidden p-2 border-b border-secondary">
+          <SheetTrigger asChild>
             <div>
               <Button variant="outline" size="icon">
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </div>
-          </div>
-        </SheetTrigger>
+          </SheetTrigger>
+          {/* Cart button mobile */}
+          {authUser != null && (
+            <div className="flex items-center lg:hidden relative px-2">
+              {total > 0 && (
+                <span className="absolute top-0 right-2 inline-flex items-center justify-center px-2 py-1 text-[12px] font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-main rounded-full">
+                  {total}
+                </span>
+              )}
+              <button
+                type="button"
+                className="flex items-center justify-center rounded-md text-black-main hover:bg-gray-main/80 hover:text-black-main focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                aria-controls="mobile-menu"
+                aria-expanded={cartOpen}
+                onClick={() => setCartOpen(!cartOpen)}
+              >
+                <span className="sr-only">Open main menu</span>
+
+                {/* Open */}
+                <Icon icon="mdi:cart" width="24" height="24" />
+              </button>
+            </div>
+          )}
+        </div>
 
         <SheetContent side="left" className="bg-main">
           <ul className="flex flex-col w-full justify-center gap-2 et-menu bg-main">
@@ -153,23 +197,7 @@ export default function Component() {
                 pathname={pathname || ""}
               />
             )}
-            {/* Cart button mobile */}
-            {authUser != null && (
-              <div className="flex items-center md:hidden w-full">
-                <button
-                  type="button"
-                  className="absolute right-16 flex items-center justify-center rounded-md text-black-main hover:bg-gray-main/80 hover:text-black-main focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                  aria-controls="mobile-menu"
-                  aria-expanded={cartOpen}
-                  onClick={() => setCartOpen(!cartOpen)}
-                >
-                  <span className="sr-only">Open main menu</span>
 
-                  {/* Open */}
-                  <Icon icon="mdi:cart" width="24" height="24" />
-                </button>
-              </div>
-            )}
             {authUser ? (
               <Button
                 variant={"main"}
@@ -291,7 +319,13 @@ export default function Component() {
           </ul>
           {/* Cart button desktop */}
           {authUser != null && pathname !== "/ticket" && (
-            <div>
+            <div className="flex items-center relative mr-2">
+              {total > 0 && (
+                <span className="absolute top-0 right-2 inline-flex items-center justify-center px-2 py-1 text-[12px] font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-main rounded-full">
+                  {total}
+                </span>
+              )}
+              
               <button
                 type="button"
                 className="px-3 py-2 inline-flex items-center justify-center rounded-md text-black-main hover:bg-gray-main/80 hover:text-black-main focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
