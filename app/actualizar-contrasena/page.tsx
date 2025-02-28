@@ -77,8 +77,6 @@ const page = () => {
       confirmPassword: string
     }) => {
       if (values.password !== values.confirmPassword) {
-        console.log("Las contraseñas no coinciden")
-
         return Promise.reject(new Error("Las contraseñas no coinciden"))
       }
       return passwordReset(values.code, values.password, values.email)

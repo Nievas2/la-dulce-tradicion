@@ -47,8 +47,6 @@ const page = () => {
   })
 
   useEffect(() => {
-    console.log(productStore?.products)
-
     if (
       productStore?.products.length === undefined ||
       productStore?.products.length === 0

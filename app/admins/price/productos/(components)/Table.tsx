@@ -22,7 +22,6 @@ export default async function Table({
     Number(categoryId),
     nullable
   )  
-console.log(products);
 
   return (
     <div className="mt-6 flow-root">
