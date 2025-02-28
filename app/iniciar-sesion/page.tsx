@@ -35,7 +35,6 @@ const page = () => {
               user: data,
               token: response.data.token,
             }
-            localStorage.setItem("user", JSON.stringify(user))
             Cookies.set("token", response.data.token)
             window.location.href = "/"
           } else {
@@ -65,8 +64,6 @@ const page = () => {
         token: data.token,
       }
       console.log(data)
-
-      localStorage.setItem("user", JSON.stringify(user))
       Cookies.set("token", data.token)
       window.location.href = "/"
     },

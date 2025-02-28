@@ -9,11 +9,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   function (config: any) {    
-    const user = localStorage.getItem("user")
-    const data = JSON.parse(user!)
-    if (data) {
-      const token = data.token
-      
+    const token = Cookies.get("token")
+    if (token) {      
       config.headers.Authorization = `Bearer ${token}`  
     }
 
@@ -32,7 +29,6 @@ axiosInstance.interceptors.response.use(
 
   function (error: any) {
     if (error.response.status === 401) {
-      localStorage.removeItem("user")
       Cookies.remove("token")
       window.location.href = "/iniciar-sesion"
     }

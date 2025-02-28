@@ -47,7 +47,6 @@ export default function Component() {
   }, [cartOpen])
 
   function handleLogout() {
-    localStorage.removeItem("user")
     setAuthUser(null)
     Cookies.set("token", "")
   }

@@ -62,7 +62,6 @@ const page = () => {
               user: data,
               token: response.data.token,
             }
-            localStorage.setItem("user", JSON.stringify(user))
             window.location.href = "/"
           } else {
             setError(true)
