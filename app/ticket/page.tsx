@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 const NEXT_PUBLIC_PHONE = process.env.NEXT_PUBLIC_PHONE
 
@@ -31,6 +32,7 @@ const page = () => {
   })
   const [total, setTotal] = useState(0)
   const { authUser } = useAuthContext()
+  const { push } = useRouter()
   const productStore = useCartStore((state) =>
     state.cart.find(
       (productStorage) => productStorage.userId === authUser?.user.id
@@ -43,6 +45,16 @@ const page = () => {
       return checkCart(cart)
     },
   })
+
+  useEffect(() => {
+    console.log(productStore?.products)
+
+    if (
+      productStore?.products.length === undefined ||
+      productStore?.products.length === 0
+    )
+      return push("/productos")
+  }, [])
 
   useEffect(() => {
     if (productStore != undefined && productStore?.products.length > 0) {
@@ -165,7 +177,7 @@ const page = () => {
         className="hidden md:block absolute top-10 left-96 z-0"
       />
       <div className="flex flex-col w-full items-center justify-center gap-6 p-0 py-6 sm:p-4 backdrop-blur-md bg-white/30 border border-secondary rounded-xl">
-      <h2 className="text-3xl font-bold">Finalizar compra</h2>
+        <h2 className="text-3xl font-bold">Finalizar compra</h2>
         <Table>
           <TableCaption>
             Envianos tu pedido y a la brevedad te responderemos.
