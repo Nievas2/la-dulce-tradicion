@@ -190,7 +190,7 @@ const Cards = ({ product }: CardProps) => {
             />
           </div>
           <div className="w-full flex items-end justify-end">
-            {authUser != null && (
+            {authUser != null ? (
               <Button
                 variant="secondary"
                 className="flex gap-2"
@@ -199,6 +199,10 @@ const Cards = ({ product }: CardProps) => {
                 <Icon icon="mdi:cart" width="16" height="16" />
                 Agregar al carrito
               </Button>
+            ) : (
+              <small className="text-red font-bold">
+                Por favor inicia sesión para poder añadir productos a tu carrito
+              </small>
             )}
           </div>
         </>
@@ -257,7 +261,7 @@ const Cards = ({ product }: CardProps) => {
             />
           </div>
           <div className="w-full flex items-end justify-end">
-            {authUser != null && (
+            {authUser != null ? (
               <Button
                 variant="secondary"
                 className="flex gap-2"
@@ -266,6 +270,10 @@ const Cards = ({ product }: CardProps) => {
                 <Icon icon="mdi:cart" width="16" height="16" />
                 Agregar al carrito
               </Button>
+            ) : (
+              <small className="text-red font-bold">
+                Por favor inicia sesión para poder añadir productos a tu carrito
+              </small>
             )}
           </div>
         </>
