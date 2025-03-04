@@ -47,14 +47,6 @@ const page = () => {
   })
 
   useEffect(() => {
-    if (
-      productStore?.products.length === undefined ||
-      productStore?.products.length === 0
-    )
-      return push("/productos")
-  }, [])
-
-  useEffect(() => {
     if (productStore != undefined && productStore?.products.length > 0) {
       let body: CheckPrices = {
         products: [],
@@ -138,8 +130,8 @@ const page = () => {
   }
 
   return (
-    <section className="flex flex-col w-full min-h-[78vh] items-center justify-center p-0 sm:p-2 gap-6 relative">
-      <img
+    <section className="flex flex-col w-full min-h-[78vh] items-center justify-center p-0 sm:p-2 gap-6 relative  bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] ">
+      {/*      <img
         src={"/svgs/Blob.svg"}
         height={300}
         width={300}
@@ -173,7 +165,7 @@ const page = () => {
         width={100}
         alt="blob"
         className="hidden md:block absolute top-10 left-96 z-0"
-      />
+      /> */}
       <div className="flex flex-col w-full items-center justify-center gap-6 p-0 py-6 sm:p-4 backdrop-blur-md bg-white/30 border border-secondary rounded-xl">
         <h2 className="text-3xl font-bold">Finalizar compra</h2>
         <Table>
@@ -222,14 +214,14 @@ const page = () => {
               <TableCell colSpan={3} className="text-right font-medium">
                 Total:
               </TableCell>
-              <TableCell className="text-right font-medium">
+              <TableCell className="text-right text-lg font-bold">
                 $ {total}
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
-        <Button variant="main" onClick={handleSubmit}>
-          Enviar a whatsapp
+        <Button className="font-semibold text-md" variant="secondary" onClick={handleSubmit}>
+          Envianos y te responderemos
         </Button>
       </div>
     </section>

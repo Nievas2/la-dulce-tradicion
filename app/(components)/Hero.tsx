@@ -23,7 +23,7 @@ const Hero = () => {
   })
   return (
     /* bg-[url('/hero.jpg')] */
-    <section className=" w-full h-[90vh] flex justify-center items-center bg-[url('/hero.webp')] bg-cover bg-no-repeat">
+    <section className=" w-full h-[90vh] flex justify-center items-center bg-[url('/hero.jpeg')] bg-cover bg-no-repeat">
       <div className="p-4 flex flex-col items-center justify-center gap-6">
         <div className="px-1 py-2 border border-main rounded-full">
           <img
@@ -45,7 +45,7 @@ const Hero = () => {
         <form className="flex w-full relative" onSubmit={formik.handleSubmit}>
           <input
             className="block w-full rounded-md rounded-r-none border border-secondary py-[9px] px-2 text-sm font-semibold outline-1 outline-secondary placeholder:font-medium placeholder:text-red-main"
-            placeholder="Buscar un producto"
+            placeholder="Escribe aquí"
             {...formik.getFieldProps("query")}
             /* onChange={(e) => {
               setText(e.target.value)

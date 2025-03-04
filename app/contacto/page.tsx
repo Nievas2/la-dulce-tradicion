@@ -19,7 +19,7 @@ const page = () => {
     },
   })
   return (
-    <main className="flex justify-center items-center bg-no-repeat bg-cover bg-center bg-[url('/fondos/fondos1.jpg')] w-full min-h-screen max-w-8xl py-8 text-black">
+    <main className="flex justify-center items-center bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] w-full min-h-screen max-w-8xl py-8 text-black">
       <section className="flex flex-col bg-main p-8 w-[80%] rounded-lg gap-4 shadow-lg shadow-gray-400">
         <div className="flex md:hidden flex-col items-center justify-center w-full">
           <img
