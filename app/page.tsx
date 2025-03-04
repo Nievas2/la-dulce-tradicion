@@ -10,7 +10,7 @@ import Redes from "@/components/shared/Redes"
 export default function Home() {
   return (
     <main className="flex flex-1 max-w-8xl flex-col gap-4">
-      <title>La dulce tradicion | home</title>
+      <title>La dulce tradicion | Inicio</title>
       {/* <Carrousel /> */}
       <Hero />
       <div className="px-4">
