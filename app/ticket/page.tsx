@@ -169,8 +169,8 @@ const page = () => {
       <div className="flex flex-col w-full items-center justify-center gap-6 p-0 py-6 sm:p-4 backdrop-blur-md bg-white/30 border border-secondary rounded-xl">
         <h2 className="text-3xl font-bold">Finalizar compra</h2>
         <Table>
-          <TableCaption>
-            Envianos tu pedido y a la brevedad te responderemos.
+          <TableCaption className="font-bold text-xl text-red-main">
+            Fin del ticket.
           </TableCaption>
           <TableHeader>
             <TableRow>
@@ -220,7 +220,7 @@ const page = () => {
             </TableRow>
           </TableBody>
         </Table>
-        <Button className="font-semibold text-md" variant="secondary" onClick={handleSubmit}>
+        <Button variant="secondary" onClick={handleSubmit}>
           Envianos y te responderemos
         </Button>
       </div>

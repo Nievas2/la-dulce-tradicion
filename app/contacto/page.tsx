@@ -20,7 +20,7 @@ const page = () => {
   })
   return (
     <main className="flex justify-center items-center bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] w-full min-h-screen max-w-8xl py-8 text-black">
-      <section className="flex flex-col bg-main p-8 w-[80%] rounded-lg gap-4 shadow-lg shadow-gray-400">
+      <section className="flex flex-col bg-main p-8 w-fit rounded-lg gap-4 shadow-lg shadow-gray-400">
         <div className="flex md:hidden flex-col items-center justify-center w-full">
           <img
             src="/flor.png"
@@ -33,7 +33,7 @@ const page = () => {
             PASTELERÍA Y ALGO MÁS
           </h2>
         </div>
-        <div className="flex flex-col-reverse md:flex-row gap-8">
+        <div className="flex flex-col-reverse md:flex-row gap-8 max-w-[800px]">
           <div className="flex flex-col basis-5/12 justify-center items-start gap-4">
             <div className="hidden md:flex flex-col items-center justify-center w-full ">
               <img
@@ -93,7 +93,7 @@ const page = () => {
 
           <div className="flex flex-col basis-7/12 gap-4">
             <div className="flex flex-col gap-4 font-medium text-lg">
-              <p className="leading-7">
+              <p className="leading-7 text-xl">
                 ¡Hola! Somos Flor y Lucas, desde 2018 dedicados a la cocina.
                 Elaboramos todo lo que necesites para comer rico y abundante en
                 tu proximo evento.
