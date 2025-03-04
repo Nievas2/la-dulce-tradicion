@@ -33,9 +33,10 @@ import Link from "next/link"
 
 interface CardProps {
   product: Product
+  favorite?: boolean
 }
 
-const Cards = ({ product }: CardProps) => {
+const Cards = ({ product, favorite }: CardProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const [imageSelected, setImageSelected] = useState(0)
   const [subCategory, setSubCategory] = useState<number | undefined>()
@@ -176,7 +177,9 @@ const Cards = ({ product }: CardProps) => {
       return productsInCart?.products.some(
         (item) => item.product.id === product.id
       ) ? (
-        <span>Ya se agregaron todas las posibles subcategorias</span>
+        <span className="text-green-500 font-bold">
+          Ya se agregaron todas las posibles subcategorias
+        </span>
       ) : (
         <>
           <div>
@@ -235,7 +238,7 @@ const Cards = ({ product }: CardProps) => {
                   key={crypto.randomUUID()}
                   value="999"
                 >
-                  categorias
+                 Categorias
                 </SelectItem>
                 {subCategoriesFiltered.map((subCategory) => (
                   <SelectItem
@@ -243,7 +246,7 @@ const Cards = ({ product }: CardProps) => {
                     key={crypto.randomUUID()}
                     value={subCategory.SubCategory.id.toString()}
                   >
-                    {subCategory.SubCategory.date} :{" "}
+                    {subCategory.SubCategory.date} :{" $ "}
                     {subCategory.SubCategory.price}
                   </SelectItem>
                 ))}
@@ -278,7 +281,9 @@ const Cards = ({ product }: CardProps) => {
           </div>
         </>
       ) : (
-        <span>Ya se agregaron todas las posibles subcategorias</span>
+        <span className="text-green-500 font-bold">
+          Ya se agregaron todas las posibles subcategorias
+        </span>
       )
     }
     return allSubcategories.length > 0 ? (
@@ -307,7 +312,7 @@ const Cards = ({ product }: CardProps) => {
                   key={crypto.randomUUID()}
                   value={subCategory.SubCategory.id.toString()}
                 >
-                  {subCategory.SubCategory.date} :{" "}
+                  {subCategory.SubCategory.date} :{" $ "}
                   {subCategory.SubCategory.price}
                 </SelectItem>
               ))}
@@ -507,7 +512,11 @@ const Cards = ({ product }: CardProps) => {
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>Añadir a favoritos</p>
+                            <p>
+                              {favorite
+                                ? "Eliminar de favoritos"
+                                : "Añadir a favoritos"}
+                            </p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>

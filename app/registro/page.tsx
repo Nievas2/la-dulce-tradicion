@@ -79,8 +79,11 @@ const page = () => {
     <div className="bg-no-repeat bg-cover bg-center bg-[url('/background.jpeg')] w-full max-w-8xl">
       <div className="flex justify-center items-center min-h-screen py-8">
         <div className="border border-black bg-main p-4 rounded-md">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
             <h5 className="font-bold text-xl text-center">Registro</h5>
+            <p className="font-medium text-sm">
+              ¡Registrate para poder realizar tu primera compra!
+            </p>
 
             <form
               className="flex flex-col gap-2"
@@ -285,7 +288,7 @@ const page = () => {
                     className="text-blue-800 font-bold"
                     href="/iniciar-sesion"
                   >
-                    aqui
+                    aquí
                   </Link>
                 </h5>
               </div>

@@ -19,7 +19,7 @@ const Page = () => {
         <div className="mx-auto w-full grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-x-6 gap-y-3">
           {
             favorites.map((product) => (
-              <Cards key={crypto.randomUUID()} product={product} />
+              <Cards key={crypto.randomUUID()} product={product} favorite={true} />
             ))
           }
         </div>

@@ -204,13 +204,13 @@ const page = () => {
                 <h5 className="text-sm">
                   Si no tiene una cuenta puede crearse una desde{" "}
                   <Link className="text-blue-800 font-bold" href="registro">
-                    aqui
+                    aquí
                   </Link>
                 </h5>
                 <h5 className="text-sm">
-                  ¿Olvidate tu contraseña?{" "}
+                  ¿Olvidaste tu contraseña?{" "}
                   <Link className="text-blue-800 font-bold" href="actualizar-contrasena">
-                    aqui
+                    aquí
                   </Link>
                 </h5>
               </div>

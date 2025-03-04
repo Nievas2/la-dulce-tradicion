@@ -6,10 +6,10 @@ import { motion } from "framer-motion"
 const Questions = () => {
   return (
     <div className="w-full max-w-8xl">
-      <div className="flex flex-col w-full gap-10 p-0 sm:p-6">
-        {/* <h1 className="text-4xl font-bold mb-6 text-center">
+      <div className="flex flex-col w-full gap-4 p-0 sm:p-6">
+        <h1 className="text-4xl font-bold text-center">
           Preguntas Frecuentes
-        </h1> */}
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
           <motion.div
             whileInView={{ x: 0, opacity: 1 }}
@@ -174,7 +174,7 @@ const Questions = () => {
                   height="24"
                 />
                 <h2 className="text-lg font-semibold mb-2">
-                  ¿REALIZAN PEDIDOS?
+                  ¿REALIZAN ENVIOS?
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   Si, realizamos entregas a domicilio con costo adicional, si
