@@ -21,8 +21,8 @@ export default function Redes() {
         const response = await axios.get("/api/instagram")
         setPosts(response.data)
         setLoading(false)
-      } catch (error) {
-        console.error("Error fetching Instagram posts:", error)
+      } catch (error : any) {
+        console.error("Error fetching Instagram posts:", error.message)
         setLoading(false)
       }
     }

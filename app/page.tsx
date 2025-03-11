@@ -13,10 +13,10 @@ export default function Home() {
       <title>La dulce tradicion | Inicio</title>
       {/* <Carrousel /> */}
       <Hero />
-      <div className="px-4">
+      <div>
         <Questions />
         <CategoriesSection />
-        <Redes />
+       {/*  <Redes /> */}
       </div>
     </main>
   )

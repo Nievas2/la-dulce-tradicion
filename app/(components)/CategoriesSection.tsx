@@ -2,8 +2,8 @@ import Category from "./Category"
 
 const CategoriesSection = () => {
   return (
-    <section className="flex flex-col gap-10 min-h-screen py-8">
-      <h2 className="text-4xl font-bold text-center ">
+    <section className="flex flex-col gap-10 min-h-screen pt-8 bg-[#ffbfbc]">
+      <h2 className="text-4xl font-bold text-center text-white">
         Categorias que queremos recomendarte
       </h2>
 
