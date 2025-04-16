@@ -35,7 +35,9 @@ const page = () => {
               user: data,
               token: response.data.token,
             }
-            Cookies.set("token", response.data.token)
+            Cookies.set("token", response.data.token, {
+              expires: 30,
+            })
             window.location.href = "/"
           } else {
             setError(true)
@@ -64,7 +66,9 @@ const page = () => {
         token: data.token,
       }
       console.log(data)
-      Cookies.set("token", data.token)
+      Cookies.set("token", data.token, {
+        expires: 30,
+      })
       window.location.href = "/"
     },
     onError: (error) => {
@@ -209,7 +213,10 @@ const page = () => {
                 </h5>
                 <h5 className="text-sm">
                   ¿Olvidaste tu contraseña?{" "}
-                  <Link className="text-blue-800 font-bold" href="actualizar-contrasena">
+                  <Link
+                    className="text-blue-800 font-bold"
+                    href="actualizar-contrasena"
+                  >
                     aquí
                   </Link>
                 </h5>
