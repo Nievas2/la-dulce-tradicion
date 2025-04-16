@@ -520,17 +520,14 @@ const Cards = ({ product, favorite }: CardProps) => {
                       </TooltipProvider>
                     </div>
                   </div>
-                  {product.price ||
-                    (product.SubCategoryProducts.length > 0 && (
-                      <h3 className="text-xl">
-                        ${" "}
-                        {product.price
-                          ? product.price
-                          : product.SubCategoryProducts.length > 0
-                          ? product.SubCategoryProducts[0].SubCategory.price
-                          : 0}
-                      </h3>
-                    ))}
+                  <h3 className="text-xl">
+                    ${" "}
+                    {product.price
+                      ? product.price
+                      : product.SubCategoryProducts.length > 0
+                      ? product.SubCategoryProducts[0].SubCategory.price
+                      : 0}
+                  </h3>
 
                   <p
                     dangerouslySetInnerHTML={{ __html: product.description }}
