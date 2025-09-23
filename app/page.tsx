@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
-import Carrousel from "./(components)/Carrousel"
 import Questions from "./(components)/Questions"
 import CategoriesSection from "./(components)/CategoriesSection"
-import Hero from "./(components)/Hero"
-import Redes from "@/components/shared/Redes"
+import Hero from "./(components)/Hero"/* 
+import Carrousel from "./(components)/Carrousel"
+import Redes from "@/components/shared/Redes" */
 
 export default function Home() {
   return (

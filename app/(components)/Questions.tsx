@@ -8,7 +8,7 @@ const Questions = () => {
     <div className="w-full max-w-8xl">
       <div className="flex flex-col w-full gap-4 p-0 sm:p-6">
         <h1 className="text-4xl font-bold text-center">
-          Preguntas Frecuentes
+          PREGUNTAS FRECUENTES
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
           <motion.div
